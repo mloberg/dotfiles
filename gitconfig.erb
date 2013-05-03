@@ -1,0 +1,23 @@
+[user]
+  name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
+  email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+[mergetool]
+  keepBackup = true
+[alias]
+  co = checkout
+  wtf = !git-wtf
+  bf = !gitbf
+  ds = diff --staged
+  amend = commit --amend -C HEAD
+  undo = reset --soft HEAD^
+  ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
+  standup = log --since '1 day ago' --oneline --author loberg.matt@gmail.com
+  graph = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+[credential]
+  helper = /opt/boxen/bin/boxen-git-credential
+[push]
+  default = simple
+[core]
+  excludesfile = /opt/boxen/config/git/gitignore
+[hub]
+  protocol = https

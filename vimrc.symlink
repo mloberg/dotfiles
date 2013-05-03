@@ -1,0 +1,56 @@
+"Interface
+	set title "allow vim to alter the title bar of the terminal
+	set titlestring=%<%F\ %M%R\ %n "the format of the terminal title
+	set nowrap "turn off word wrap
+	set number "line numbers
+	set ruler "show ruler
+	set laststatus=2 "always show command area
+	set cmdheight=2 "make command area two lines high
+	set statusline=\ %n\ \ %<%F%=\ %c\ \ %l/%L\ \ \ %r
+	set showtabline=2 "0=never; 1=when applicable; 2=always
+	set showmode " show the current mode
+	"set scrolloff=15 " scroll when cursor is N lines from the top/bottom edge
+	set showcmd "show commands in command area
+	set visualbell t_vb= " Turn off audible bell
+	set clipboard=unnamed " hopefully catch the cut/paste of the OS
+	autocmd BufWritePre * :%s/\s\+$//e " remove trainling white space on :w
+	"set clipboard=unnamedplus " same as above but for vim -v > 7.3.74
+	"set lines=30 columns=100
+	set diffopt=filler,iwhite
+
+"Margins
+	set tabstop=4 "default tab width
+	set shiftwidth=4 "default shift width
+	set softtabstop=4 "a combination of spaces and tabs are used to simulate tab stops at a width other then the (hard)tabstop
+	set tabpagemax=15 "allow 15 tabs
+	set smartindent "indent after curly braces
+	set smarttab "make tab insert indents instead of tabs at the begging of a line
+	filetype plugin on "allow syntax specific settings
+
+"Search
+	set hlsearch "highlight search results
+
+"Keyboard mapping
+	"imap <Tab> <C-P> " Tab completion
+
+"Bundles
+	set nocompatible
+	filetype off
+	set rtp+=~/.vim/bundle/vundle/
+	call vundle#rc()
+	filetype plugin indent on
+	Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
+	Bundle 'gmarik/vundle'
+
+"Editor Preferences
+	set showmatch " show the matching bracket
+	set autoindent " auto indent based on previous line
+	set autochdir " automatically change the working dir to the dir of the current file/buffer/window
+	set cursorline " show the current cursor line
+	set backspace=indent,eol,start "{:help bs} a fix for *POSSIBLY*  broken backspace keys
+	set matchpairs+=<:> "add html tag delimeters to bracket matching
+	set whichwrap=<,>,[,],h,l " Allows for left/right keys to wrap across lines
+	filetype plugin on " allows for some extra filetype specific goodness, specifically auto comments
+	syntax enable
+	let &t_Co=256 "vim sees iTerm2 as only have 8 colors, and doesn't display colors
+	colorscheme Revelation
