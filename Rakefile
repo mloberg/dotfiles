@@ -32,6 +32,16 @@ task :install do
       link_file(symlink)
     end
   end
+  install_vundle
+end
+
+def install_vundle
+  target = ENV['HOME'] + "/.vim/bundle/vundle"
+  unless File.exists? target
+    system("git clone https://github.com/gmarik/vundle.git #{target}")
+  end
+  puts "Installing Vim Bundles"
+  system("vim +BundleInstall +qall")
 end
 
 def replace_file(file)
