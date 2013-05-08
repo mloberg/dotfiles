@@ -1,6 +1,35 @@
 require "rake"
 require "erb"
 
+class Template
+  include ERB::Util
+
+  def initialize(template)
+    @input = {}
+    @template = template
+  end
+
+  def get_input(prompt)
+    return @input[prompt] if @input[prompt]
+    print prompt
+    STDOUT.flush
+    response = STDIN.gets.chomp
+    @input[prompt] = response
+    return response
+  end
+
+  def render
+    ERB.new(File.read(@template)).result(binding)
+  end
+
+  def save(file)
+    File.open(file, 'w') do |f|
+      f.write(render)
+    end
+  end
+
+end
+
 task :default => :install
 
 desc "install dotfiles into user's home directory"
@@ -33,6 +62,7 @@ task :install do
     end
   end
   install_vundle
+  system %Q{mkdir -p #{ENV['HOME']}/.bash.d}
   puts "Run `rake bashfu to install Bashfu`"
 end
 
@@ -89,9 +119,8 @@ end
 def link_file(file)
   if file =~ /.erb$/
     puts "generating ~/.#{file.sub(/\.erb$/, '')}"
-    File.open(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"), 'w') do |new_file|
-      new_file.write ERB.new(File.read(file)).result(binding)
-    end
+    template = Template.new(file)
+    template.save(File.join(ENV['HOME'], ".#{file.sub(/\.erb$/, '')}"))
   else
     puts "linking ~/.#{file.gsub(/\.symlink$/, '')}"
     system %Q{ln -s "$PWD/#{file}" "$HOME/.#{file.gsub(/\.(symlink|erb)$/, '')}"}

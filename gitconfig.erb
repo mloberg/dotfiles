@@ -1,6 +1,6 @@
 [user]
-  name = <%= print("Your Name: "); STDOUT.flush; STDIN.gets.chomp %>
-  email = <%= print("Your Email: "); STDOUT.flush; STDIN.gets.chomp %>
+  name = <%= get_input("Your Name: ") %>
+  email = <%= get_input("Your Email: ") %>
 [mergetool]
   keepBackup = true
 [alias]
@@ -11,13 +11,13 @@
   amend = commit --amend -C HEAD
   undo = reset --soft HEAD^
   ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
-  standup = log --since '1 day ago' --oneline --author loberg.matt@gmail.com
+  standup = log --since '1 day ago' --oneline --author <%= get_input("Your Email: ") %>
   graph = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
 [credential]
   helper = /opt/boxen/bin/boxen-git-credential
 [push]
   default = simple
 [core]
-  excludesfile = /opt/boxen/config/git/gitignore
+  excludesfile = <%= ENV['HOME'] %>/.gitignore
 [hub]
   protocol = https

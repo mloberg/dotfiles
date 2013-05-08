@@ -23,3 +23,10 @@ export IRC_CLIENT='irc'
 
 # Load Bashfu
 [ -f "$BASHFU/bashfu.sh" ] && source $BASHFU/bashfu.sh
+
+# Load custom scripts
+for file in "$HOME/.bash.d/*"; do
+    if [ -e "${file}" ]; then
+      source $file
+    fi
+done
