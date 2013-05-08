@@ -33,6 +33,43 @@ task :install do
     end
   end
   install_vundle
+  puts "Run `rake bashfu to install Bashfu`"
+end
+
+desc "Install and enable Bashfu"
+task :bashfu do
+  BASHFU = File.join(ENV['HOME'], ".bashfu")
+  %w(aliases plugins completion).each do |type|
+    system %Q{mkdir -p #{BASHFU}/#{type}/enabled}
+    print "Would to to enable all, some, or no #{type}? [all/some/none] "
+    case STDIN.gets.chomp
+    when 'all'
+      Dir["#{BASHFU}/#{type}/available/*.bash"].each do |file|
+        filename = File.basename(file)
+        target = "#{BASHFU}/#{type}/enabled/#{filename}"
+        if not File.identical?(file, target)
+          system %Q{rm -rf "#{target}"} if File.exists?(target)
+          system %Q{ln -s "#{file}" "#{target}"}
+        end
+      end
+    when 'some'
+      type_single = type.gsub(/e?s$/, '')
+      Dir["#{BASHFU}/#{type}/available/*.bash"].each do |path|
+        filename = File.basename(path)
+        name = filename.gsub(".#{type}.bash", "")
+        print "Would you like to enable the #{name} #{type_single} [y/n] "
+        case STDIN.gets.chomp.downcase
+        when 'y'
+        when 'yes'
+          system %Q{ln -s "#{path}" "#{BASHFU}/#{type}/enabled/#{filename}"}
+        else
+          # Move along
+        end
+      end
+    else
+      # Move along
+    end
+  end
 end
 
 def install_vundle
