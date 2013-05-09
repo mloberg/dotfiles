@@ -21,12 +21,8 @@ unset MAILCHECK
 # Change this to your console based IRC client of choice.
 export IRC_CLIENT='irc'
 
+# Load custom scripts
+for f in ~/.bash.d/*; do source $f; done
+
 # Load Bashfu
 [ -f "$BASHFU/bashfu.sh" ] && source $BASHFU/bashfu.sh
-
-# Load custom scripts
-for file in "$HOME/.bash.d/*"; do
-    if [ -e "${file}" ]; then
-      source $file
-    fi
-done
