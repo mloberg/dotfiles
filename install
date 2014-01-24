@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install dotfiles, templates, and repos
-python -c 'from lib import install; install()'
+python -c "from lib import install; install(ignore=['lib', 'linux', 'darwin', 'tools'])"
 
 # Install vundle
 vim +BundleInstall +qall
