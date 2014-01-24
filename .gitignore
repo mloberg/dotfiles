@@ -1,3 +1,2 @@
 vim.symlink/bundle
-bashfu.symlink/*/enabled/*
 *.pyc
