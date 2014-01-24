@@ -46,15 +46,19 @@ class Repos(object):
                     pass
                 continue
             # Clone repo
-            subprocess.check_output([self.git, "clone", repo['url'], target])
+            subprocess.call([self.git, "clone", repo['url'], target])
 
     def _fix_repo(self, target, url, branch):
         cwd = os.getcwd()
         os.chdir(target)
         check_remote = [self.git, "config", "--get", "remote.origin.url"]
-        remote = subprocess.check_output(check_remote).strip()
+        remote = self._check_output(check_remote).strip()
         if remote != url:
             subprocess.call([self.git, "remote", "set-url", "origin", url])
         subprocess.call([self.git, "checkout", branch])
         subprocess.call([self.git, "pull"])
         os.chdir(cwd)
+
+    def _check_output(self, cmd):
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()
+        return proc[0]
