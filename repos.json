@@ -1,0 +1,14 @@
+{
+    "repos": [
+        {
+            "name": "Bash it",
+            "url": "https://github.com/mloberg/bash-it",
+            "target": "~/.bash_it"
+        },
+        {
+            "name": "vundle",
+            "url": "https://github.com/gmarik/vundle.git",
+            "target": "~/.vim/bundle/vundle"
+        }
+    ]
+}
