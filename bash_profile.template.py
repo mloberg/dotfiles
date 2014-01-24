@@ -1,3 +1,5 @@
+from lib.utils import input_prompt
+
 template = """
 # Bash it theme
 export BASH_IT_THEME="i_hate_everyone"
@@ -24,14 +26,14 @@ for f in ~/.bash.d/*; do source $f; done
 
 def input_or_default(prompt, default):
     def ask_prompt():
-        response = raw_input(prompt).strip()
+        response = input_prompt(prompt).strip()
         if response == '':
             response = default
         return response
     return ask_prompt
 
 variables = {
-    'git_hosting': lambda: raw_input("Git host: "),
+    'git_hosting': lambda: input_prompt("Git host: "),
     'editor': input_or_default("Editor (default vim): ", "/usr/bin/vim"),
     'git_editor': input_or_default("Git commit editor (default vim): ",
                                    "/usr/bin/vim"),

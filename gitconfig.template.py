@@ -1,5 +1,6 @@
 import os.path
 import platform
+from lib.utils import input_prompt
 
 template = """
 [user]
@@ -33,7 +34,7 @@ template += """[core]
 """
 
 variables = {
-    'name': lambda: raw_input("Your name: ").strip(),
-    'email': lambda: raw_input("Your email: ").strip(),
+    'name': lambda: input_prompt("Your name: ").strip(),
+    'email': lambda: input_prompt("Your email: ").strip(),
     'home': os.path.expanduser('~'),
 }
