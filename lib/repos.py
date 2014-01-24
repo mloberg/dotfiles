@@ -19,7 +19,8 @@ class Repos(object):
 
     @classmethod
     def load_from_file(cls, filename):
-        repos = json.load(open(filename, 'rb'))['repos']
+        raw_json = open(filename, 'rb').read().decode("utf-8")
+        repos = json.loads(raw_json)['repos']
         instance = cls(repos)
         return instance
 

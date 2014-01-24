@@ -3,6 +3,12 @@ import sys
 import fnmatch
 
 
+def input_prompt(text=''):
+    if sys.version_info[0] >= 3:
+        return input(text)
+    return raw_input(text)
+
+
 def query_yes_no(question, default="yes"):
     valid = {"yes": True, "y": True, "ye": True, "no": False, "n": False}
     if default is None:
@@ -16,7 +22,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stdout.write(question + prompt)
-        choice = raw_input().lower()
+        choice = input_prompt().lower()
         if default is not None and choice == '':
             return valid[default]
         elif choice in valid:
