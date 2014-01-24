@@ -40,11 +40,15 @@ class Dotfiles(DotfilesBase):
     def _symlink_file(self, dotfile):
         filename = self._get_filename(dotfile)
         target = self._get_target(filename)
-        # TODO: Broken symlinks aren't caught and can't be symlinked
-        if os.path.exists(target):
-            if os.path.realpath(target) == dotfile:
+        if os.path.lexists(target):
+            if os.path.exists(target) is False:
+                # Broken symlink
+                os.remove(target)
+            elif os.path.realpath(target) == dotfile:
+                # Same file
                 return
             elif query_yes_no("%s exists. Replace?" % target):
+                # Replace file
                 os.rename(target, target + '.orig')
             else:
                 return
