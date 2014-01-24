@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+import platform
+from lib.dotfiles import Dotfiles, DotfileTemplates
+
+if __name__ == '__main__':
+    ignore_directories = ['lib', 'linux', 'darwin']
+    dotfiles = Dotfiles(ignore=ignore_directories)
+    dotfiles.find('.')
+    dotfiles.find(platform.system().lower())
+    dotfiles.symlink()
+
+    templates = DotfileTemplates(ignore=ignore_directories)
+    templates.find('.')
+    templates.find(platform.system().lower())
+    templates.save()
