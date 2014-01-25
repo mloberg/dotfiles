@@ -1,6 +1,6 @@
 import os.path
 import platform
-from lib.utils import input_prompt
+from lib.six.moves import input
 
 template = """
 [user]
@@ -34,7 +34,7 @@ template += """[core]
 """
 
 variables = {
-    'name': lambda: input_prompt("Your name: ").strip(),
-    'email': lambda: input_prompt("Your email: ").strip(),
+    'name': lambda: input("Your name: ").strip(),
+    'email': lambda: input("Your email: ").strip(),
     'home': os.path.expanduser('~'),
 }

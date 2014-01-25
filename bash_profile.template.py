@@ -1,4 +1,4 @@
-from lib.utils import input_prompt
+from lib.six.moves import input
 
 template = """
 # Bash it theme
@@ -26,7 +26,7 @@ for f in ~/.bash.d/*; do source $f; done
 
 def input_or_default(prompt, default):
     def ask_prompt():
-        response = input_prompt(prompt).strip()
+        response = input(prompt).strip()
         if response == '':
             response = default
         return response
