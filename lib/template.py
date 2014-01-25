@@ -1,4 +1,5 @@
 import re
+from .six import callable
 
 
 class Template(object):
@@ -15,7 +16,7 @@ class Template(object):
 
     def render_to_file(self, filename):
         with open(filename, 'wb') as fp:
-            fp.write(self.render())
+            fp.write(self.render().encode('utf-8'))
 
     def _normalize_variables(self):
         variables = {}
