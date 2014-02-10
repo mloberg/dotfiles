@@ -33,7 +33,7 @@ def input_or_default(prompt, default):
     return ask_prompt
 
 variables = {
-    'git_hosting': lambda: input_prompt("Git host: "),
+    'git_hosting': lambda: input("Git host: "),
     'editor': input_or_default("Editor (default vim): ", "/usr/bin/vim"),
     'git_editor': input_or_default("Git commit editor (default vim): ",
                                    "/usr/bin/vim"),
