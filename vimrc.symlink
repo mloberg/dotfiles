@@ -38,9 +38,8 @@
 	filetype off
 	set rtp+=~/.vim/bundle/vundle/
 	call vundle#rc()
-	filetype plugin indent on
-	Bundle "daylerees/colour-schemes", { "rtp": "vim-themes/" }
 	Bundle 'gmarik/vundle'
+	Bundle 'tomasr/molokai'
 
 "Editor Preferences
 	set showmatch " show the matching bracket
@@ -53,4 +52,4 @@
 	filetype plugin on " allows for some extra filetype specific goodness, specifically auto comments
 	syntax enable
 	let &t_Co=256 "vim sees iTerm2 as only have 8 colors, and doesn't display colors
-	colorscheme Revelation
+	colorscheme molokai
