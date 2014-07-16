@@ -1,2 +1,2 @@
-vim.symlink/bundle
-*.pyc
+vim/vim.symlink/bundle
+git/gitconfig.symlink

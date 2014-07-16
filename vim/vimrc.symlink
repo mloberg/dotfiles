@@ -36,10 +36,13 @@
 "Bundles
 	set nocompatible
 	filetype off
-	set rtp+=~/.vim/bundle/vundle/
-	call vundle#rc()
-	Bundle 'gmarik/vundle'
-	Bundle 'tomasr/molokai'
+	set rtp+=~/.vim/bundle/Vundle.vim
+	call vundle#begin()
+	Plugin 'gmarik/Vundle.vim'
+	Plugin 'tomasr/molokai'
+	"Add more plugins here
+	call vundle#end()
+	filetype plugin indent on
 
 "Editor Preferences
 	set showmatch " show the matching bracket
