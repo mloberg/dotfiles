@@ -45,10 +45,27 @@ install_dotfiles () {
     done
 }
 
+install_os_dotfiles () {
+    os="$(uname -s | awk '{print tolower($0)}')"
+
+    if [ -d "${DOTFILES_ROOT}/${os}" ]; then
+        info "installing ${os} specific dotfiles"
+
+        local overwrite_all=false backup_all=false skip_all=false
+
+        for src in $(find "$DOTFILES_ROOT/$os" -maxdepth 2 -name '*.symlink')
+        do
+            dst="$HOME/.$(basename "${src%.*}")"
+            link_file "$src" "$dst"
+        done
+    fi
+}
+
 git submodule init
 git submodule update
 setup_gitconfig
 install_dotfiles
+install_os_dotfiles
 
 echo ''
 echo '  All installed!'
