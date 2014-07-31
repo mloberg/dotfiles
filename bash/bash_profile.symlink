@@ -96,16 +96,23 @@ if [[ -a ~/.localrc ]]; then
 fi
 
 # load *path.bash files
-for src in $(find "$DOTFILES" -name '*path.bash'); do
+for src in $(find "$DOTFILES" -maxdepth 2 -name '*path.bash'); do
     source "${src}"
 done
 
 # load everything but the path and completion files
-for src in $(find "$DOTFILES" -name '*.bash' -not -name '*path.bash' -not -name '*completion.bash'); do
+for src in $(find "$DOTFILES" -maxdepth 2 -name '*.bash' -not -name '*path.bash' -not -name '*completion.bash'); do
     source "${src}"
 done
 
 # load completions
-for src in $(find "$DOTFILES" -name '*completion.bash'); do
+for src in $(find "$DOTFILES" -maxdepth 2 -name '*completion.bash'); do
     source "${src}"
 done
+
+# ~/.bash.d
+if [ -d "$HOME/.bash.d" ]; then
+    for f in $HOME/.bash.d/*.sh; do
+        source $f
+    done
+fi
