@@ -69,3 +69,5 @@ install_os_dotfiles
 
 echo ''
 echo '  All installed!'
+
+source ~/.bash_profile
