@@ -280,14 +280,18 @@ ruby_version_prompt() {
 }
 
 python_version_prompt() {
-    echo -e $(python -c "import sys;print('%s.%s.%s' % sys.version_info[:3])")
+    echo -e "$(python -c "import sys;print('%s.%s.%s' % sys.version_info[:3])")"
+}
+
+php_version_prompt() {
+	echo -e "$(php -r 'print phpversion();')"
 }
 
 PS1="\[\033]0;\u@\h:\w\007\]" # Set title
 PS1+="\[${echo_red}\]\u@\h:" # user@host
 PS1+="\[${echo_bold_green}\]\w" # pwd
 PS1+="\[${echo_purple}\] "
-PS1+="|ruby \$(ruby_version_prompt)|python \$(python_version_prompt)|"
+PS1+="|ruby \$(ruby_version_prompt)|python \$(python_version_prompt)|php \$(php_version_prompt)|"
 PS1+="\[${echo_white}\] \$(vcprompt -f '[%s:%b:%h]%a%m%u')" # Git repo details
 PS1+="\[${echo_reset_color}\]\n" # Reset color
 PS1+="-> "
