@@ -14,3 +14,4 @@ ehthumbs.db
 /tags
 /.bundle/
 .php-version
+.idea
