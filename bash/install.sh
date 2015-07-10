@@ -43,7 +43,7 @@ function load_some() {
 
 for type in "aliases" "plugins" "completion"; do
     # Run only if not ran before
-    if [ ! "$(ls -A $BASH_IT/$type/enabled)" ]; then
+    if [ ! "$(ls -A $BASH_IT/$type/enabled)" ] || [ "$1" = "--update" ]; then
         while true; do
             read -p "Would you like to enable all, some, or no $type? Some of these may make bash slower to start up (especially completion). (all/some/none) " RESP
             case $RESP in
