@@ -32,3 +32,7 @@ set-option -g mouse-select-pane on
 set-option -g mouse-select-window on
 set-window-option -g mode-keys vi
 set-window-option -g mode-mouse on
+
+# Copy/paste buffer
+bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+bind C-v run "reattach-to-user-namespace pbpaste | tmux load-buffer - && tmux paste-buffer"
