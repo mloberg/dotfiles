@@ -10,6 +10,13 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
+## macOS bootstrap
+
+```sh
+./macos/setup.sh
+./macos/bootstrap.sh
+```
+
 ## thanks
 
 * [Zach Holman's dotfiles](https://github.com/holman/dotfiles)

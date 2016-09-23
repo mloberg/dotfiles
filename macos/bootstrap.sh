@@ -1,0 +1,295 @@
+#!/usr/bin/env bash
+#
+# Bootstrap macOS
+set -e
+
+OS="$(uname -s | awk '{print tolower($0)}')"
+
+if [ "${OS}" != "darwin" ]; then
+  abort "This can only be run on Mac systems."
+fi
+
+MACOS_VERSION="$(/usr/bin/sw_vers -productVersion)"
+printf -v MACOS_VERSION_NUMERIC "%02d%02d%02d" ${MACOS_VERSION//./ }
+
+# This may work on older systems, but this is the oldest one I use
+if [ "${MACOS_VERSION_NUMERIC}" -lt "100900" ]; then
+  abort "Your system is too old. You need Mavericks (10.9) or newer."
+fi
+
+# Make sure Boxen doesn't exist
+if [ -d /opt/boxen ] || ; then
+  abort "It looks like you are using Boxen. I don't play well with Boxen."
+fi
+
+# Sudo may cause unwanted results
+if [ "${USER}" == "root" ]; then
+  abort "Run this as a normal user, I'll sudo if I need to."
+fi
+
+# Make sure we're in the bootstrap root
+BOOTSTRAP_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "${BOOTSTRAP_ROOT}"
+
+# Source additional functions
+source ../lib/functions
+
+## START: functions ##
+install_package() {
+  local package="$1"
+
+  # TODO: --upgrade flag
+  if ! $(brew list "${package}" &>/dev/null); then
+    info "Installing ${package}"
+    brew install "${package}" &>/dev/null
+  fi
+}
+
+install_unlinked_package() {
+  local package="$1"
+
+  # TODO: --upgrade flag
+  if ! $(brew list "${package}" &>/dev/null); then
+    info "Installing and unlinking ${package}"
+    brew install "${package}" &>/dev/null
+    brew unlink "${package}" &>/dev/null
+  fi
+}
+
+install_app() {
+  local app="$1"
+
+  if ! $(brew cask list "${app}" &>/dev/null); then
+    info "Installing ${app}"
+    brew cask install "${app}" &>/dev/null
+  fi
+}
+
+brew_tap() {
+  local tap="$1"
+
+  (brew tap | grep "${tap}") &>/dev/null || brew tap "${tap}" &>/dev/null
+}
+
+ruby_install() {
+  local version="$1"
+
+  (rbenv versions | grep "${version}") &>/dev/null || (info "Installing Ruby ${version}" && rbenv install "${version}" &>/dev/null)
+}
+
+python_install() {
+  local version="$1"
+
+  (pyenv versions | grep "${version}") &>/dev/null || (info "Installing Python ${version}" && pyenv install "${version}" &>/dev/null)
+}
+## END: functions ##
+
+# Make sure /usr/local is in our PATH
+PATH="/usr/local/bin:$PATH"
+
+# Install Command Line Tools
+info "Installing Command Line Tools"
+xcode-select -p &>/dev/null || xcode-select --install
+
+# Install Homebrew
+info "Installing Homebrew"
+if ! [ -x "$(command -v brew)" ]; then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+# TODO: brew doctor
+
+# brew packages (see: `http://braumeister.org/`)
+install_package "git"
+install_package "git-flow"
+install_package "wget"
+install_package "ack"
+install_package "tmux"
+install_package "reattach-to-user-namespace"
+
+# Brew cask (see: `https://caskroom.github.io/search`)
+brew_tap "caskroom/cask"
+install_app "dropbox"
+install_app "iterm2"
+install_app "sequel-pro"
+install_app "tower"
+install_app "google-chrome"
+install_app "caffeine"
+install_app "spotify"
+install_app "spotify-notifications"
+install_app "virtualbox"
+install_app "vagrant"
+install_app "vagrant-manager"
+install_app "phpstorm"
+install_app "atom"
+install_app "hipchat"
+install_app "macdown"
+
+if [ "${HOSTNAME}" == "Matts-Air" ]; then
+  install_app "flux"
+  install_app "ableton-live"
+  install_app "ilok-license-manager"
+fi
+
+# Udpated Bash
+info "Updating bash"
+install_package "bash"
+install_package "bash-completion"
+
+(cat /etc/shells | grep /usr/local/bin/bash) &>/dev/null || (echo "/usr/local/bin/bash" | sudo tee -a /etc/shells)
+
+if [ "${SHELL}" != "/usr/local/bin/bash" ]; then
+  chsh -s /usr/local/bin/bash
+fi
+
+header "Bash Completion"
+cat << 'EOF'
+To enable bash completion add the following lines to your ~/.bash_profile:
+  if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+  fi
+
+EOF
+
+info "Installing Docker"
+if [ "${MACOS_VERSION_NUMERIC}" -ge "101003" ]; then
+  install_app "docker"
+  install_app "kitematic"
+else
+  install_app "docker-toolbox"
+fi
+
+# NodeJS via n (see: `https://github.com/tj/n`)
+info "Installing NodeJS via N"
+install_package "n"
+
+n stable
+
+# Ruby via rbenv (see: `https://github.com/rbenv/rbenv`)
+info "Installing Ruby via rbenv"
+install_package "rbenv"
+install_package "rbenv-default-gems"
+
+if ! $(type rbenv | grep 'rbenv is a function'); then
+  eval "$(rbenv init -)"
+fi
+
+default_gems_file=$(rbenv root)/default-gems
+
+(cat "${default_gems_file}" | grep bundler) &>/dev/null | (echo 'bundler' >> "${default_gems_file}")
+
+# rbenv install 1.9.3-p545
+# rbenv install 2.0.0-p648
+# rbenv install 2.1.10
+# rbenv install 2.2.5
+ruby_install 2.3.1
+
+rbenv global 2.3.1
+
+header "Ruby (rbenv)"
+cat << 'EOF'
+To enable Ruby management add the following line to your ~/.bash_profile:
+  eval "$(rbenv init -)"
+
+EOF
+
+# Python via pyenv (see: `https://github.com/yyuu/pyenv`)
+info "Installing Python via pyenv"
+install_package "pyenv"
+install_package "pyenv-ccache"
+install_package "pyenv-virtualenvwrapper"
+
+if ! $(type pyenv | grep 'pyenv is a function'); then
+  eval "$(pyenv init -)"
+fi
+
+python_install 2.7.12
+
+if [ "${HOSTNAME}" != "Matts-Air" ]; then
+  python_install 3.5.2
+fi
+
+pyenv global 2.7.12
+
+header "Python (pyenv)"
+cat << 'EOF'
+To enable Python management add the following line to your ~/.bash_profile:
+  eval "$(pyenv init -)"
+
+EOF
+
+# PHP with switch script
+info "Installing PHP"
+brew_tap "homebrew/dupes"
+brew_tap "homebrew/versions"
+brew_tap "homebrew/homebrew-php"
+
+if [ "${HOSTNAME}" != "Matts-Air" ]; then
+  install_unlinked_package "php54"
+  install_unlinked_package "php55"
+fi
+
+install_unlinked_package "php56"
+install_unlinked_package "php70"
+
+# PHP Switch Command
+src="${BOOTSTRAP_ROOT}/files/sphp"
+dest="/usr/local/bin/sphp"
+
+if [ ! -f "${dest}" ] || [ "${src}" -nt "${dest}" ]; then
+  cp "${src}" "${dest}"
+fi
+
+header "PHP"
+cat << 'EOF'
+To switch active PHP versions, use the `sphp` script:
+  /usr/local/bin/sphp 56
+
+EOF
+
+# Composer
+info "Installing Composer"
+curl -sS https://getcomposer.org/installer | $(brew list php56 | grep 'bin/php$') -- --install-dir=/usr/local/bin --filename=composer &>/dev/null
+
+# Fonts
+FONT_ROOT="${HOME}/Library/Fonts"
+
+info "Installing Adobe SourceCodePro font"
+for title in Black Bold ExtraLight Light Medium Regular Semibold; do
+  font_name="SourceCodePro-${title}.otf"
+  font_path="${FONT_ROOT}/${font_name}"
+
+  if [ ! -f "${font_path}" ]; then
+    curl -o "${font_path}" "https://github.com/adobe-fonts/source-code-pro/raw/gh-pages/OTF/${font_name}" &>/dev/null
+  fi
+done
+
+info "Installing Adobe SourceSansPro font"
+for title in Black BlackIt Bold BoldIt ExtraLight ExtraLightIt It Light LightIt Regular Semibold SemiboldIt; do
+  font_name="SourceSansPro-${title}.otf"
+  font_path="${FONT_ROOT}/${font_name}"
+
+  if [ ! -f "${font_path}" ]; then
+    curl -o "${font_path}" "https://github.com/adobe-fonts/source-sans-pro/raw/gh-pages/OTF/${font_name}" &>/dev/null
+  fi
+done
+
+info "Installing Lato font"
+if [ ! -f "${FONT_ROOT}/Lato-Regular.ttf" ]; then
+  curl -L -o "/tmp/lato.zip" "http://www.latofonts.com/download/Lato2OFL.zip" &>/dev/null
+  unzip /tmp/lato.zip -d /tmp &>/dev/null
+  cp /tmp/Lato2OFL/*.ttf "${FONT_ROOT}"
+  rm -r /tmp/Lato2OFL
+  rm /tmp/lato.zip
+fi
+
+info "Installing Monoid font"
+if [ ! -f "${FONT_ROOT}/Monoid-Regular.ttf" ]; then
+  curl -L -o "/tmp/monoid.zip" "https://cdn.rawgit.com/larsenwork/monoid/2db2d289f4e61010dd3f44e09918d9bb32fb96fd/Monoid.zip" &>/dev/null
+  unzip /tmp/monoid.zip -d /tmp/monoid &>/dev/null
+  cp /tmp/monoid/*.ttf "${FONT_ROOT}"
+  rm -r /tmp/monoid
+  rm /tmp/monoid.zip
+fi
+
+success "Bootstraped System. You may need to restart your shell to take affect."
