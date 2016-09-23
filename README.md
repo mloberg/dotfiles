@@ -14,3 +14,7 @@ cd ~/.dotfiles
 
 * [Zach Holman's dotfiles](https://github.com/holman/dotfiles)
 * [Mathias’s dotfiles](https://github.com/mathiasbynens/dotfiles)
+
+## todo
+
+* Set list of bash it aliases, plugins, and completions to automatically install
