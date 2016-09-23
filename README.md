@@ -7,8 +7,7 @@ My dotfiles
 ```sh
 git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-script/bootstrap
-script/install
+./install.sh
 ```
 
 ## thanks

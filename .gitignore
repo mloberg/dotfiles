@@ -1,3 +1,2 @@
-git/gitconfig.symlink
-vim/vim.symlink/bundle/*
-!vim/vim.symlink/Vundle.vim
+dotfiles/vim/bundle/*
+!dotfiles/vim/bundle/Vundle.vim
