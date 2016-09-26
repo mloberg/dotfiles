@@ -212,3 +212,5 @@ done
 
 # Install Vundle
 vim +PluginInstall +qall
+
+info "Dotfiles installed. Please reload your shell to take affect."
