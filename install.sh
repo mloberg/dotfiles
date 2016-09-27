@@ -195,6 +195,6 @@ for type in "aliases" "plugins" "completion"; do
 done
 
 # Install Vundle
-vim +PluginInstall +qall
+vim -u "${DOTFILES_ROOT}/lib/vimrc" +PluginInstall +qall
 
 success "Dotfiles installed. Please reload your shell to take affect."
