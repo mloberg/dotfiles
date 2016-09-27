@@ -13,7 +13,7 @@ cd ~/.dotfiles
 ## macOS bootstrap
 
 ```sh
-./macos/setup.sh
+./macos/setup.sh --init
 ./macos/bootstrap.sh
 ```
 
