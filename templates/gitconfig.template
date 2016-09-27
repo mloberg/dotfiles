@@ -1,8 +1,8 @@
 [user]
-    name = AUTHORNAME
-    email = AUTHOREMAIL
+    name = {{AUTHORNAME}}
+    email = {{AUTHOREMAIL}}
 [credential]
-    helper = GIT_CREDENTIAL_HELPER
+    helper = {{GIT_CREDENTIAL_HELPER}}
 [alias]
     co = checkout
     wtf = !git-wtf
@@ -13,6 +13,7 @@
     ls = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
     standup = log --since '1 day ago' --oneline --author {{ email }}
     graph = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+    lastchange = log -p --follow -n 1
 [color]
     diff = auto
     status = auto

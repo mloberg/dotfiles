@@ -11,7 +11,7 @@ shopt -s cdspell
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-    shopt -s "$option" 2> /dev/null
+  shopt -s "$option" 2> /dev/null
 done
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -31,19 +31,19 @@ shopt -s checkwinsize
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+  xterm-color) color_prompt=yes;;
 esac
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias ls='ls --color=auto'
+  #alias dir='dir --color=auto'
+  #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
 fi
 
 # some more ls aliases
@@ -59,22 +59,21 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f ~/.bash_aliases ]; then
-    source ~/.bash_aliases
+  source ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-    if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-        source "$(brew --prefix)/etc/bash_completion"
-    elif [ -f /usr/share/bash-completion/bash_completion ]; then
-        source /usr/share/bash-completion/bash_completion
-    elif [ -f /etc/bash_completion ]; then
-        source /etc/bash_completion
-    fi
+  if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+    source "$(brew --prefix)/etc/bash_completion"
+  elif [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+  fi
 fi
 
 # shortcut to dotfiles path
@@ -85,6 +84,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
   # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
   [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
+
 export DOTFILES="$( cd -P "$( dirname "$SOURCE" )"/.. && pwd )"
 
 unset DIR SOURCE
@@ -92,27 +92,17 @@ unset DIR SOURCE
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
 if [[ -a ~/.localrc ]]; then
-    source ~/.localrc
+  source ~/.localrc
 fi
 
-# load *path.bash files
-for src in $(find "$DOTFILES" -maxdepth 2 -name '*path.bash'); do
-    source "${src}"
-done
-
-# load everything but the path and completion files
-for src in $(find "$DOTFILES" -maxdepth 2 -name '*.bash' -not -name '*path.bash' -not -name '*completion.bash'); do
-    source "${src}"
-done
-
-# load completions
-for src in $(find "$DOTFILES" -maxdepth 2 -name '*completion.bash'); do
-    source "${src}"
+# Load additional bash files
+for src in $(find "${DOTFILES}/bash" -name '*.bash'); do
+  source "${src}"
 done
 
 # ~/.bash.d
 if [ -d "$HOME/.bash.d" ]; then
-    for f in $HOME/.bash.d/*.sh; do
-        source $f
-    done
+  for f in $HOME/.bash.d/*.sh; do
+    source $f
+  done
 fi
