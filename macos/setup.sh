@@ -223,7 +223,7 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 info "Setting trackpad & mouse speed to a reasonable number"
 defaults write -g com.apple.trackpad.scaling 2
-defaults write -g com.apple.mouse.scaling 2.5
+defaults write -g com.apple.mouse.scaling 1.5
 
 info "Turn off keyboard illumination when computer is not used for 5 minutes"
 defaults write com.apple.BezelServices kDimTime -int 300
