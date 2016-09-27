@@ -3,30 +3,19 @@
 # Run all dotfiles installers.
 set -e
 
+# Make sure we're in the dotfiles root
+DOTFILES_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "${DOTFILES_ROOT}"
+
+# Source additional functions
+source ./lib/functions
+
+# Global settings
 overwrite_all=false
 backup_all=false
 skip_all=false
 
 ## START: functions ##
-
-info () {
-  printf "\r  [ \033[00;34m..\033[0m ] $1\n"
-}
-
-user () {
-  printf "\r  [ \033[0;33m?\033[0m ] $1 "
-}
-
-success () {
-  printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
-}
-
-fail () {
-  printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
-  echo ''
-  exit
-}
-
 link_file () {
   local src=$1 dst=$2
 
@@ -132,15 +121,10 @@ function load_some() {
 ## END: functions ##
 
 if [ "${USER}" == "root" ]; then
-  echo "Run this as a normal user, I'll sudo if I need to."
-  exit 1
+  abort "Run this as a normal user, I'll sudo if I need to."
 fi
 
-DOTFILES_ROOT="$(cd "$(dirname "$0")" && pwd)"
 OS="$(uname -s | awk '{print tolower($0)}')"
-
-# Make sure we're in the dotfiles root
-cd "${DOTFILES_ROOT}"
 
 # Make sure submodules are initialized and updated
 git submodule init
@@ -176,7 +160,7 @@ template="templates/gitconfig.template"
 dest="${HOME}/.gitconfig"
 
 if [ ! -f "${dest}" ] || [ "${template}" -nt "${dest}" ]; then
-  info 'Generating git config'
+  info 'Generating ~/.gitconfig'
 
   git_credential='cache'
 
@@ -191,7 +175,7 @@ if [ ! -f "${dest}" ] || [ "${template}" -nt "${dest}" ]; then
 
   (sed "s|{{AUTHORNAME}}|${git_authorname}|;s|{{AUTHOREMAIL}}|${git_authoremail}|;s|{{GIT_CREDENTIAL_HELPER}}|${git_credential}|" "${template}") > "${dest}"
 
-  success 'Generated git config'
+  success 'Generated ~/.gitconfig'
 fi
 
 # Install bash it (https://github.com/Bash-it/bash-it)
@@ -213,4 +197,4 @@ done
 # Install Vundle
 vim +PluginInstall +qall
 
-info "Dotfiles installed. Please reload your shell to take affect."
+success "Dotfiles installed. Please reload your shell to take affect."
