@@ -3,6 +3,14 @@
 # Bootstrap macOS
 set -e
 
+# Make sure we're in the bootstrap root
+BOOTSTRAP_ROOT="$(cd "$(dirname "$0")" && pwd)"
+cd "${BOOTSTRAP_ROOT}"
+
+# Source additional functions
+source ../lib/functions
+
+# Check we're on macOS
 OS="$(uname -s | awk '{print tolower($0)}')"
 
 if [ "${OS}" != "darwin" ]; then
@@ -18,7 +26,7 @@ if [ "${MACOS_VERSION_NUMERIC}" -lt "100900" ]; then
 fi
 
 # Make sure Boxen doesn't exist
-if [ -d /opt/boxen ] || ; then
+if [ -d /opt/boxen ]; then
   abort "It looks like you are using Boxen. I don't play well with Boxen."
 fi
 
@@ -26,13 +34,6 @@ fi
 if [ "${USER}" == "root" ]; then
   abort "Run this as a normal user, I'll sudo if I need to."
 fi
-
-# Make sure we're in the bootstrap root
-BOOTSTRAP_ROOT="$(cd "$(dirname "$0")" && pwd)"
-cd "${BOOTSTRAP_ROOT}"
-
-# Source additional functions
-source ../lib/functions
 
 ## START: functions ##
 install_package() {
@@ -63,6 +64,12 @@ install_app() {
     info "Installing ${app}"
     brew cask install "${app}" &>/dev/null
   fi
+}
+
+install_font() {
+  local font="$1"
+
+  install_app "font-${font}"
 }
 
 brew_tap() {
@@ -251,45 +258,14 @@ EOF
 info "Installing Composer"
 curl -sS https://getcomposer.org/installer | $(brew list php56 | grep 'bin/php$') -- --install-dir=/usr/local/bin --filename=composer &>/dev/null
 
-# Fonts
-FONT_ROOT="${HOME}/Library/Fonts"
+# Fonts via Cask (see: `https://github.com/caskroom/homebrew-fonts`)
+info "Installing fonts"
+brew_tap caskroom/fonts
+install_font "source-code-pro"
+install_font "source-sans-pro"
+install_font "lato"
+install_font "monoid"
+install_font "fontawesome"
 
-info "Installing Adobe SourceCodePro font"
-for title in Black Bold ExtraLight Light Medium Regular Semibold; do
-  font_name="SourceCodePro-${title}.otf"
-  font_path="${FONT_ROOT}/${font_name}"
-
-  if [ ! -f "${font_path}" ]; then
-    curl -o "${font_path}" "https://github.com/adobe-fonts/source-code-pro/raw/gh-pages/OTF/${font_name}" &>/dev/null
-  fi
-done
-
-info "Installing Adobe SourceSansPro font"
-for title in Black BlackIt Bold BoldIt ExtraLight ExtraLightIt It Light LightIt Regular Semibold SemiboldIt; do
-  font_name="SourceSansPro-${title}.otf"
-  font_path="${FONT_ROOT}/${font_name}"
-
-  if [ ! -f "${font_path}" ]; then
-    curl -o "${font_path}" "https://github.com/adobe-fonts/source-sans-pro/raw/gh-pages/OTF/${font_name}" &>/dev/null
-  fi
-done
-
-info "Installing Lato font"
-if [ ! -f "${FONT_ROOT}/Lato-Regular.ttf" ]; then
-  curl -L -o "/tmp/lato.zip" "http://www.latofonts.com/download/Lato2OFL.zip" &>/dev/null
-  unzip /tmp/lato.zip -d /tmp &>/dev/null
-  cp /tmp/Lato2OFL/*.ttf "${FONT_ROOT}"
-  rm -r /tmp/Lato2OFL
-  rm /tmp/lato.zip
-fi
-
-info "Installing Monoid font"
-if [ ! -f "${FONT_ROOT}/Monoid-Regular.ttf" ]; then
-  curl -L -o "/tmp/monoid.zip" "https://cdn.rawgit.com/larsenwork/monoid/2db2d289f4e61010dd3f44e09918d9bb32fb96fd/Monoid.zip" &>/dev/null
-  unzip /tmp/monoid.zip -d /tmp/monoid &>/dev/null
-  cp /tmp/monoid/*.ttf "${FONT_ROOT}"
-  rm -r /tmp/monoid
-  rm /tmp/monoid.zip
-fi
-
-success "Bootstraped System. You may need to restart your shell to take affect."
+success "Bootstraped!"
+warn "You may need to restart your shell and/or computer to take affect."
