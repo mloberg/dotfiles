@@ -255,8 +255,7 @@ To switch active PHP versions, use the `sphp` script:
 EOF
 
 # Composer
-info "Installing Composer"
-curl -sS https://getcomposer.org/installer | $(brew list php56 | grep 'bin/php$') -- --install-dir=/usr/local/bin --filename=composer &>/dev/null
+install_package "composer"
 
 # Fonts via Cask (see: `https://github.com/caskroom/homebrew-fonts`)
 info "Installing fonts"
