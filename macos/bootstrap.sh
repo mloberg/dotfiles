@@ -245,6 +245,7 @@ dest="/usr/local/bin/sphp"
 
 if [ ! -f "${dest}" ] || [ "${src}" -nt "${dest}" ]; then
   cp "${src}" "${dest}"
+  chmod +x "${dest}"
 fi
 
 header "PHP"
