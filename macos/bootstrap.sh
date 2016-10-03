@@ -239,9 +239,9 @@ fi
 install_unlinked_package "php56"
 install_unlinked_package "php70"
 
-# PHP Switch Command
-src="${BOOTSTRAP_ROOT}/files/sphp"
-dest="/usr/local/bin/sphp"
+# PHP Manage Command
+src="${BOOTSTRAP_ROOT}/files/mphp"
+dest="/usr/local/bin/mphp"
 
 if [ ! -f "${dest}" ] || [ "${src}" -nt "${dest}" ]; then
   cp "${src}" "${dest}"
@@ -250,8 +250,8 @@ fi
 
 header "PHP"
 cat << 'EOF'
-To switch active PHP versions, use the `sphp` script:
-  /usr/local/bin/sphp 56
+To manage PHP versions, use the `mphp` script:
+  /usr/local/bin/mphp switch 56
 
 EOF
 
