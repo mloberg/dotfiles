@@ -71,6 +71,10 @@ upgrade() {
   switch "${currentversion}"
 }
 
+if ! [ -x "$(command -v brew)" ]; then
+  abort "Please install Homebrew to manage PHP versions."
+fi
+
 if [ "$1" == "list" ]; then
   list
   exit
@@ -80,15 +84,15 @@ elif [ "$1" == "current" ]; then
 fi
 
 if [ $# -ne 2 ]; then
-	abort "Usage: $(basename "${0}") [command] [phpversion]"
+  abort "Usage: $(basename "${0}") [command] [phpversion]"
 fi
 
 if [ "$1" == "switch" ]; then
-	switch "$2"
+  switch "$2"
 elif [ "$1" == "install" ]; then
-	install "$2"
+  install "$2"
 elif [ "$1" == "upgrade" ]; then
-	upgrade "$2"
+  upgrade "$2"
 else
-	abort 'Valid commands are: "switch", "install", or "upgrade".'
+  abort 'Valid commands are: "switch", "install", or "upgrade".'
 fi
