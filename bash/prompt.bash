@@ -284,15 +284,65 @@ python_version_prompt() {
 }
 
 php_version_prompt() {
-	echo -e "$(php -r 'print phpversion();')"
+    echo -e "$(php -r 'print phpversion();')"
+}
+
+node_version_prompt() {
+    echo -e "$(node --version | tr -d '\n\r' | tail -c +2)"
+}
+
+git_info_prompt() {
+    git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n\r')
+
+    if [ -z "$git_branch" ]; then
+      return
+    fi
+
+    changes=""
+
+    if git status --porcelain | grep '^\s*?' &>/dev/null; then
+      changes+="+"
+    fi
+
+    if git status --porcelain | grep '^\s*M' &>/dev/null; then
+      changes+="*"
+    fi
+
+    if git status --porcelain | grep '^\s*D' &>/dev/null; then
+      changes+="!"
+    fi
+
+    changes="$(printf "%s" "${changes[@]}")"
+
+    UPSTREAM=${1:-'@{u}'}
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse "$UPSTREAM")
+    BASE=$(git merge-base @ "$UPSTREAM")
+
+    if [ $LOCAL = $REMOTE ]; then
+      status=""
+    elif [ $LOCAL = $BASE ]; then
+        status=" (behind)"
+    elif [ $REMOTE = $BASE ]; then
+        status=" (ahead)"
+    else
+        status=" (diverged)"
+    fi
+
+    echo -e "[$(echo $git_branch:$changes | sed 's/:$//' )]$status"
+}
+
+battery_status() {
+    $DOT/bin/battery-status
 }
 
 PS1="\[\033]0;\u@\h:\w\007\]" # Set title
+# PS1+="\$(battery_status)"
 PS1+="\[${echo_red}\]\u@\h:" # user@host
 PS1+="\[${echo_bold_green}\]\w" # pwd
 PS1+="\[${echo_purple}\] "
-PS1+="|ruby \$(ruby_version_prompt)|python \$(python_version_prompt)|php \$(php_version_prompt)|"
-PS1+="\[${echo_white}\] \$(vcprompt -f '[%s:%b:%h]%a%m%u')" # Git repo details
+PS1+="|ruby \$(ruby_version_prompt)|python \$(python_version_prompt)|node \$(node_version_prompt)|php \$(php_version_prompt)|"
+PS1+="\[${echo_white}\] \$(git_info_prompt)" # Git repo details
 PS1+="\[${echo_reset_color}\]\n" # Reset color
 PS1+="-> "
 export PS1
