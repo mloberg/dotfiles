@@ -76,7 +76,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export DOTFILES="$HOME/.dotfiles"
+export DOT="$HOME/.dotfiles"
 
 # use .localrc for SUPER SECRET CRAP that you don't
 # want in your public, versioned repo.
@@ -85,12 +85,12 @@ if [[ -a ~/.localrc ]]; then
 fi
 
 # Load all path files
-for file in $(find -H "$DOTFILES" -maxdepth 2 -name 'path.bash' -not -path '*.git*'); do
+for file in $(find -H "$DOT" -maxdepth 2 -name 'path.bash' -not -path '*.git*'); do
   source $file
 done
 
 # Load all .bash files from dotfiles that aren't path or completion
-for file in $(find -H "$DOTFILES" -maxdepth 2 -name '*.bash' -not -name 'path.bash' -not -name 'completion.bash' -not -path '*.git*'); do
+for file in $(find -H "$DOT" -maxdepth 2 -name '*.bash' -not -name 'path.bash' -not -name 'completion.bash' -not -path '*.git*'); do
   source $file
 done
 
@@ -102,6 +102,6 @@ if [ -d "$HOME/.bash.d" ]; then
 fi
 
 # Load completions
-for file in $(find -H "$DOTFILES" -maxdepth 2 -name 'completion.bash' -not -path '*.git*'); do
+for file in $(find -H "$DOT" -maxdepth 2 -name 'completion.bash' -not -path '*.git*'); do
   source $file
 done
