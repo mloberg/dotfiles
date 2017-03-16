@@ -1,3 +1,0 @@
-alias fuck='sudo $(history -p \!\!)'
-alias start_xdebug='export XDEBUG_CONFIG="idekey=PHPSTORM"'
-alias stop_xdebug='unset XDEBUG_CONFIG'
