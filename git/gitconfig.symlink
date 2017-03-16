@@ -7,6 +7,12 @@
         wtf     = !$DOT/bin/git-wtf
         rank-contributors = !$DOT/bin/git-rank-contributors
         count   = !git shortlog -sn
+        staged  = diff --staged
+        amend   = commit --amend -C HEAD
+        undo    = reset --soft HEAD^
+        ls      = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
+        standup = log --since '1 day ago' --oneline --author {{ email }}
+        graph   = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
 [color]
         diff = auto
         status = auto
