@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+current=$(php -r "error_reporting(0); echo str_replace('.', '', substr(phpversion(), 0, 3));")
+
+abort() {
+    (>&2 printf "\033[0;31m$1\033[0m\n")
+    exit 1
+}
+
+install() {
+    if [ -z "$1" ]; then
+        abort "Supply a PHP version to install."
+    fi
+
+    package="php${1//.}"
+
+    if $(brew list ${package} &>/dev/null); then
+        switch "$@"
+        exit 0
+    fi
+
+    if ! $(brew info ${package} &>/dev/null); then
+        abort "PHP $1 not found."
+    fi
+
+    brew unlink "php${current}"
+    brew install "$package"
+}
+
+switch() {
+    if [ -z "$1" ]; then
+        abort "Supply a PHP version to activate."
+    fi
+
+    version="${1//.}"
+    package="php${version}"
+
+    if [ "$version" == "$current" ]; then
+        exit 0
+    fi
+
+    if ! $(brew list ${package} &>/dev/null); then
+        abort "PHP $1 not installed."
+    fi
+
+    brew unlink "php${current}"
+    brew link "$package"
+}
+
+versions() {
+    for package in $(brew list | grep 'php[0-9]\{2\}$'); do
+        version="${package:3}"
+
+        if [ "$version" == "$current" ]; then
+            status="*"
+        else
+            status=" "
+        fi
+
+        echo "$status $version"
+    done
+}
+
+command="$1"
+shift 1
+
+case "$command" in
+    install )
+        install "$@"
+        ;;
+    switch )
+        switch "$@"
+        ;;
+    list | versions )
+        versions "$@"
+        ;;
+    version | current )
+        echo "$current"
+        ;;
+    * )
+        abort "Usage: $(dirname $0) [install|switch|list|version]"
+        ;;
+esac

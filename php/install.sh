@@ -2,11 +2,9 @@
 #
 # Install some PHP versions
 
-cd "$(dirname $0)"
+phenv="$(dirname $0)/../bin/phenv"
 
-bin/phenv-install 70
-bin/phenv-install 71
+$phenv install 70
+$phenv install 71
 
-bin/phenv-global 70
-
-brew install composer
+$phenv switch 71
