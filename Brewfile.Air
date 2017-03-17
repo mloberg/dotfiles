@@ -1,0 +1,6 @@
+cask_args appdir: '/Applications'
+
+# Brew cask (see: `https://caskroom.github.io/search`)
+cask 'ableton-live-suite'
+# cask 'ilok-license-manager'
+cask 'flux'

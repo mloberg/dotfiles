@@ -5,11 +5,11 @@
 # This installs some of the common dependencies needed (or at least desired)
 # using Homebrew.
 
-if [ "$(uname)" != "Darwin" ];
+if [ "$(uname)" != "Darwin" ]; then
   return
 fi
 
-cd "$(dirname $0)"
+cd "$(dirname $0)/.."
 
 # Check for Homebrew
 if test ! $(which brew); then
@@ -21,11 +21,13 @@ fi
 brew tap Homebrew/bundle
 
 # Run Homebrew through the Brewfile
-# echo "› brew bundle"
-# brew bundle
+echo "› brew bundle"
+brew bundle
 
-# brewfile="Brewfile.${HOSTNAME}"
-#
-# if [ -f "$brewfile" ]; then
-#   brew bundle --file="$brewfile"
-# fi
+brewfile="Brewfile.$(hostname)"
+
+echo "$brewfile"
+
+if [ -f "$brewfile" ]; then
+  brew bundle --file="$brewfile"
+fi
