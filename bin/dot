@@ -4,15 +4,6 @@
 #
 # `dot` handles installation, updates, things like that. Run it periodically
 # to make sure you're on the latest and greatest.
-export DOT=$HOME/.dotfiles
 
-# Set macOS defaults
-$DOT/macos/set-defaults.sh
-
-# Upgrade homebrew
-echo "› brew update"
-brew update
-
-# Install software
 echo "› $DOT/script/install"
 $DOT/script/install

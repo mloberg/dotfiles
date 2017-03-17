@@ -156,16 +156,13 @@ install_dotfiles
 [[ -f ".initialized" && "$@" != *"--hostname"* ]] || set_hostname && touch ".initialized"
 
 # If we're on a Mac, let's install and setup homebrew.
-# if [ "$(uname -s)" == "Darwin" ]
-# then
-#   info "installing dependencies"
-#   if source bin/dot > /tmp/dotfiles-dot 2>&1
-#   then
-#     success "dependencies installed"
-#   else
-#     fail "error installing dependencies"
-#   fi
-# fi
+if [ "$(uname -s)" == "Darwin" ]; then
+  info "setting defaults"
+  ./macos/set-defaults.sh
+
+  info "installing dependencies"
+  ./script/install
+fi
 
 echo ''
 echo '  All installed!'
