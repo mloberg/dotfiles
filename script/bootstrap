@@ -140,6 +140,17 @@ install_dotfiles () {
 setup_gitconfig
 install_dotfiles
 
+user ' - Set your computer hostname (blank will keep it the same)'
+read -e hostname
+
+if [ -n "$hostname" ]; then
+  sudo hostname "$hostname"
+  sudo scutil --set ComputerName "$hostname"
+  sudo scutil --set HostName "$hostname"
+  sudo scutil --set LocalHostName "$hostname"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+fi
+
 # If we're on a Mac, let's install and setup homebrew.
 # if [ "$(uname -s)" == "Darwin" ]
 # then
