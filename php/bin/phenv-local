@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+abort() {
+    (>&2 printf "\033[0;31m$1\033[0m\n")
+    exit 1
+}
+
+version="${1//.}"
+package="php${version}"
+
+if ! $(brew list ${package} &>/dev/null); then
+    abort "PHP ${1} not installed"
+fi
+
+echo "${version}" > .php-version

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+abort() {
+    (>&2 printf "\033[0;31m$1\033[0m\n")
+    exit 1
+}
+
+package="php${1//.}"
+
+if $(brew list ${package} &>/dev/null); then
+    exit 0
+fi
+
+if ! $(brew info ${package} &>/dev/null); then
+    abort "PHP version $1 not found."
+fi
+
+brew install "$package"
+brew unlink "$package"

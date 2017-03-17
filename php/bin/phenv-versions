@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+currentversion=$(phenv version)
+
+status() {
+    version="$1"
+
+    if [ "$version" == "$currentversion" ]; then
+        status="*"
+    else
+        status=" "
+    fi
+
+    echo "$status $version"
+}
+
+for package in $(brew list | grep 'php[0-9]\{2\}$'); do
+    status "${package:3}"
+done
+
+status "system"
