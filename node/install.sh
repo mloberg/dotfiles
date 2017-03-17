@@ -1,4 +1,5 @@
-if test ! $(which spoof)
-then
-  sudo npm install spoof -g
-fi
+#!/usr/bin/env bash
+#
+# Install some Node versions with n
+
+n stable
