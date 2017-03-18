@@ -2,8 +2,6 @@
 #
 # Run all dotfiles installers.
 
-set -e
-
 cd "$(dirname $0)"/..
 
 # Run the Homebrew installer first because others depend on packages
