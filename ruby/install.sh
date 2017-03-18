@@ -2,9 +2,7 @@
 #
 # Install some Ruby versions
 
-if ! $(type rbenv | grep 'rbenv is a function'); then
-    eval "$(rbenv init -)"
-fi
+[ -x `which rbenv` ] && eval "$(rbenv init -)"
 
 default_gems_file=$(rbenv root)/default-gems
 
