@@ -13,6 +13,7 @@ brew 'composer'
 brew 'coreutils'
 brew 'git'
 brew 'git-flow'
+brew 'm-cli'
 brew 'n'
 brew 'reattach-to-user-namespace'
 brew 'readline'
@@ -45,3 +46,4 @@ cask 'vagrant'
 cask 'virtualbox'
 
 # mas '1Password', id: 443987910
+# mas 'Affinity Photo', id: 824183456
