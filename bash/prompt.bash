@@ -308,7 +308,7 @@ git_branch_prompt() {
 }
 
 git_status_prompt() {
-    if [ $(git rev-parse @{u} 2>/dev/null) ]; then
+    if [ $(git rev-parse @{u} &>/dev/null) ]; then
         status=($(git rev-list --left-right --count @...@{u}))
 
         echo -e " (${status[0]} ahead/${status[1]} behind)"
