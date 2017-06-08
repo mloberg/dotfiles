@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# dotfiles
+#
+# `dotfiles` handles installation, updates, things like that. Run it'
+# periodically to make sure you're on the latest and greatest.
+
+echo "› $DOT/script/install"
+$DOT/script/install
