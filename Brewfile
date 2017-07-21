@@ -25,7 +25,7 @@ brew 'rbenv'
 brew 'rbenv-default-gems'
 brew 'tmux'
 brew 'wget'
-brew 'yarn'
+# brew 'yarn'
 
 cask 'atom'
 cask 'caffeine'
@@ -37,7 +37,6 @@ cask 'font-lato'
 cask 'font-monoid'
 cask 'google-chrome'
 cask 'iterm2'
-cask 'jetbrains-toolbox'
 cask 'kitematic'
 cask 'sequel-pro'
 cask 'slack'
@@ -45,5 +44,5 @@ cask 'tower'
 cask 'vagrant'
 cask 'virtualbox'
 
-# mas '1Password', id: 443987910
+mas '1Password', id: 443987910
 # mas 'Affinity Photo', id: 824183456
