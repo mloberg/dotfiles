@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Set users Bash to be Homebrew's
+# Set users Bash to be Homebrew's and install Bash-it
 
 if [ -f "/usr/local/bin/bash" ]; then
     (cat /etc/shells | grep /usr/local/bin/bash) &>/dev/null || (echo "/usr/local/bin/bash" | sudo tee -a /etc/shells)
@@ -17,8 +17,9 @@ fi
 if [ ! -d "$BASH_IT" ]; then
     git clone --depth=1 https://github.com/Bash-it/bash-it.git "$BASH_IT"
     "$BASH_IT/install.sh" --silent --no-modify-config
-    source $BASH_IT/bash_it.sh
 fi
+
+source $BASH_IT/bash_it.sh
 
 bash-it enable alias bundler osx vagrant
 bash-it enable completion brew bundler capistrano composer docker-compose docker gem git gulp makefile npm ssh tmux vagrant
