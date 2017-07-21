@@ -276,56 +276,42 @@ echo_normal="$(echo_color reset)"
 echo_reset_color="$(__make_echo '' 39)"
 
 ruby_version_prompt() {
-    echo -e "$(ruby -e "puts RUBY_VERSION")"
+    test ! $(which ruby) && return
+    echo -e "ruby $(ruby -e "puts RUBY_VERSION")|"
 }
 
 python_version_prompt() {
-    echo -e "$(python -c "import sys;print('%s.%s.%s' % sys.version_info[:3])")"
+    test ! $(which python) && return
+    echo -e "python $(python -c "import sys;print('%s.%s.%s' % sys.version_info[:3])")|"
 }
 
 php_version_prompt() {
-    echo -e "$(php -r 'print phpversion();')"
+    test ! $(which php) && return
+    echo -e "php $(php -r 'print phpversion();')|"
 }
 
 node_version_prompt() {
-    echo -e "$(node --version | tr -d '\n\r' | tail -c +2)"
-}
-
-git_branch_prompt() {
-    git_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n\r')
-
-    if [ -z "$git_branch" ]; then
-      return
-    fi
-
-    if [[ $(git status --porcelain) == "" ]]; then
-      color="${echo_bold_green}"
-    else
-      color="${echo_bold_red}"
-    fi
-
-    echo -e "${echo_white}[git:${color}$git_branch${echo_white}]"
-}
-
-git_status_prompt() {
-    if [ $(git rev-parse @{u} &>/dev/null) ]; then
-        status=($(git rev-list --left-right --count @...@{u}))
-
-        echo -e " (${status[0]} ahead/${status[1]} behind)"
-    fi
+    test ! $(which node) && return
+    echo -e "node $(node --version | tr -d '\n\r' | tail -c +2)|"
 }
 
 battery_status() {
     $DOT/bin/battery-status
 }
 
+# Git prompt config from Bash-it
+export SCM_THEME_PROMPT_PREFIX=' ['
+export SCM_THEME_PROMPT_SUFFIX=']'
+export SCM_THEME_PROMPT_DIRTY=" ${echo_bold_red}✗${echo_white}"
+export SCM_THEME_PROMPT_CLEAN=" ${echo_bold_green}✗${echo_white}"
+
 PS1="\[\033]0;\u@\h:\w\007\]" # Set title
 PS1+="\$(battery_status)"
 PS1+="\[${echo_red}\]\u@\h:" # user@host
 PS1+="\[${echo_bold_green}\]\w" # pwd
 PS1+="\[${echo_purple}\] "
-PS1+="|ruby \$(ruby_version_prompt)|python \$(python_version_prompt)|node \$(node_version_prompt)|php \$(php_version_prompt)|"
-PS1+="\[${echo_white}\] \$(git_branch_prompt)\$(git_status_prompt)" # Git repo details
+PS1+="|\$(ruby_version_prompt)\$(python_version_prompt)\$(node_version_prompt)\$(php_version_prompt)"
+PS1+="\[${echo_white}\]\$(scm_prompt_info)" # Git repo details
 PS1+="\[${echo_reset_color}\]\n" # Reset color
 PS1+="-> "
 export PS1
