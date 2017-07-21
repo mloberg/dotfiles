@@ -4,6 +4,19 @@
 #
 # `dotfiles` handles installation, updates, things like that. Run it'
 # periodically to make sure you're on the latest and greatest.
+[[ -n "${DOT}" ]] || DOT=$HOME/.dotfiles
 
+# Set macOS defaults
+echo "› $DOT/macos/set-defaults.sh"
+$DOT/macos/set-defaults.sh
+
+# Install homebrew
+$DOT/homebrew/install.sh 2>&1
+
+# Upgrade homebrew
+echo "› brew update"
+brew update
+
+# Install software
 echo "› $DOT/script/install"
 $DOT/script/install

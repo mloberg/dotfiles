@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
 #
 # Run all dotfiles installers.
+set -e
 
 cd "$(dirname $0)"/..
 
-# Run the Homebrew installer first because others depend on packages
-sh -c "./macos/homebrew.sh"
+# Run Homebrew through the Brewfile
+echo "› brew bundle"
+brew bundle
+
+# Computer specific Brewfile
+brewfile="Brewfile.$(hostname)"
+[ -f "$brewfile" ] && brew bundle --file="$brewfile"
 
 # find the installers and run them iteratively
 find . -name install.sh | while read installer ; do sh -c "${installer}" ; done

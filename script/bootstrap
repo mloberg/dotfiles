@@ -21,6 +21,10 @@ success () {
   printf "\r\033[2K  [ \033[00;32mOK\033[0m ] $1\n"
 }
 
+warn () {
+  printf "\r\033[2K  [\033[00;33mWARN\033[0m] $1\n"
+}
+
 fail () {
   printf "\r\033[2K  [\033[0;31mFAIL\033[0m] $1\n"
   echo ''
@@ -150,19 +154,28 @@ set_hostname() {
   fi
 }
 
+[[ -f ".initialized" && "$@" != *"--hostname"* ]] || set_hostname
+[[ -f ".initialized" && "$@" != *"--clear-dock"* ]] || defaults write com.apple.dock persistent-apps -array
+
 setup_gitconfig
 install_dotfiles
 
-[[ -f ".initialized" && "$@" != *"--hostname"* ]] || set_hostname && touch ".initialized"
-
 # If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]; then
-  info "setting defaults"
-  ./macos/set-defaults.sh
-
+if [ "$(uname -s)" == "Darwin" ]
+then
   info "installing dependencies"
-  ./script/install
+  if source bin/dotfiles | while read -r data; do info "$data"; done
+  then
+    success "dependencies installed"
+  else
+    fail "error installing dependencies"
+  fi
 fi
 
+touch ".initialized"
+
 echo ''
-echo '  All installed!'
+success 'All installed'
+warn 'Restart your computer for everything to take effect'
+warn 'Run "dotfiles" regularly to make sure things stay up to date'
+echo ''
