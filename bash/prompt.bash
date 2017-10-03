@@ -303,7 +303,7 @@ battery_status() {
 export SCM_THEME_PROMPT_PREFIX=' ['
 export SCM_THEME_PROMPT_SUFFIX=']'
 export SCM_THEME_PROMPT_DIRTY=" ${echo_bold_red}✗${echo_white}"
-export SCM_THEME_PROMPT_CLEAN=" ${echo_bold_green}✗${echo_white}"
+export SCM_THEME_PROMPT_CLEAN=" ${echo_bold_green}✓${echo_white}"
 
 PS1="\[\033]0;\u@\h:\w\007\]" # Set title
 PS1+="\$(battery_status)"
