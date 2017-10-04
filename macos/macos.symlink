@@ -164,6 +164,9 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # Use three fingers to swipe between pages
 defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerHorizSwipeGesture -int 1
 
+# Increase tracking speed on trackpad
+defaults write -g com.apple.trackpad.scaling 2
+
 # Disable “natural” (Lion-style) scrolling
 # defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
