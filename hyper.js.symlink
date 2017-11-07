@@ -120,11 +120,6 @@ module.exports = {
   //   `project#1.0.1`
   plugins: [
     "hyperline",
-    "hypercwd",
-    "hyperlinks",
-    "hyperterm-safepaste",
-    "hyper-quit",
-    "hyper-confirm"
   ],
 
   // in development, you can create a directory under
