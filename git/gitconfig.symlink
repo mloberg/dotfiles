@@ -2,7 +2,7 @@
 [include]
         path = ~/.gitconfig.local
 [alias]
-        co = checkout
+        co      = checkout
         promote = !$DOT/bin/git-promote
         wtf     = !$DOT/bin/git-wtf
         rank-contributors = !$DOT/bin/git-rank-contributors
@@ -13,6 +13,7 @@
         ls      = log --pretty=format:"%C(yellow)%h %C(blue)%ad%C(red)%d %C(reset)%s%C(green) [%cn]" --decorate --date=short
         standup = log --since '1 day ago' --oneline --author {{ email }}
         graph   = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
+        up      = !git pull --rebase --prune
 [color]
         diff = auto
         status = auto
@@ -35,3 +36,8 @@
         #
         # Setting to git 2.0 default to suppress warning message
         default = simple
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
