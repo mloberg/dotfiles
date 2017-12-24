@@ -14,6 +14,7 @@
         standup = log --since '1 day ago' --oneline --author {{ email }}
         graph   = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white) %an, %ar%Creset'
         up      = !git pull --rebase --prune
+        new     = checkout -b
 [color]
         diff = auto
         status = auto
