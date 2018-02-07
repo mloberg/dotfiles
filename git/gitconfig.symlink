@@ -2,13 +2,14 @@
 [include]
         path = ~/.gitconfig.local
 [alias]
-        co      = checkout
-        count   = shortlog -sn
-        staged  = diff --staged
-        amend   = commit --amend -C HEAD
-        undo    = reset --soft HEAD^
-        up      = pull --rebase --prune
-        new     = checkout -b
+        co = checkout
+        count = shortlog -sn
+        staged = diff --staged
+        amend = commit --amend -C HEAD
+        undo = reset --soft HEAD^
+        up = pull --rebase --prune
+        new = checkout -b
+        rename-branch = branch -m
 [color]
         diff = auto
         status = auto
