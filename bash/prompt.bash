@@ -20,6 +20,11 @@ function node_version_prompt() {
     echo -e "node $(node --version | tr -d '\n\r' | tail -c +2)|"
 }
 
+function virtual_env_prompt() {
+    test ! "$VIRTUAL_ENV" && return
+    echo -e "($(basename $VIRTUAL_ENV))"
+}
+
 function battery_status() {
     $DOT/bin/battery-status
 }
@@ -35,9 +40,10 @@ function prompt() {
   PS1+="${red}\u@\h:" # user@host
   PS1+="${bold_green}\w" # pwd
   PS1+="${purple} |$(ruby_version_prompt)$(python_version_prompt)$(node_version_prompt)$(php_version_prompt)"
-  PS1+="${white}$(scm_prompt_info)" # Git repo details
-  PS1+="${reset_color}\n" # Reset color
-  PS1+="-> "
+  PS1+="${white}$(scm_prompt_info)"
+  PS1+="\n"
+  PS1+="${cyan}$(virtual_env_prompt)"
+  PS1+="${reset_color}-> "
   PS2=" > "
 }
 
