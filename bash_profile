@@ -47,6 +47,13 @@ case "$TERM" in
   xterm-color) color_prompt=yes;;
 esac
 
+# colored grep
+export GREP_OPTIONS='--color=auto'
+export GREP_COLOR='1;33'
+
+# colored ls
+export LSCOLORS='Gxfxcxdxdxegedabagacad'
+
 # Don't check mail when opening terminal.
 unset MAILCHECK
 
