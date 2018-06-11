@@ -1,0 +1,6 @@
+[user]
+  name = {{ name }}
+  email = {{ email }}
+[credential]
+  # Use "cache" if not running macOS
+  helper = osxkeychain

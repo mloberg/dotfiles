@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -e
+
+cd "$(dirname "$0")/.."
+
+# parse options
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --hostname)
+      hostname="$2"
+      shift
+      shift
+      ;;
+    *)
+      POSITIONAL+=("$1")
+      shift
+      ;;
+  esac
+done
+set -- "${POSITIONAL[@]}"
+
+if [ -n "$hostname" ]; then
+  sudo hostname "$hostname"
+  sudo scutil --set ComputerName "$hostname"
+  sudo scutil --set HostName "$hostname"
+  sudo scutil --set LocalHostName "$hostname"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+fi
+
+if test ! $(which brew); then
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+brew bundle
+
+chsh -s $(which bash)
+
+RCRC=$HOME/.dotfiles/rcrc rcup

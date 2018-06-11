@@ -1,0 +1,38 @@
+[alias]
+  co = checkout
+  count = shortlog -sn
+  staged = diff --staged
+  amend = commit --amend -C HEAD
+  undo = reset --soft HEAD^
+  up = pull --rebase --prune
+  new = checkout -b
+  rename-branch = branch -m
+[apply]
+  whitespace = nowarn
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+[core]
+  excludesfile = ~/.gitignore
+  editor = vim
+[difftool]
+  prompt = false
+[fetch]
+  prune = true
+[help]
+  autocorrect = 1
+[include]
+  path = ~/.gitconfig.local
+[merge]
+  ff = only
+[mergetool]
+  keepBackup = false
+[push]
+  default = current
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

@@ -1,0 +1,2 @@
+EXCLUDES="README.md LICENSE scripts bin lib *.example hyper.js"
+DOTFILES_DIRS="$HOME/.dotfiles"
