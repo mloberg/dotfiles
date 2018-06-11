@@ -35,5 +35,5 @@ fi
 brew bundle
 
 chsh -s $(which bash)
-
 RCRC=$HOME/.dotfiles/rcrc rcup
+sudo softwareupdate -i -a
