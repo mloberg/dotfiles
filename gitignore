@@ -11,8 +11,8 @@ ehthumbs.db
 *~
 \#*\#
 .bundle
-.php-version
 .idea
+.vscode
 .env
 db/*.sqlite3
 log/*.log
