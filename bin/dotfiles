@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+info() {
+  echo -e "\033[00;34m$1\033[0m"
+}
+
+success() {
+  echo -e "\033[00;32m$1\033[0m"
+}
+
+warn() {
+  echo -e "\033[00;33m$1\033[0m"
+}
+
+error() {
+  echo -e "\033[0;31m$1\033[0m"
+}
+
+cd ~/.dotfiles
+
+warn "Updating dotfiles repo"
+git up 2>/dev/null || error "Could not update repo. Please update manually."
+
+warn "Syncing dotfiles"
+rcup
+
+warn "Installing Homebrew packages"
+brew bundle --global
