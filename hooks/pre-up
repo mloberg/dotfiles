@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
+if [ ! -f "$DIR/gitconfig.local" ]; then
+  echo -e "\033[00;33mMissing gitconfig.local dotfile.\033[0m"
+fi
