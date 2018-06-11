@@ -119,7 +119,7 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    "hyperline#0.6.1",
+    // "hyperline",
   ],
 
   // in development, you can create a directory under
