@@ -67,15 +67,14 @@ function virtual_env_prompt() {
 }
 
 function git_prompt() {
-  GIT_BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/*\(.*\)/\1/')
+  GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
+  [ -z "$GIT_BRANCH" ] && return
 
-  if [ -n "${GIT_BRANCH}" ]; then
-    GIT_STATE=${GIT_PROMPT_CLEAN}
+  GIT_STATE=${GIT_PROMPT_CLEAN}
 
-    if [ ! -z "$(git status --short)" ]; then
-      GIT_STATE=${GIT_PROMPT_DIRTY}
-    fi
-
-    echo -e "${GIT_PROMPT_PREFIX}${GIT_BRANCH//[[:space:]]}${GIT_STATE}${GIT_PROMPT_SUFFIX}"
+  if [ ! -z "$(git status --short)" ]; then
+    GIT_STATE=${GIT_PROMPT_DIRTY}
   fi
+
+  echo -e "${GIT_PROMPT_PREFIX}${GIT_BRANCH}${GIT_STATE}${GIT_PROMPT_SUFFIX}"
 }
