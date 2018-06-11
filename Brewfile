@@ -6,7 +6,7 @@ tap "thoughtbot/formulae"
 # brew "ack"
 brew "bash"
 brew "bash-completion"
-# brew "coreutils"
+brew "coreutils"
 brew "git"
 # brew "git-flow"
 brew "git-lfs"
@@ -44,5 +44,12 @@ brew "wget"
 
 mas "1Password", id: 443987910
 
-# if `hostname`.strip == 'Asteria'
-# end
+case `hostname`.strip
+when 'Orion'
+  cask "ableton-live-suite"
+  cask "ilok-license-manager"
+when 'Artemis'
+  cask "kaleidoscope"
+  cask "slack"
+end
+
