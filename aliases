@@ -1,3 +1,5 @@
+alias dotfiles="rcup"
+
 # PHP debugging
 alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
 alias xoff='unset XDEBUG_CONFIG'

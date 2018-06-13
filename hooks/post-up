@@ -10,3 +10,5 @@ fi
 vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 reset -Q
+
+brew bundle --global
