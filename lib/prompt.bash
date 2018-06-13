@@ -67,7 +67,7 @@ function virtual_env_prompt() {
 }
 
 function git_prompt() {
-  GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
+  GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
   [ -z "$GIT_BRANCH" ] && return
 
   GIT_TRACK=""
