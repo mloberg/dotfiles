@@ -5,7 +5,6 @@ tap "thoughtbot/formulae"
 
 # brew "ack"
 brew "bash"
-brew "bash-completion"
 brew "coreutils"
 brew "git"
 # brew "git-flow"
@@ -13,6 +12,7 @@ brew "git-lfs"
 # brew "git-standup"
 # brew "m-cli"
 # brew "n"
+# brew "packer"
 brew "reattach-to-user-namespace"
 brew "readline"
 # brew "rbenv"
@@ -21,6 +21,15 @@ brew "rcm"
 # brew "thefuck"
 # brew "tmux"
 brew "wget"
+
+# Completions
+brew "bash-completion"
+brew "docker-completion"
+brew "docker-compose-completion"
+brew "open-completion"
+# brew "packer-completion"
+brew "pip-completion"
+brew "vagrant-completion"
 
 # cask "atom"
 # cask "beardedspice"
@@ -52,4 +61,3 @@ when 'Artemis'
   cask "kaleidoscope"
   cask "slack"
 end
-

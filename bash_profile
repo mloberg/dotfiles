@@ -72,7 +72,12 @@ pathmunge "./vendor/bin"
 pathmunge "./node_modules/.bin"
 pathmunge "./bin"
 
+# Bash completions
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+for completion in $HOME/.dotfiles/lib/completion/*.bash; do
+  source $completion
+done
 
 # Propmpt
 source "$HOME/.dotfiles/lib/prompt.bash"
