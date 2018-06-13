@@ -70,11 +70,27 @@ function git_prompt() {
   GIT_BRANCH=$(git branch 2>/dev/null | grep '^*' | colrm 1 2)
   [ -z "$GIT_BRANCH" ] && return
 
+  GIT_TRACK=""
   GIT_STATE=${GIT_PROMPT_CLEAN}
 
   if [ ! -z "$(git status --short)" ]; then
     GIT_STATE=${GIT_PROMPT_DIRTY}
   fi
 
-  echo -e "${GIT_PROMPT_PREFIX}${GIT_BRANCH}${GIT_STATE}${GIT_PROMPT_SUFFIX}"
+  upstream=$(git for-each-ref --format='%(upstream:short)' refs/heads/${GIT_BRANCH})
+
+  if [[ -n "$upstream" ]] && [[ -n $(git branch --all --list ${upstream} 2>/dev/null) ]]; then
+    ahead=$(git rev-list ${upstream}..${branch} | wc -l | tr -d ' ')
+    behind=$(git rev-list ${branch}..${upstream} | wc -l | tr -d ' ')
+
+    if [ "$ahead" -gt 0 ]; then
+      GIT_TRACK+=" ↑${ahead}"
+    fi
+
+    if [ "$behind" -gt 0 ]; then
+      GIT_TRACK+=" ↓${behind}"
+    fi
+  fi
+
+  echo -e "${GIT_PROMPT_PREFIX}${GIT_BRANCH}${GIT_TRACK}${GIT_STATE}${GIT_PROMPT_SUFFIX}"
 }
