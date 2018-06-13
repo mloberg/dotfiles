@@ -1,18 +1,15 @@
-alias start_xdebug='export XDEBUG_CONFIG="idekey=PHPSTORM"'
-alias stop_xdebug='unset XDEBUG_CONFIG'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+# PHP debugging
+alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
+alias xoff='unset XDEBUG_CONFIG'
 
 # grc overides for ls
 #   Made possible through contributions from generous benefactors like
 #   `brew install coreutils`
 if $(gls &>/dev/null); then
-    alias ls="gls -F --color"
-    alias l="gls -lAh --color"
-    alias ll="gls -l --color"
-    alias la='gls -A --color'
+  alias ls="gls -F --color"
+  alias l="gls -lAh --color"
+  alias ll="gls -l --color"
+  alias la='gls -A --color'
 fi
 
 # Pipe my public key to my clipboard.
@@ -20,6 +17,42 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pa
 
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
+
+# Bundler
+alias be='bundle exec'
+alias bi='bundle install'
+
+# Language aliases
+alias rb='ruby'
+alias py='python'
+
+alias c='clear'
+alias k='clear'
+alias ...='cd ../..'     # Go up two directories
+alias ....='cd ../../..' # Go up three directories
+alias -- -='cd -'        # Go back
+
+# Tree
+if [ ! -x "$(which tree 2>/dev/null)" ]; then
+  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+fi
+
+# Homebrew
+alias bin='brew install'
+alias brm='brew uninstall'
+
+# Desktop Programs
+alias chrome="open -a google\ chrome"
+alias mou='open -a Mou'
+
+# Show/hide hidden files
+alias showhidden="defaults write com.apple.finder AppleShowAllFiles TRUE"
+alias hidehidden="defaults write com.apple.finder AppleShowAllFiles FALSE"
+
+# Vagrant
+alias vup="vagrant up"
+alias vssh="vagrant ssh"
+alias vdstr="vagrant destroy"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
