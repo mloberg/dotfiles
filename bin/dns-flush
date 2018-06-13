@@ -6,3 +6,5 @@
 # https://github.com/holman/dotfiles/blob/master/bin/dns-flush
 
 sudo killall -HUP mDNSResponder
+sudo killall mDNSResponderHelper
+sudo dscacheutil -flushcache
