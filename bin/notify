@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+TITLE="Notification"
+MESSAGE=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --title)
+      TITLE="$2"
+      shift
+      shift
+      ;;
+    *)
+      MESSAGE+=("$1")
+      shift
+      ;;
+  esac
+done
+
+SCRIPT="display notification \"${MESSAGE[@]}\""
+
+if [ -n "$TITLE" ]; then
+  SCRIPT+=" with title \"${TITLE}\""
+fi
+
+osascript -e "$SCRIPT"
