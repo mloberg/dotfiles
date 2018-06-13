@@ -1,0 +1,7 @@
+#!/bin/sh
+
+branches=$(git branch --merged | grep -v '^*' | grep -v 'master' | grep -v 'develop' | tr -d '\n')
+
+if [ -n "$branches" ]; then
+  git branch -d $branches
+fi
