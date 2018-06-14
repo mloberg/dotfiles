@@ -57,20 +57,9 @@ export LSCOLORS='Gxfxcxdxdxegedabagacad'
 # Don't check mail when opening terminal.
 unset MAILCHECK
 
-if [ -z "$COMPOSER_HOME" ]; then
-    export COMPOSER_HOME="$HOME/.composer"
-fi
-
-# PATH
+# PATHs
 source "$HOME/.dotfiles/lib/functions.bash"
-
 pathmunge "/usr/local/bin"
-pathmunge "$COMPOSER_HOME/vendor/bin"
-pathmunge "$HOME/.dotfiles/bin"
-pathmunge "$HOME/bin"
-pathmunge "./vendor/bin"
-pathmunge "./node_modules/.bin"
-pathmunge "./bin"
 
 # Bash completions
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
@@ -78,6 +67,15 @@ pathmunge "./bin"
 for completion in $HOME/.dotfiles/lib/completion/*.bash; do
   source $completion
 done
+
+for plugin in $HOME/.dotfiles/lib/plugin/*.bash; do
+  source $plugin
+done
+
+# More PATHs
+pathmunge "$HOME/.dotfiles/bin"
+pathmunge "$HOME/bin"
+pathmunge ./bin
 
 # Propmpt
 source "$HOME/.dotfiles/lib/prompt.bash"
