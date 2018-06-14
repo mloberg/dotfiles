@@ -56,5 +56,7 @@ alias vup="vagrant up"
 alias vssh="vagrant ssh"
 alias vdstr="vagrant destroy"
 
+alias serve="python -m SimpleHTTPServer"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
