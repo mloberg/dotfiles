@@ -10,5 +10,7 @@
 #
 # https://github.com/holman/dotfiles/blob/master/bin/git-nuke
 
+[ -z "$1" ] && echo "Give me a branch to nuke" 1>&2 && exit 1
+
 git branch -D $1
 git push origin :$1
