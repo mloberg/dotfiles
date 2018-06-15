@@ -11,4 +11,6 @@
 #
 # https://github.com/holman/dotfiles/blob/master/bin/git-credit
 
+[ "$#" != 2 ] && echo "Give me an author name and email" 1>&2 && exit 1
+
 git commit --amend --author "$1 <$2>" -C HEAD
