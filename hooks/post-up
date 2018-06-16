@@ -27,4 +27,4 @@ EOF
 fi
 
 # Set MacOS defaults
-~/.macos
+[ $(uname -s) == "Darwin" ] && ~/.macos

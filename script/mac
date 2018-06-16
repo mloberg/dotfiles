@@ -16,6 +16,13 @@ user() {
   printf "⁉️ \033[0;33m$1\033[0m"
 }
 
+abort() {
+  printf "☠️ \033[0;31m$1\033[0m\n"
+  exit 1
+}
+
+[ $(uname -s) != "Darwin" ] && abort "This only works on MacOS"
+
 user "Hostname: "
 read -e hostname
 
