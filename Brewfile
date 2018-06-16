@@ -19,7 +19,6 @@ brew "rbenv"
 brew "rbenv-default-gems"
 brew "rcm"
 brew "thefuck"
-# brew "tmux"
 brew "wget"
 
 # Completions
