@@ -11,6 +11,7 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 reset -Q
 
+# Install Homebrew packages
 brew bundle --global
 
 # Configure Vagrant to not require passwords when setting up
@@ -24,3 +25,6 @@ Cmnd_Alias VAGRANT_HOSTS_REMOVE = $(which sed) -i -e /*/ d /etc/hosts
 %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE, VAGRANT_HOSTS_ADD, VAGRANT_HOSTS_REMOVE
 EOF
 fi
+
+# Set MacOS defaults
+~/.macos
