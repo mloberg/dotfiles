@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ ! $(command -v go &>/dev/null) ] && return
+command -v go &>/dev/null || return
 
 export GOROOT=${GOROOT:-$(go env | grep GOROOT | cut -d'"' -f2)}
 pathmunge "${GOROOT}/bin"
