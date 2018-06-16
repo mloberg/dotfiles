@@ -4,13 +4,20 @@ My dotfiles
 
 ## install
 
-    $ git clone -b develop https://github.com/mloberg/dotfiles.git ~/.dotfiles
-    $ cd ~/.dotfiles
-    $ script/bootstrap
+    $ git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
+    $ ~/.dotfiles/script/mac
+
+## one-line install (not recommended)
+
+    $ bash <(curl -fsS https://raw.githubusercontent.com/mloberg/dotfiles/master/script/mac)
+
+## updating
+
+    $ dotfiles
 
 ## thanks
 
 inspiration/dotfiles taken from:
 
 * [thoughtbot dotfiles](https://github.com/thoughtbot/dotfiles)
-* [Zach Holman](https://github.com/holman/dotfiles)
+* [Zach Holman dotfiles](https://github.com/holman/dotfiles)

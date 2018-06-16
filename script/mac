@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 info() {
   printf "🛠 \033[00;36m$1\033[0m\n"
