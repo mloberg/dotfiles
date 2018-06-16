@@ -54,11 +54,15 @@ info "Installing dotfiles..."
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 RCRC=$HOME/.dotfiles/rcrc rcup
 
+info "Turning Bluetooth off..."
+m bluetooth disable
+
+info "Clearing the Dock..."
+m dock prune
+
 info "Updating software"
 sudo softwareupdate -i -a
 
-info "Clearing the Dock..."
-defaults write com.apple.dock persistent-apps -array
-
 success "Success"
-warn "You should restart your computer for all changes to take affect."
+warn "Rebooting"
+m restart

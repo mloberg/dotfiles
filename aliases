@@ -45,7 +45,6 @@ alias brm='brew uninstall'
 
 # Desktop Programs
 alias chrome="open -a google\ chrome"
-alias mou='open -a Mou'
 
 # Show/hide hidden files
 alias showhidden="defaults write com.apple.finder AppleShowAllFiles TRUE"
@@ -57,6 +56,10 @@ alias vssh="vagrant ssh"
 alias vdstr="vagrant destroy"
 
 alias serve="python -m SimpleHTTPServer"
+
+alias bt-off="m bluetooth disable"
+alias bt-on="m bluetooth enable"
+alias dns-flush="m dns flush"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
