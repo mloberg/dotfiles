@@ -1,0 +1,57 @@
+#!/bin/sh
+
+info() {
+  printf "🛠 \033[00;36m$1\033[0m\n"
+}
+
+success() {
+  printf "🙌 \033[00;32m$1\033[0m\n"
+}
+
+warn() {
+  printf "⚠️ \033[00;33m$1\033[0m\n"
+}
+
+user() {
+  printf "⁉️ \033[0;33m$1\033[0m"
+}
+
+user "Hostname: "
+read -e hostname
+
+if [ -n "$hostname" ]; then
+  info "Setting hostname..."
+  sudo hostname "$hostname"
+  sudo scutil --set ComputerName "$hostname"
+  sudo scutil --set HostName "$hostname"
+  sudo scutil --set LocalHostName "$hostname"
+  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
+fi
+
+if ! command -v brew >/dev/null; then
+  info "Installing Homebrew..."
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
+info "Installing some requirements via Homebrew..."
+brew bundle --file=- <<EOF
+tap "thoughtbot/formulae"
+brew "rcm"
+brew "bash"
+EOF
+
+info "Using a newer Bash..."
+chsh -s $(which bash)
+
+info "Installing dotfiles..."
+[ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
+RCRC=$HOME/.dotfiles/rcrc rcup
+
+info "Updating software"
+sudo softwareupdate -i -a
+
+info "Clearing the Dock..."
+defaults write com.apple.dock persistent-apps -array
+
+success "Success"
+warn "You should restart your computer for all changes to take affect."

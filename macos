@@ -608,5 +608,3 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 
 # Expand the print dialog by default
 defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
-
-echo "You may need to logout/restart in order for some settings to take affect."
