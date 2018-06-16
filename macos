@@ -608,3 +608,15 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 
 # Expand the print dialog by default
 defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
+
+###############################################################################
+# Touchbar                                                                    #
+###############################################################################
+
+# Set the minimized state, using the default, but replacing Siri with
+# screen lock
+defaults write com.apple.controlstrip MiniCustomized -array \
+	"com.apple.system.brightness" \
+	"com.apple.system.volume" \
+	"com.apple.system.mute" \
+	"com.apple.system.screen-lock"
