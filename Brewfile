@@ -57,6 +57,7 @@ case `hostname`.strip
 when 'Apollo' # Personal laptop
   # cask "ableton-live-suite"
   cask "ilok-license-manager"
+  cask "guitar-pro"
 when 'Artemis' # Work laptop
   cask "hipchat"
   cask "slack"
