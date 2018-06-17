@@ -30,6 +30,7 @@ brew "open-completion"
 brew "pip-completion"
 brew "vagrant-completion"
 
+cask "1password"
 cask "atom"
 cask "beardedspice"
 cask "caffeine"
@@ -51,11 +52,9 @@ cask "tower"
 cask "vagrant"
 cask "virtualbox"
 
-mas "1Password", id: 443987910
-
 case `hostname`.strip
 when 'Apollo' # Personal laptop
-  cask "ableton-live-suite"
+  # cask "ableton-live-suite"
   cask "ilok-license-manager"
 when 'Artemis' # Work laptop
   cask "hipchat"
