@@ -68,8 +68,8 @@ for completion in $HOME/.dotfiles/lib/completion/*.bash; do
   source $completion
 done
 
-for plugin in $HOME/.dotfiles/lib/plugin/*.bash; do
-  source $plugin
+for extra in $HOME/.bash.d/*.bash; do
+  source $extra
 done
 
 # More PATHs
