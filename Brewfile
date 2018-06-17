@@ -51,6 +51,7 @@ cask "sequel-pro"
 cask "tower"
 cask "vagrant"
 cask "virtualbox"
+cask "visual-studio-code"
 
 case `hostname`.strip
 when 'Apollo' # Personal laptop
