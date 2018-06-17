@@ -1,4 +1,5 @@
 alias dotfiles="rcup"
+alias set-defaults="~/.macos"
 
 # PHP debugging
 alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
