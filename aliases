@@ -30,6 +30,7 @@ alias py='python'
 
 alias c='clear'
 alias k='clear'
+alias ..="cd .."
 alias ...='cd ../..'     # Go up two directories
 alias ....='cd ../../..' # Go up three directories
 alias -- -='cd -'        # Go back
