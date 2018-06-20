@@ -19,6 +19,7 @@ brew "readline"
 brew "rbenv"
 brew "rbenv-default-gems"
 brew "rcm"
+brew "shellcheck"
 brew "thefuck"
 brew "wget"
 
