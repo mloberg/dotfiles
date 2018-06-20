@@ -8,7 +8,7 @@ set incsearch                   " do incremental searching
 set hlsearch                    " highlight search results
 set laststatus=2                " Always display the status line
 set autowrite                   " Automatically :write before running commands
-"set nowrap                      " turn off word wrap
+set nowrap                      " turn off word wrap
 set cmdheight=2                 " make command area two lines high
 set statusline=\ %n\ \ %<%F%=\ %c\ \ %l/%L\ \ \ %r
 set showtabline=2               " 0=never; 1=when applicable; 2=always
@@ -62,7 +62,7 @@ set expandtab
 "set smartindent " indent after curly braces
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+set list listchars=tab:»·,extends:»,precedes:«,trail:~,nbsp:¬,space:·
 
 " Use one space, not two, after punctuation.
 set nojoinspaces
