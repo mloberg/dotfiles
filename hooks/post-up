@@ -12,4 +12,4 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 reset -Q
 
 # Install Homebrew packages
-brew bundle --global
+[ $(uname -s) == "Darwin" ] && brew bundle --global
