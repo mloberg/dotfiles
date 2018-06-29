@@ -15,7 +15,6 @@ function docker-compose-fresh() {
     COMPOSE_FILE_PARAM="--file $1"
   fi
 
-  docker-compose $COMPOSE_FILE_PARAM stop
-  docker-compose $COMPOSE_FILE_PARAM rm -f
+  docker-compose $COMPOSE_FILE_PARAM down
   docker-compose $COMPOSE_FILE_PARAM up -d
 }
