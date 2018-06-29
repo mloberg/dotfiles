@@ -13,6 +13,9 @@
   # See what's staged
   staged = diff --staged
 
+  # Show everything I haven't pushed yet
+  unpushed = "!git diff origin/$(git rev-parse --abbrev-ref HEAD)..HEAD"
+
   # Amend the last commit
   amend = commit --amend -C HEAD
 
@@ -30,6 +33,12 @@
 
   # Delete all branches (except develop & master) that have been merged into the current branch
   delete-merged = "!git branch --merged | grep -vE '\\*|master|develop' | xargs -n 1 git branch -d"
+
+  # Credit the author of the last commit
+  credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+
+  # Delete a branch locally and on the origin remote
+  nuke = "!f() { git branch -D $1 && git push -d origin $1; }; f"
 [apply]
   whitespace = nowarn
 [color]

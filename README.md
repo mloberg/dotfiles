@@ -30,8 +30,7 @@ My dotfiles
 * `delete-merged` - Delete merged local branches
 * `nuke` - Delete given branch from both local and remote
 * `unpushed` - Diff of everything you haven't pushed yet
-* `wtf` - Show the state of the repository in a readable format
-* `standup` - Generate a report for a standup
+* `standup` - [Recall what you did in the last day](https://github.com/kamranahmedse/git-standup)
 
 ## thanks
 
