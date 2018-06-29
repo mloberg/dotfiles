@@ -69,7 +69,7 @@ for completion in $HOME/.dotfiles/lib/completion/*.bash; do
 done
 
 for extra in $HOME/.bash.d/*.bash; do
-  source $extra
+  [ -r "$extra" ] && [ -f "$extra" ] && source $extra
 done
 
 # More PATHs

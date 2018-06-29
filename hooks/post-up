@@ -13,3 +13,6 @@ reset -Q
 
 # Install Homebrew packages
 [ $(uname -s) == "Darwin" ] && brew bundle --global
+
+# Remove broken symlinks
+find -L ~/.bash.d -type l -exec rm {} +

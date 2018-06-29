@@ -63,5 +63,7 @@ alias bt-off="m bluetooth disable"
 alias bt-on="m bluetooth enable"
 alias dns-flush="m dns flush"
 
+alias extract="dtrx"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
