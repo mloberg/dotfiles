@@ -18,3 +18,26 @@ function docker-compose-fresh() {
   docker-compose $COMPOSE_FILE_PARAM down
   docker-compose $COMPOSE_FILE_PARAM up -d
 }
+
+function services() {
+  local ACTION=""
+  local SERVICE="$2"
+
+  case "$1" in
+    start)
+      ACTION="up -d"
+      ;;
+    stop)
+      ACTION="rm -sfv"
+      ;;
+  esac
+
+  if [[ -z "$ACTION" || -z "$SERVICE" ]]; then
+    echo "Usage: services [start|stop] [service]"
+    return 1
+  fi
+
+  docker-compose --file ~/.services.yml $ACTION $SERVICE
+}
+
+alias redis-cli="docker-compose --file ~/.services.yml exec redis redis-cli"
