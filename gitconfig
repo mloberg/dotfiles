@@ -1,12 +1,34 @@
 [alias]
   co = checkout
-  count = shortlog -sn
+  tags = tag -l
+  branches = branch -a
+  remotes = remote -v
+
+  # List aliases
+  aliases = config --get-regexp alias
+
+  # List contributors by number of commits
+  contributors = shortlog -sn
+
+  # See what's staged
   staged = diff --staged
+
+  # Amend the last commit
   amend = commit --amend -C HEAD
+
+  # Undo the last commit, but keep the changes
   undo = reset --soft HEAD^
+
+  # Make sure current branch is up to date
   up = pull --rebase --prune
+
+  # Create new branch
   new = checkout -b
+
+  # Rename the current branch
   rename-branch = branch -m
+
+  # Delete all branches (except develop & master) that have been merged into the current branch
   delete-merged = "!git branch --merged | grep -vE '\\*|master|develop' | xargs -n 1 git branch -d"
 [apply]
   whitespace = nowarn

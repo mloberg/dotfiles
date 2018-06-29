@@ -17,8 +17,9 @@ My dotfiles
 
 ## git
 
+* `aliases` - List git aliases. This is probably a good place to start
 * `co` - Checkout
-* `count` - Commit count by author
+* `contributors` - Commit count by author
 * `staged` - See staged diffs
 * `amend` - Amend last commit
 * `undo` - Undo last commit, but leave changes
@@ -26,7 +27,7 @@ My dotfiles
 * `new` - Create new branch
 * `rename-branch` - Rename the current branch
 * `credit` - Change the author on the last commit
-* `delete-local-merged` - Delete all local branches that have been merged into the current branch
+* `delete-merged` - Delete merged local branches
 * `nuke` - Delete given branch from both local and remote
 * `unpushed` - Diff of everything you haven't pushed yet
 * `wtf` - Show the state of the repository in a readable format
