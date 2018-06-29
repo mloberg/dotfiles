@@ -1,5 +1,0 @@
-#!/bin/sh
-
-branches=$(git branch --merged | grep -v '^*' | grep -v 'master' | grep -v 'develop' | tr -d '\n')
-
-[ -n "$branches" ] && git branch -d $branches

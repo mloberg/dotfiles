@@ -7,6 +7,7 @@
   up = pull --rebase --prune
   new = checkout -b
   rename-branch = branch -m
+  delete-merged = "!git branch --merged | grep -vE '\\*|master|develop' | xargs -n 1 git branch -d"
 [apply]
   whitespace = nowarn
 [color]
