@@ -13,8 +13,11 @@
   # See what's staged
   staged = diff --staged
 
-  # Show everything I haven't pushed yet
-  unpushed = "!git diff origin/$(git rev-parse --abbrev-ref HEAD)..HEAD"
+  # Show log of commits that haven't been pushed yet
+  unpushed = log @{u}..
+
+  # Show diff of changes that haven't been pushed yet
+  changes = "!git diff origin/$(git rev-parse --abbrev-ref HEAD)..HEAD"
 
   # Amend the last commit
   amend = commit --amend -C HEAD
@@ -39,6 +42,9 @@
 
   # Delete a branch locally and on the origin remote
   nuke = "!f() { git branch -D $1 && git push -d origin $1; }; f"
+
+  # Interactive rebase of commits that haven't been pushed yet
+  wip = rebase -i @{u}
 
 [apply]
   whitespace = nowarn

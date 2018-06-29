@@ -29,7 +29,9 @@ My dotfiles
 * `credit` - Change the author on the last commit
 * `delete-merged` - Delete merged local branches
 * `nuke` - Delete given branch from both local and remote
-* `unpushed` - Diff of everything you haven't pushed yet
+* `unpushed` - Log of commits you haven't pushed yet
+* `changed` - Diff of unpushed changes
+* `wip` - Interactive rebase of unpushed commits
 * `standup` - [Recall what you did in the last day](https://github.com/kamranahmedse/git-standup)
 
 ## thanks
