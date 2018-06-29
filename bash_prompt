@@ -67,30 +67,46 @@ function virtual_env_prompt() {
 }
 
 function git_prompt() {
-  GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-  [ -z "$GIT_BRANCH" ] && return
+    local state=''
+    local branchName=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
-  GIT_TRACK=""
-  GIT_STATE=${GIT_PROMPT_CLEAN}
+    [ -z "$branchName" ] && return
+    
+    local upstream=$(git for-each-ref --format='%(upstream:short)' refs/heads/${branchName})
 
-  if [ ! -z "$(git status --short)" ]; then
-    GIT_STATE=${GIT_PROMPT_DIRTY}
-  fi
+    if [[ -n "$upstream" ]] && [[ -n $(git branch --all --list ${upstream} 2>/dev/null) ]]; then
+        local ahead=$(git rev-list ${upstream}..${branchName} | wc -l | tr -d ' ')
+        local behind=$(git rev-list ${branchName}..${upstream} | wc -l | tr -d ' ')
 
-  upstream=$(git for-each-ref --format='%(upstream:short)' refs/heads/${GIT_BRANCH})
-
-  if [[ -n "$upstream" ]] && [[ -n $(git branch --all --list ${upstream} 2>/dev/null) ]]; then
-    ahead=$(git rev-list ${upstream}..${branch} | wc -l | tr -d ' ')
-    behind=$(git rev-list ${branch}..${upstream} | wc -l | tr -d ' ')
-
-    if [ "$ahead" -gt 0 ]; then
-      GIT_TRACK+=" ↑${ahead}"
+        [ "$ahead" -gt 0 ] && state+=" ↑${ahead}"
+        [ "$behind" -gt 0 ] && state+=" ↓${behind}"
     fi
 
-    if [ "$behind" -gt 0 ]; then
-      GIT_TRACK+=" ↓${behind}"
+    if [ ! -z "$(git status --short)" ]; then
+        state+="${GIT_PROMPT_DIRTY}"
+    else
+        state+="${GIT_PROMPT_CLEAN}"
     fi
-  fi
 
-  echo -e "${GIT_PROMPT_PREFIX}${GIT_BRANCH}${GIT_TRACK}${GIT_STATE}${GIT_PROMPT_SUFFIX}"
+    echo -e "${GIT_PROMPT_PREFIX}${branchName}${state}${GIT_PROMPT_SUFFIX}"
 }
+
+GIT_PROMPT_PREFIX="${white}["
+GIT_PROMPT_SUFFIX="${white}]"
+GIT_PROMPT_DIRTY=" ${bold_red}✗"
+GIT_PROMPT_CLEAN=" ${bold_green}✓"
+
+function prompt() {
+    PS1="\[\033]0;\u@\h:\w\007\]" # Set title
+    PS1+="$(battery-status)"
+    PS1+="${red}\u@\h:" # user@host
+    PS1+="${bold_green}\w" # pwd
+    PS1+="${purple} |$(ruby_version_prompt)$(python_version_prompt)$(node_version_prompt)$(php_version_prompt)"
+    PS1+="${white} $(git_prompt)"
+    PS1+="\n"
+    PS1+="${cyan}$(virtual_env_prompt)"
+    PS1+="${reset_color}-> "
+    PS2=" > "
+}
+
+PROMPT_COMMAND=prompt

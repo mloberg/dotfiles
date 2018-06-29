@@ -23,9 +23,8 @@ shopt -s cdspell
 # Enable some Bash 4 features when possible:
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
-for option in autocd globstar; do
-  shopt -s "$option" 2> /dev/null
-done
+shopt -s autocd 2> /dev/null
+shopt -s globstar 2> /dev/null
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -78,24 +77,4 @@ pathmunge "$HOME/bin"
 pathmunge ./bin
 
 # Propmpt
-source "$HOME/.dotfiles/lib/prompt.bash"
-
-GIT_PROMPT_PREFIX="${white}["
-GIT_PROMPT_SUFFIX="${white}]"
-GIT_PROMPT_DIRTY=" ${bold_red}✗"
-GIT_PROMPT_CLEAN=" ${bold_green}✓"
-
-function prompt() {
-  PS1="\[\033]0;\u@\h:\w\007\]" # Set title
-  PS1+="$(battery-status)"
-  PS1+="${red}\u@\h:" # user@host
-  PS1+="${bold_green}\w" # pwd
-  PS1+="${purple} |$(ruby_version_prompt)$(python_version_prompt)$(node_version_prompt)$(php_version_prompt)"
-  PS1+="${white} $(git_prompt)"
-  PS1+="\n"
-  PS1+="${cyan}$(virtual_env_prompt)"
-  PS1+="${reset_color}-> "
-  PS2=" > "
-}
-
-PROMPT_COMMAND=prompt
+source "$HOME/.bash_prompt"
