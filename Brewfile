@@ -25,6 +25,7 @@ brew "rbenv-default-gems"
 brew "rcm"
 brew "shellcheck"
 brew "thefuck"
+brew "the_silver_searcher"
 brew "wget"
 
 # Completions
