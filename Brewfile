@@ -1,6 +1,7 @@
 cask_args appdir: "/Applications"
 
 tap "homebrew/cask-fonts"
+tap "homebrew/cask-versions"
 tap "thoughtbot/formulae"
 
 brew "ack"
@@ -61,7 +62,7 @@ cask "visual-studio-code"
 
 case `hostname`.strip
 when 'Apollo' # Personal laptop
-  # cask "ableton-live-suite"
+  cask "ableton-live-suite9"
   cask "ilok-license-manager"
   cask "guitar-pro"
 when 'Artemis' # Work laptop
