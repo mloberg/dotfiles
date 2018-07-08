@@ -61,6 +61,8 @@ cask "vagrant"
 cask "virtualbox"
 cask "visual-studio-code"
 
+mas "Affinity Photo", id: 824183456
+
 case `hostname`.strip
 when 'Apollo' # Personal laptop
   cask "ableton-live-suite9"
