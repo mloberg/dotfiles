@@ -34,6 +34,9 @@
   # Rename the current branch
   rename-branch = branch -m
 
+  # Publish a branch to the remote
+  publish = "!f() { git push --set-upstream ${1:-origin}; }; f"
+
   # Delete all branches (except develop & master) that have been merged into the current branch
   delete-merged = "!git branch --merged | grep -vE '\\*|master|develop' | xargs -n 1 git branch -d"
 
@@ -45,6 +48,9 @@
 
   # Interactive rebase of commits that haven't been pushed yet
   wip = rebase -i @{u}
+
+  # Interactive rebase with the given number of latest commits
+  reb = "!r() { git rebase -i HEAD~$1; }; r"
 
 [apply]
   whitespace = nowarn
