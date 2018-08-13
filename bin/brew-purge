@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -e
+
+formula="$1"
+
+if [ -z "$formula" ]; then
+    (>&2 echo "Usage: $0 [formula]")
+    exit 1
+fi
+
+if ! brew list | grep -q "$formula"; then
+    (>&2 echo "Brew formula \"$formula\" is not installed")
+    exit 1
+fi
+
+# Remove dependencies
+brew deps "$formula" | xargs brew remove --ignore-dependencies
+
+# Remove formula
+brew remove "$formula"
+
+# Reinstall missing libraries
+brew missing | cut -d: -f2 | sort | uniq | xargs brew install
