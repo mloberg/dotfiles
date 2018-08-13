@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+#
+# Notify via MacOS Notification center
+#
+# Usage: $0 [--title Title] [Message to display]
+set -e
 
 TITLE="Notification"
 MESSAGE=()
@@ -17,7 +22,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-SCRIPT="display notification \"${MESSAGE[@]}\""
+SCRIPT="display notification \"${MESSAGE[*]}\""
 
 if [ -n "$TITLE" ]; then
   SCRIPT+=" with title \"${TITLE}\""
