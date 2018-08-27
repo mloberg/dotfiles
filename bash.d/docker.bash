@@ -41,6 +41,7 @@ function services() {
 }
 
 alias redis-cli="docker-compose --file ~/.services.yml exec redis redis-cli"
+alias portainer="open http://localhost:9000"
 
 function jekyll() {
   tty=
