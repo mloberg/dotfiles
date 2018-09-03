@@ -42,17 +42,3 @@ function services() {
 
 alias redis-cli="docker-compose --file ~/.services.yml exec redis redis-cli"
 alias portainer="open http://localhost:9000"
-
-function jekyll() {
-  tty=
-  cache=
-  tty -s && tty=--tty
-  test -f Gemfile && cache="--volume $(pwd)/vendor/bundle:/usr/local/bundle"
-  docker run $tty \
-    --interactive \
-    --rm \
-    --volume $(pwd):/srv/jekyll $cache \
-    --publish 4000:4000 \
-    jekyll/jekyll:${JEKYLL_VERSION:-3.8} \
-    jekyll "$@"
-}

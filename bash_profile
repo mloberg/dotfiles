@@ -71,6 +71,8 @@ for extra in $HOME/.bash.d/*.bash; do
   [ -r "$extra" ] && [ -f "$extra" ] && source $extra
 done
 
+[ -f $HOME/.dockerfunc ] && source $HOME/.dockerfunc
+
 # More PATHs
 pathmunge "$HOME/.dotfiles/bin"
 pathmunge "$HOME/bin"
