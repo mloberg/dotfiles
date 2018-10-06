@@ -69,7 +69,7 @@ when 'Apollo' # Personal laptop
   cask "ableton-live-suite9"
   cask "ilok-license-manager"
   cask "guitar-pro"
-  mas "Affinity Photo", id: 824183456
+  # mas "Affinity Photo", id: 824183456
 when 'Artemis' # Work laptop
   cask "hipchat"
   cask "slack"
