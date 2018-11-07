@@ -5,6 +5,8 @@
 function aws() {
   docker run -it --rm \
     -v "${HOME}/.aws:/root/.aws" \
+    -v $(pwd):/tmp/data \
+    -w /tmp/data \
     --log-driver none \
     --name aws \
     jess/awscli "$@"
