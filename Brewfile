@@ -43,10 +43,12 @@ brew "pip-completion"
 brew "vagrant-completion"
 
 cask "1password"
+cask "brave-browser"
 cask "caffeine"
 cask "dash"
 cask "docker"
 cask "dropbox"
+cask "firefox"
 cask "font-fira-code"
 cask "font-lato"
 cask "font-monoid"
@@ -57,12 +59,19 @@ cask "hyper"
 cask "jetbrains-toolbox"
 cask "kitematic"
 cask "macdown"
-cask "marshallofsound-google-play-music-player"
 cask "sequel-pro"
 cask "tower2"
 cask "vagrant"
 cask "virtualbox"
 cask "visual-studio-code"
+
+# Security apps
+cask "knockknock"
+cask "blockblock"
+cask "dhs"
+cask "oversight"
+cask "do-not-disturb"
+cask "protonvpn"
 
 case `hostname`.strip
 when 'Apollo' # Personal laptop

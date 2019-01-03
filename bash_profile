@@ -56,9 +56,13 @@ export LSCOLORS='Gxfxcxdxdxegedabagacad'
 # Don't check mail when opening terminal.
 unset MAILCHECK
 
+# Security settings
+export HOMEBREW_NO_ANALYTICS=1
+
 # PATHs
 source "$HOME/.dotfiles/lib/functions.bash"
 pathmunge "/usr/local/bin"
+pathmunge "/usr/local/opt/openssl/bin"
 
 # Bash completions
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
