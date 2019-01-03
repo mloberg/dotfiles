@@ -1,3 +1,5 @@
+scriptencoding utf-8
+set encoding=utf-8
 set title                       "allow vim to alter the title bar of the terminal
 set titlestring=%<%F\ %M%R\ %n  "the format of the terminal title
 set backspace=2                 " Backspace deletes like most programs in insert mode
@@ -79,7 +81,7 @@ set expandtab
 "set smartindent " indent after curly braces
 
 " Display extra whitespace
-set list listchars=tab:»·,extends:»,precedes:«,trail:~,nbsp:¬,space:·
+set list listchars=tab:»·,extends:»,precedes:«,trail:·,nbsp:¬
 
 " Use one space, not two, after punctuation.
 set nojoinspaces
