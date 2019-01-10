@@ -41,3 +41,4 @@ inspiration/dotfiles taken from:
 * [thoughtbot dotfiles](https://github.com/thoughtbot/dotfiles)
 * [Zach Holman dotfiles](https://github.com/holman/dotfiles)
 * [Mathias’s dotfiles](https://github.com/mathiasbynens/dotfiles)
+* [Jess Frazelle's dotfiles](https://github.com/jessfraz/dotfiles)
