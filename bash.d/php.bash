@@ -20,3 +20,7 @@ function composer() {
         --volume $(pwd):/app \
         composer "$@"
 }
+
+function homestead() {
+    ( cd ~/Homestead && vagrant $* )
+}
