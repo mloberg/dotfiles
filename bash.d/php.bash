@@ -8,6 +8,11 @@ pathmunge "$COMPOSER_HOME/vendor/bin"
 pathmunge ./vendor/bin
 
 function composer() {
+    if [ "self-update" == "$1" ]; then
+        docker pull composer
+        return
+    fi
+
     tty=
     tty -s && tty=--tty
     docker run $tty \
