@@ -12,8 +12,9 @@ brew "git"
 brew "git-flow"
 brew "git-lfs"
 brew "git-standup"
-brew "gron"
 brew "go"
+brew "gpg"
+brew "gron"
 brew "htop"
 brew "httpie"
 brew "jq"
@@ -80,6 +81,5 @@ when 'Apollo' # Personal laptop
   cask "guitar-pro"
   # mas "Affinity Photo", id: 824183456
 when 'Artemis' # Work laptop
-  cask "hipchat"
   cask "slack"
 end
