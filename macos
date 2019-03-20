@@ -83,7 +83,7 @@ defaults write com.apple.systempreferences NSQuitAlwaysKeepsWindows -bool false
 defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
 
 # Disable the crash reporter
-#defaults write com.apple.CrashReporter DialogType -string "none"
+defaults write com.apple.CrashReporter DialogType -string "none"
 
 # Set Help Viewer windows to non-floating mode
 defaults write com.apple.helpviewer DevMode -bool true
@@ -624,3 +624,20 @@ defaults write com.apple.controlstrip MiniCustomized -array \
 	"com.apple.system.volume" \
 	"com.apple.system.mute" \
 	"com.apple.system.screen-lock"
+
+###############################################################################
+# Security                                                                    #
+###############################################################################
+
+# Disable Bonjour multicast advertisements
+defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
+
+# Disable Google's automated updates as they "call home"
+defaults write com.google.Keystone.Agent checkInterval 0
+
+###############################################################################
+# Networking                                                                  #
+###############################################################################
+
+# Use CloudFlare's DNS service
+networksetup -setdnsservers Wi-Fi 1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001
