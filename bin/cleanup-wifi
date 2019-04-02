@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+IFS=$'\n'
+for ssid in $(networksetup -listpreferredwirelessnetworks en0 | grep -v "Preferred networks on en0:" | sed "s/[\	]//g"); do
+    read -p "Remove ${ssid}? " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        networksetup -removepreferredwirelessnetwork en0 "$ssid"
+    fi
+done
