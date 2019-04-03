@@ -57,7 +57,7 @@ alias vup="vagrant up"
 alias vssh="vagrant ssh"
 alias vdstr="vagrant destroy"
 
-alias serve="python -m SimpleHTTPServer"
+alias serve="/usr/bin/python -m SimpleHTTPServer"
 
 alias bt-off="m bluetooth disable"
 alias bt-on="m bluetooth enable"
