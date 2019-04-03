@@ -75,9 +75,12 @@ info "Setting MacOS defaults..."
 info "Turning Bluetooth off..."
 m bluetooth disable
 
-# TODO: user confirmation
-info "Clearing the Dock..."
-m dock prune
+user "Clear Dock? [y/N] "
+read -r clear
+if [[ "${clear}" =~ ^(y|Y)$ ]]; then
+  info "Clearing the Dock..."
+  m dock prune
+fi
 
 info "Updating software"
 sudo softwareupdate -i -a
