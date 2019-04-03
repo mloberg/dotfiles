@@ -1,6 +1,9 @@
 # Make Tab autocomplete regardless of filename case
 set completion-ignore-case on
 
+# Treat hyphens and underscores as equivalent
+set completion-map-case on
+
 # List all matches in case multiple possible completions are possible
 set show-all-if-ambiguous on
 
@@ -9,8 +12,11 @@ set mark-symlinked-directories on
 
 # Use the text that has already been typed as the prefix for searching through
 # commands (i.e. more intelligent Up/Down behavior)
+# See: http://codeinthehole.com/writing/the-most-important-command-line-tip-incremental-history-searching-with-inputrc/
 "\e[B": history-search-forward
 "\e[A": history-search-backward
+"\e[C": forward-char
+"\e[D": backward-char
 
 # Do not autocomplete hidden files unless the pattern explicitly begins with a dot
 set match-hidden-files off
