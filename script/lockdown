@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+#
+# Lockdown MacOS
+# Most of this comes from https://github.com/0xmachos/mOSL with a few changes:
+#   * I do not disable IPV6
+#   * I disable AirDrop instead of just "Contacts Only"
+set -ue
+
+info() {
+  printf "🛠 \033[00;36m%s\033[0m\n" "$1"
+}
+
+success() {
+  printf "🙌 \033[00;32m%s\033[0m\n" "$1"
+}
+
+warn() {
+  printf "⚠️ \033[00;33m%s\033[0m\n" "$1"
+}
+
+user() {
+  printf "⁉️ \033[0;33m%s\033[0m" "$1"
+}
+
+abort() {
+  printf "☠️ \033[0;31m%s\033[0m\n" "$1"
+  exit 1
+}
+
+[ "$(uname -s)" != "Darwin" ] && abort "This only works on MacOS"
+[ "$(sw_vers -productVersion | awk -F '.' '{print $1 "." $2}')" != "10.14" ] && abort "This only works on MacOS 10.14"
+[ ! -r "$HOME/Library/Mail" ] && abort "Need full disk access"
+
+info "Enable Automatic System Updates"
+declare -a keys=(AutomaticCheckEnabled AutomaticDownload AutomaticallyInstallMacOSUpdates ConfigDataInstall CriticalUpdateInstall);
+for key in "${keys[@]}"; do
+  sudo defaults write /Library/Preferences/com.apple.SoftwareUpdate.plist "${key}" -bool true
+done
+
+info "Enable Automatic App Store Updates"
+sudo defaults write /Library/Preferences/com.apple.commerce.plist AutoUpdate -bool true
+
+info "Set AppStore update check to every one (1) day"
+defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
+
+info "Enable Gatekeeper"
+sudo spctl --master-enable
+
+info "Enable Firewall"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
+
+info "Disable built-in software from being auto-permitted to listen through firewall"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off >/dev/null
+
+info "Disable downloaded signed software from being auto-permitted to listen through firewall"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off >/dev/null
+
+info "Require an administrator password to access system-wide preferences"
+security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
+/usr/libexec/PlistBuddy -c 'Set :shared false' /tmp/system.preferences.plist
+sudo cat /tmp/system.preferences.plist | sudo security -q authorizationdb write system.preferences
+rm '/tmp/system.preferences.plist'
+
+info "Enable Terminal.app secure keyboard entry"
+defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+
+info "Enable System Integrity Protection (SIP)"
+sudo csrutil clear >/dev/null
+
+info "Enable FileVault"
+if ! diskutil info / | grep 'File System Personality:' | grep -q 'APFS'; then
+  warn "Filesystem is not APFS. Not enabling FDE."
+elif ! fdesetup status | grep -q 'On'; then
+  sudo fdesetup enable -user "$USER" | tee "$HOME/FileVault_recovery_key.txt"
+fi
+
+info "Disable automatic loading of remote content by Mail.app"
+defaults write com.apple.mail-shared DisableURLLoading -bool true
+
+info "Disable Remote Apple Events"
+sudo systemsetup -setremoteappleevents off >/dev/null
+
+info "Disable Remote Login"
+sudo systemsetup -f -setremotelogin off >/dev/null
+
+info "Disable Safari Auto Open 'safe' Files"
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+info "Disable AirDrop Discoverability"
+defaults write com.apple.sharingd DiscoverableMode -string 'Off'
+sudo killall -HUP sharingd
+
+user "Set Firmware Password? [y/N] "
+read -r permission
+if [[ "${permission}" =~ ^(y|Y)$ ]]; then
+  sudo firmwarepasswd -setpasswd
+fi
+
+spctl kext-consent status | grep -q 'ENABLED' || warn "Kernel Extension User Consent not required"
+
+if system_profiler SPiBridgeDataType | grep 'Model Name:' | grep -q 'T2'; then
+  warn "EFI Firmware Integrity Check Not Supported by this Mac"
+else
+  /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
+fi
+
+groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
