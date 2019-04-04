@@ -100,15 +100,15 @@ fi
 # Bash completions
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 
-for completion in $HOME/.dotfiles/lib/completion/*.bash; do
-  source $completion
+for completion in "$HOME"/.dotfiles/lib/completion/*.bash; do
+  source "$completion"
 done
 
-for extra in $HOME/.bash.d/*.bash; do
-  [ -r "$extra" ] && [ -f "$extra" ] && source $extra
+for extra in "$HOME"/.bash.d/*.bash; do
+  [ -r "$extra" ] && [ -f "$extra" ] && source "$extra"
 done
 
-[ -f $HOME/.dockerfunc ] && source $HOME/.dockerfunc
+[ -f "$HOME/.dockerfunc" ] && source "$HOME/.dockerfunc"
 
 # More PATHs
 pathmunge "$HOME/.dotfiles/bin"

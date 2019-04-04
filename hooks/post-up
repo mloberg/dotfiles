@@ -12,7 +12,7 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 reset -Q
 
 # Install Homebrew packages
-[ $(uname -s) == "Darwin" ] && brew update && brew bundle --global
+[ "$(uname -s)" == "Darwin" ] && brew update && brew bundle --global
 
 # Remove broken symlinks
 find -L ~/.bash.d -type l -exec rm {} +
