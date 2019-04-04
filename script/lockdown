@@ -74,6 +74,9 @@ sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.c
 info "Disable Printer Sharing"
 cupsctl --no-share-printers
 
+info "Adding Known Bad Hosts to /etc/hosts"
+curl https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts
+
 info "Require an administrator password to access system-wide preferences"
 security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
 /usr/libexec/PlistBuddy -c 'Set :shared false' /tmp/system.preferences.plist

@@ -1,2 +1,2 @@
-EXCLUDES="README.md LICENSE script bin lib *.example"
+EXCLUDES="README.md LICENSE script bin lib config *.example"
 DOTFILES_DIRS="$HOME/.dotfiles"

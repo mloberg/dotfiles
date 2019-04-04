@@ -39,25 +39,25 @@ if [ -n "$hostname" ]; then
 fi
 
 if ! command -v brew >/dev/null; then
-  info "Installing Homebrew..."
+  info "Installing Homebrew"
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-info "Installing some requirements via Homebrew..."
+info "Installing some requirements via Homebrew"
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 brew "rcm"
 brew "bash"
 EOF
 
-info "Using a newer Bash..."
+info "Using a newer Bash"
 chsh -s "$(command -v bash)"
 
-info "Installing dotfiles..."
+info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
-RCRC=$HOME/.dotfiles/rcrc rcup
+RCRC="$HOME/.dotfiles/rcrc" rcup
 
-info "Configuring Vagrant to not require passwords..."
+info "Configuring Vagrant to not require passwords"
 if [ ! -f /etc/sudoers.d/vagrant ]; then
   cat <<EOF | sudo tee /etc/sudoers.d/vagrant
 Cmnd_Alias VAGRANT_EXPORTS_ADD = /usr/bin/tee -a /etc/exports
@@ -69,16 +69,25 @@ Cmnd_Alias VAGRANT_HOSTS_REMOVE = $(command -v sed) -i -e /*/ d /etc/hosts
 EOF
 fi
 
-info "Setting MacOS defaults..."
+info "Setting up Dnsmasq"
+rm -f /usr/local/etc/dnsmasq.conf
+ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
+ln -s "$HOME/.dotfiles/config/resolv.dnsmasq.conf" /usr/local/etc/resolv.dnsmasq.conf
+sudo brew services start dnsmasq-dnssec
+sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
+networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setdnsservers "Wired" 127.0.0.1
+dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
+
+info "Setting MacOS defaults"
 ~/.macos
 
-info "Turning Bluetooth off..."
+info "Turning Bluetooth off"
 m bluetooth disable
 
 user "Clear Dock? [y/N] "
 read -r clear
 if [[ "${clear}" =~ ^(y|Y)$ ]]; then
-  info "Clearing the Dock..."
+  info "Clearing the Dock"
   m dock prune
 fi
 
@@ -88,7 +97,6 @@ sudo softwareupdate -i -a
 user "Secure Mac? [y/N] "
 read -r secure
 if [[ "${secure}" =~ ^(y|Y)$ ]]; then
-  info "Securing Mac..."
   ~/.dotfiles/script/lockdown
 fi
 
