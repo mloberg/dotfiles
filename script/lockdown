@@ -4,6 +4,7 @@
 # Most of this comes from https://github.com/0xmachos/mOSL with a few changes:
 #   * I do not disable IPV6
 #   * I disable AirDrop instead of just "Contacts Only"
+# Some additional configuration from: https://github.com/alichtman/stronghold
 set -ue
 
 info() {
@@ -43,17 +44,35 @@ sudo defaults write /Library/Preferences/com.apple.commerce.plist AutoUpdate -bo
 info "Set AppStore update check to every one (1) day"
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
-info "Enable Gatekeeper"
-sudo spctl --master-enable
-
 info "Enable Firewall"
+sudo launchctl load /System/Library/LaunchDaemons/com.apple.alf.agent.plist >/dev/null 2>&1
+sudo launchctl load /System/Library/LaunchAgents/com.apple.alf.useragent.plist >/dev/null 2>&1
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
+
+info "Enable Firewall Logging"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on >/dev/null
+
+info "Turn on Sleath Mode"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on >/dev/null
 
 info "Disable built-in software from being auto-permitted to listen through firewall"
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off >/dev/null
 
 info "Disable downloaded signed software from being auto-permitted to listen through firewall"
 sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off >/dev/null
+
+# Restart Firewall to finalize changes
+sudo pkill -HUP socketfilterfw
+
+info "Enable Gatekeeper"
+sudo spctl --master-enable
+sudo spctl --enable --label "Developer ID"
+
+info "Disable Captive Portal Assistant"
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+
+info "Disable Printer Sharing"
+cupsctl --no-share-printers
 
 info "Require an administrator password to access system-wide preferences"
 security -q authorizationdb read system.preferences > /tmp/system.preferences.plist

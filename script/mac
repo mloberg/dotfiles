@@ -85,6 +85,13 @@ fi
 info "Updating software"
 sudo softwareupdate -i -a
 
+user "Secure Mac? [y/N] "
+read -r secure
+if [[ "${secure}" =~ ^(y|Y)$ ]]; then
+  info "Securing Mac..."
+  ~/.dotfiles/script/lockdown
+fi
+
 success "Success"
 warn "Rebooting"
 m restart
