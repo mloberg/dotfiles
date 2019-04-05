@@ -68,6 +68,10 @@ info "Enable Gatekeeper"
 sudo spctl --master-enable
 sudo spctl --enable --label "Developer ID"
 
+info "Disable Metadata Collection from Downloads"
+:>~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2
+sudo chflags schg ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2
+
 info "Disable Captive Portal Assistant"
 sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
 
