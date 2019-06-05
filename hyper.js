@@ -2,6 +2,7 @@
 // which will not automatically be merged into this file.
 // See https://hyper.is#cfg for all currently supported options.
 
+// theme taken from: https://github.com/WheresAlice/hyper-yonce/blob/master/index.js
 module.exports = {
   config: {
     // choose either `'stable'` for receiving highly polished,
@@ -12,7 +13,7 @@ module.exports = {
     fontSize: 12,
 
     // font family with optional fallbacks
-    fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    fontFamily: '"Fira Mono for Powerline", Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
 
     // default font weight: 'normal' or 'bold'
     fontWeight: 'normal',
@@ -21,7 +22,7 @@ module.exports = {
     fontWeightBold: 'bold',
 
     // terminal cursor background color and opacity (hex, rgb, hsl, hsv, hwb or cmyk)
-    cursorColor: 'rgba(248,28,229,0.8)',
+    cursorColor: '#FFB1F2',
 
     // terminal text color under BLOCK cursor
     cursorAccentColor: '#000',
@@ -33,17 +34,17 @@ module.exports = {
     cursorBlink: false,
 
     // color of the text
-    foregroundColor: '#fff',
+    foregroundColor: '#D4D4D4',
 
     // terminal background color
     // opacity is only supported on macOS
-    backgroundColor: '#000',
+    backgroundColor: '#1C1C1C',
 
     // terminal selection color
     selectionColor: 'rgba(248,28,229,0.3)',
 
     // border color (window, tabs)
-    borderColor: '#333',
+    borderColor: '#1C1C1C',
 
     // custom CSS to embed in the main window
     css: '',
@@ -67,22 +68,22 @@ module.exports = {
     // including the 6 x 6 color cubes and the grayscale map, just provide
     // an array here instead of a color map object
     colors: {
-      black: '#000000',
-      red: '#C51E14',
-      green: '#1DC121',
-      yellow: '#C7C329',
-      blue: '#0A2FC4',
-      magenta: '#C839C5',
-      cyan: '#20C5C6',
-      white: '#C7C7C7',
-      lightBlack: '#686868',
-      lightRed: '#FD6F6B',
-      lightGreen: '#67F86F',
-      lightYellow: '#FFFA72',
-      lightBlue: '#6A76FB',
-      lightMagenta: '#FD7CFC',
-      lightCyan: '#68FDFE',
-      lightWhite: '#FFFFFF',
+      black: '#1C1C1C',
+      red: '#FC4384',
+      green: '#98E342',
+      yellow: '#E6DB74',
+      blue: '#00A7AA',
+      magenta: '#FFB1F2',
+      cyan: '#37E5E7',
+      white: '#D4D4D4',
+      lightBlack: '#555555',
+      lightRed: '#FC4384',
+      lightGreen: '#98E342',
+      lightYellow: '#E6DB74',
+      lightBlue: '#00A7AA',
+      lightMagenta: '#FFB1F2',
+      lightCyan: '#37E5E7',
+      lightWhite: '#F1F1EF',
     },
 
     // the shell to run when spawning a new session (i.e. /usr/local/bin/fish)
@@ -131,7 +132,7 @@ module.exports = {
   //   `hyperpower`
   //   `@company/project`
   //   `project#1.0.1`
-  plugins: ["hyper-search", "hyper-yonce"],
+  plugins: ["hyper-search"],
 
   // in development, you can create a directory under
   // `~/.hyper_plugins/local/` and include it here

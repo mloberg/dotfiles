@@ -65,5 +65,7 @@ alias dns-flush="m dns flush"
 
 alias extract="dtrx"
 
+alias search="web_search duckduckgo"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local

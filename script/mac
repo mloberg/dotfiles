@@ -47,15 +47,22 @@ info "Installing some requirements via Homebrew"
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 brew "rcm"
-brew "bash"
 EOF
-
-info "Using a newer Bash"
-chsh -s "$(command -v bash)"
 
 info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 RCRC="$HOME/.dotfiles/rcrc" rcup
+
+if ! test -d "$HOME/.zsh"; then
+  info "Setting up oh-my-zsh"
+  git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh "$HOME/.zsh"
+  git clone --depth=1 https://github.com/denysdovhan/spaceship-prompt "$HOME/.zsh/custom/themes/spaceship-prompt"
+  ln -s "$HOME/.zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.zsh/custom/themes/spaceship.zsh-theme"
+fi
+
+info "Set default shell to zsh"
+echo "$(command -v zsh)" | sudo tee -a /etc/shells
+chsh -s "$(command -v zsh)"
 
 info "Configuring Vagrant to not require passwords"
 if [ ! -f /etc/sudoers.d/vagrant ]; then
