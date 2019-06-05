@@ -122,6 +122,8 @@ pathmunge "$HOME/.dotfiles/bin"
 pathmunge "$HOME/bin"
 pathmunge ./bin
 
+[[ -f ~/.dockerfunc ]] && source ~/.dockerfunc
+
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 

@@ -40,15 +40,6 @@ brew "the_silver_searcher"
 brew "wget"
 brew "zsh"
 
-# Completions
-brew "bash-completion"
-brew "docker-completion"
-brew "docker-compose-completion"
-brew "open-completion"
-# brew "packer-completion"
-brew "pip-completion"
-brew "vagrant-completion"
-
 cask "1password"
 cask "brave-browser"
 cask "caffeine"

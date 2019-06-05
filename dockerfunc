@@ -1,5 +1,4 @@
-#!/bin/bash
-# Bash wrappers for docker run commands
+# shell wrappers for docker run commands
 # Inspiration taken from: https://github.com/jessfraz/dotfiles/blob/master/.dockerfunc
 
 function aws() {
