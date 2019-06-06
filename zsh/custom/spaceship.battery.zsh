@@ -16,6 +16,7 @@ SPACESHIP_OSX_BATTERY_SUFFIX="${SPACESHIP_OSX_BATTERY_SUFFIX="$SPACESHIP_PROMPT_
 SPACESHIP_OSX_BATTERY_SYMBOL_CHARGING="${SPACESHIP_OSX_BATTERY_SYMBOL_CHARGING="🔌 "}"
 SPACESHIP_OSX_BATTERY_SYMBOL_DISCHARGING="${SPACESHIP_OSX_BATTERY_SYMBOL_DISCHARGING="🔋 "}"
 SPACESHIP_OSX_BATTERY_SYMBOL_FULL="${SPACESHIP_OSX_BATTERY_SYMBOL_FULL="⚡ "}"
+SPACESHIP_OSX_BATTERY_SYMBOL_CALCULATING="${SPACESHIP_OSX_BATTERY_SYMBOL_CALCULATING="⌛️ "}"
 SPACESHIP_OSX_BATTERY_THRESHOLD="${SPACESHIP_OSX_BATTERY_THRESHOLD=30}"
 
 # ------------------------------------------------------------------------------
@@ -41,6 +42,7 @@ spaceship_osx_battery() {
   battery_remaining=$(echo "$battery_data" | cut -d';' -f3 | cut -d' ' -f2)
 
   [[ $battery_status == *"AC"* ]] && battery_status="charging"
+  [[ $battery_remaining =~ "[0-9]" ]] || battery_remaining="${SPACESHIP_OSX_BATTERY_SYMBOL_CALCULATING}"
 
   battery_color="yellow"
   [[ $battery_percent -lt $SPACESHIP_OSX_BATTERY_THRESHOLD ]] && battery_color="red"
@@ -56,11 +58,10 @@ spaceship_osx_battery() {
   fi
 
   battery_percent="$battery_percent%% "
-  battery_remaining="$battery_remaining "
+  [[ $battery_remaining != "" ]] && battery_remaining="$battery_remaining "
+  [[ $battery_remaining == "0:00" ]] && battery_remaining=""
   [[ $SPACESHIP_OSX_BATTERY_REMAINING == false ]] && battery_remaining=""
   [[ $SPACESHIP_OSX_BATTERY_PERCENT == false ]] && battery_percent=""
-  [[ $battery_remaining =~ "[0-9]" ]] || battery_remaining=""
-  [[ $battery_remaining == "0:00" ]] && battery_remaining=""
 
   # Display battery section
   spaceship::section \
