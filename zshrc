@@ -105,40 +105,52 @@ HYPHEN_INSENSITIVE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    aws
-    common-aliases
-    docker
-    git
-    golang
-    httpie
-    npm
-    pip
-    pipenv
-    rbenv
-    ruby
-    thefuck
-    vagrant
-    web-search
-    z
+  aws
+  common-aliases
+  docker
+  git
+  golang
+  history-substring-search
+  httpie
+  npm
+  pip
+  pipenv
+  rbenv
+  ruby
+  thefuck
+  vagrant
+  web-search
+  z
+  zsh-navigation-tools
 )
 
-# prevent duplicate directories in your PATH
-if ! type pathmunge &>/dev/null; then
-  function pathmunge() {
-    if ! [[ $PATH =~ (^|:)$1($|:) ]]; then
-      export PATH=$1:$PATH
-    fi
-  }
-fi
-
-pathmunge /usr/local/bin
-pathmunge /usr/local/opt/openssl/bin
+# common places that should be in PATH
+PATH="/usr/local/bin:/usr/local/opt/openssl/bin:/usr/local/sbin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export LANG=en_US.UTF-8
 export EDITOR=vim
+
+# more custom locations for PATH that should take precedence
+export PATH="$HOME/bin:$HOME/.dotfiles/bin:$PATH"
+
+# remove duplicate entries from path
+declare -U path
+
+# Kill all child processes when we exit, don't leave them running
+unsetopt no_hup
+
+# navigation improvements
+setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
+DIRSTACKSIZE=5
+
+# Allow [ or ] whereever you want
+unsetopt nomatch
+
+# history improvements
+setopt hist_ignore_all_dups
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -147,9 +159,8 @@ export EDITOR=vim
 
 # make less more friendly for non-text input files, see lesspipe(1)
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
-
-pathmunge "$HOME/.dotfiles/bin"
-pathmunge "$HOME/bin"
+# Prevent the less hist file from being made
+export LESSHISTFILE="/dev/null"
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
