@@ -16,5 +16,5 @@ reset -Q
 
 # Remove broken symlinks
 find -L ~/.bash.d -type l -exec rm {} +
-find -L ~/.zsh.d -type l -exec rm {} +
+find -L ~/.zsh/custom -type l -exec rm {} +
 find -L ~ -type l -maxdepth 1 -exec rm {} +

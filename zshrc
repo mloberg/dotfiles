@@ -9,8 +9,42 @@ export ZSH=$HOME/.zsh
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # Theme: https://github.com/denysdovhan/spaceship-prompt
 ZSH_THEME="spaceship"
+SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  hg            # Mercurial section (hg_branch  + hg_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  elixir        # Elixir section
+  xcode         # Xcode section
+  swift         # Swift section
+  golang        # Go section
+  php           # PHP section
+  rust          # Rust section
+  haskell       # Haskell Stack section
+  julia         # Julia section
+  docker        # Docker section
+  aws           # Amazon Web Services section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  dotnet        # .NET section
+  ember         # Ember.js section
+  kubecontext   # Kubectl context section
+  terraform     # Terraform workspace section
+  exec_time     # Execution time
+  line_sep      # Line break
+  # battery       # Battery level and status
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
 SPACESHIP_DIR_TRUNC_PREFIX=…/
-SPACESHIP_BATTERY_THRESHOLD=50
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -88,6 +122,18 @@ plugins=(
     z
 )
 
+# prevent duplicate directories in your PATH
+if ! type pathmunge &>/dev/null; then
+  function pathmunge() {
+    if ! [[ $PATH =~ (^|:)$1($|:) ]]; then
+      export PATH=$1:$PATH
+    fi
+  }
+fi
+
+pathmunge /usr/local/bin
+pathmunge /usr/local/opt/openssl/bin
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -102,27 +148,8 @@ export EDITOR=vim
 # make less more friendly for non-text input files, see lesspipe(1)
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 
-if ! type pathmunge &>/dev/null; then
-  # prevent duplicate directories in your PATH
-  function pathmunge() {
-    if ! [[ $PATH =~ (^|:)$1($|:) ]]; then
-      export PATH=$1:$PATH
-    fi
-  }
-fi
-
-pathmunge /usr/local/bin
-pathmunge /usr/local/opt/openssl/bin
-
-for extra ($HOME/.zsh.d/*.zsh); do
-  source $extra
-done
-
 pathmunge "$HOME/.dotfiles/bin"
 pathmunge "$HOME/bin"
-pathmunge ./bin
-
-[[ -f ~/.dockerfunc ]] && source ~/.dockerfunc
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
