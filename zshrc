@@ -149,8 +149,17 @@ DIRSTACKSIZE=5
 # Allow [ or ] whereever you want
 unsetopt nomatch
 
-# history improvements
+# history search improvements
 setopt hist_ignore_all_dups
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
+# disallow overwriting files with >
+setopt no_clobber
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
