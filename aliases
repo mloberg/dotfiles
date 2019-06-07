@@ -62,6 +62,7 @@ alias serve="/usr/bin/python -m SimpleHTTPServer"
 alias bt-off="m bluetooth disable"
 alias bt-on="m bluetooth enable"
 alias dns-flush="m dns flush"
+alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
 
 alias extract="dtrx"
 
