@@ -1,0 +1,34 @@
+{
+    "editor.fontFamily": "Dank Mono",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "explorer.openEditors.visible": 0,
+    "window.zoomLevel": 0,
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true
+    },
+    "gitlens.historyExplorer.enabled": true,
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true,
+    "workbench.colorTheme": "Yoncé",
+    "workbench.colorCustomizations": {
+        "[Yoncé]": {
+            "editorSuggestWidget.selectedBackground": "#FC438430"
+        }
+    },
+    "markdownlint.config": {
+        "MD013": true,
+        "no-hard-tabs": true
+    },
+    "php.suggest.basic": false,
+    "go.useLanguageServer": true
+}
