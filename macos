@@ -130,6 +130,9 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 #sudo rm -rf /System/Library/CoreServices/DefaultDesktop.jpg
 #sudo ln -s /path/to/your/image /System/Library/CoreServices/DefaultDesktop.jpg
 
+# Display Date in Clock
+defaults write com.apple.menuextra.clock DateFormat -string "EEE MMM d  h:mm a"
+
 ###############################################################################
 # SSD-specific tweaks                                                         #
 ###############################################################################
