@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# Docker helper functions
 
 function docker-enter() {
   docker exec -it "$@" /bin/bash
@@ -9,38 +9,32 @@ function docker-clean() {
   docker images --filter dangling=true -q | xargs docker rmi
 }
 
-function docker-compose-fresh() {
-  local COMPOSE_FILE_PARAM=""
-  if [ -n "$1" ]; then
-    COMPOSE_FILE_PARAM="--file $1"
-  fi
-
-  docker-compose "${COMPOSE_FILE_PARAM}" down
-  docker-compose "${COMPOSE_FILE_PARAM}" up -d
-}
-
-# dockter ls
-# dockter status redis
-# dockter start portainer
-# dockter stop mysql
-# dockter run redis redis-cli
-function dockter() {
+# service ls|list
+# service status [service]
+# service start [service]
+# service stop [service]
+# service run [service] [command]
+function service() {
   local ACTION="$1"
   local SERVICE="$2"
 
-  if [ "$ACTION" == "ls" ]; then
+  if [[ "$ACTION" == "ls" || "$ACTION" == "list" ]]; then
     docker-compose --file ~/.services.yml ps --services
     return
   fi
 
   if [[ -z "$ACTION" || -z "$SERVICE" ]]; then
-    >&2 echo "Usage: dockter [start|stop|status|run] [service]"
+    >&2 echo "Usage: service [start|stop|status|run] [service]"
     return 1
   fi
 
   case "$ACTION" in
     status)
-      _dockter-status "${SERVICE}"
+      if docker-compose --file ~/.services.yml ps | grep "${SERVICE}" >/dev/null; then
+        echo "Service ${SERVICE} is running"
+      else
+        echo "Service ${SERVICE} is stopped"
+      fi
       ;;
     start)
       docker-compose --file ~/.services.yml up -d "${SERVICE}"
@@ -56,14 +50,6 @@ function dockter() {
       return 1
       ;;
   esac
-}
-
-function _dockter-status() {
-  if docker-compose --file ~/.services.yml ps | grep "$1" >/dev/null; then
-    echo "Service ${1} is running"
-  else
-    echo "Service ${1} is stopped"
-  fi
 }
 
 alias redis-cli="dockter run redis redis-cli"

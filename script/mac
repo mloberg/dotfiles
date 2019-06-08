@@ -47,15 +47,22 @@ info "Installing some requirements via Homebrew"
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 brew "rcm"
-brew "bash"
 EOF
-
-info "Using a newer Bash"
-chsh -s "$(command -v bash)"
 
 info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 RCRC="$HOME/.dotfiles/rcrc" rcup
+
+if ! test -d "$HOME/.zsh"; then
+  info "Setting up oh-my-zsh"
+  git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh "$HOME/.zsh"
+  git clone --depth=1 https://github.com/denysdovhan/spaceship-prompt "$HOME/.zsh/custom/themes/spaceship-prompt"
+  ln -s "$HOME/.zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.zsh/custom/themes/spaceship.zsh-theme"
+fi
+
+info "Set default shell to zsh"
+echo "$(command -v zsh)" | sudo tee -a /etc/shells
+chsh -s "$(command -v zsh)"
 
 info "Configuring Vagrant to not require passwords"
 if [ ! -f /etc/sudoers.d/vagrant ]; then
@@ -68,29 +75,6 @@ Cmnd_Alias VAGRANT_HOSTS_REMOVE = $(command -v sed) -i -e /*/ d /etc/hosts
 %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE, VAGRANT_HOSTS_ADD, VAGRANT_HOSTS_REMOVE
 EOF
 fi
-
-info "Setting up DNSCrypt"
-rm -f /usr/local/etc/dnscrypt-proxy.toml
-ln -s "$HOME/.dotfiles/config/dnscrypt-proxy.toml" /usr/local/etc/dnscrypt-proxy.toml
-sudo brew services start dnscrypt-proxy
-
-info "Setting up Dnsmasq"
-rm -f /usr/local/etc/dnsmasq.conf
-ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
-sudo brew services start dnsmasq-dnssec
-sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
-networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setdnsservers "Wired" 127.0.0.1
-dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
-
-info "Setup Privoxy"
-rm -f /usr/local/etc/privoxy/config
-rm -f /usr/local/etc/privoxy/user.action
-ln -s "$HOME/.dotfiles/config/privoxy/config" /usr/local/etc/privoxy/config
-ln -s "$HOME/.dotfiles/config/privoxy/user.action" /usr/local/etc/privoxy/user.action
-brew services start privoxy
-sudo networksetup -setwebproxy "Wi-Fi" 127.0.0.1 8118
-sudo networksetup -setsecurewebproxy "Wi-Fi" 127.0.0.1 8118
-networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setwebproxy "Wired" 127.0.0.1 8118 && sudo networksetup -setsecurewebproxy "Wired" 127.0.0.1 8118
 
 info "Setting MacOS defaults"
 ~/.macos
@@ -108,11 +92,8 @@ fi
 info "Updating software"
 sudo softwareupdate -i -a
 
-user "Secure Mac? [y/N] "
-read -r secure
-if [[ "${secure}" =~ ^(y|Y)$ ]]; then
-  ~/.dotfiles/script/lockdown
-fi
+info "Securing Mac"
+~/.dotfiles/script/lockdown
 
 success "Success"
 warn "Rebooting"

@@ -15,4 +15,6 @@ reset -Q
 [ "$(uname -s)" == "Darwin" ] && brew update && brew bundle --global
 
 # Remove broken symlinks
-find -L ~/.bash.d -type l -exec rm {} +
+find -L ~/.bash.d -type l -ls -delete
+find -L ~/.zsh/custom -type l -ls -delete
+find -L ~ -type l -maxdepth 1 -ls -delete

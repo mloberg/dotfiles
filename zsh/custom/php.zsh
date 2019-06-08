@@ -1,11 +1,8 @@
-#!/usr/bin/env bash
+# Run composer in Docker
 
 if [ -z "$COMPOSER_HOME" ]; then
     export COMPOSER_HOME="$HOME/.composer"
 fi
-
-pathmunge "$COMPOSER_HOME/vendor/bin"
-pathmunge ./vendor/bin
 
 function composer() {
     if [ "self-update" == "$1" ]; then
@@ -24,8 +21,4 @@ function composer() {
         --volume "$COMPOSER_HOME/.composer:/tmp" \
         --volume "$(pwd):/app" \
         composer "$@"
-}
-
-function homestead() {
-    ( cd ~/Homestead && vagrant "$@" )
 }

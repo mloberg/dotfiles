@@ -1,6 +1,10 @@
 # mloberg dotfiles
 
-My dotfiles
+> These are my dotfiles. There are many like it, but this one is mine.
+
+This is how I like my system. You have different tastes and preferences, so
+cloning this outright probably isn't what you want. However feel free to take
+and modify any part of it to fit your needs.
 
 ## install
 
