@@ -587,7 +587,7 @@ user_pref("security.ssl.enable_ocsp_stapling", true);
 user_pref("security.ssl.enable_ocsp_must_staple", true);
 
 // Require a valid OCSP response for OCSP enabled certificates
-user_pref("security.OCSP.require", true);
+// user_pref("security.OCSP.require", true);
 
 // Disable TLS Session Tickets
 user_pref("security.ssl.disable_session_identifiers", true);

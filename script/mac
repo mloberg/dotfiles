@@ -24,7 +24,19 @@ abort() {
   exit 1
 }
 
+ensureServiceRunning() {
+  local service="$1"
+
+  if brew services list | grep "$service" | grep --quiet started; then
+    brew services restart "${service}"
+  else
+    brew services start "${service}"
+  fi
+}
+
 [ "$(uname -s)" != "Darwin" ] && abort "This only works on MacOS"
+[ "$(sw_vers -productVersion | awk -F '.' '{print $1 "." $2}')" != "10.14" ] && abort "This only works on MacOS 10.14"
+[ ! -r "$HOME/Library/Mail" ] && abort "Need full disk access"
 
 user "Hostname: "
 read -r hostname
@@ -92,8 +104,58 @@ fi
 info "Updating software"
 sudo softwareupdate -i -a
 
-info "Securing Mac"
-~/.dotfiles/script/lockdown
+info "Setting up DNSCrypt"
+rm -f /usr/local/etc/dnscrypt-proxy.toml
+ln -s "$HOME/.dotfiles/config/dnscrypt-proxy.toml" /usr/local/etc/dnscrypt-proxy.toml
+ensureServiceRunning dnscrypt-proxy
+
+info "Setting up Dnsmasq"
+rm -f /usr/local/etc/dnsmasq.conf
+ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
+ensureServiceRunning dnsmasq-dnssec
+sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
+networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setdnsservers "Wired" 127.0.0.1
+dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
+
+info "Setup Privoxy"
+rm -f /usr/local/etc/privoxy/config
+rm -f /usr/local/etc/privoxy/user.action
+ln -s "$HOME/.dotfiles/config/privoxy/config" /usr/local/etc/privoxy/config
+ln -s "$HOME/.dotfiles/config/privoxy/user.action" /usr/local/etc/privoxy/user.action
+ensureServiceRunning privoxy
+sudo networksetup -setwebproxy "Wi-Fi" 127.0.0.1 8118
+sudo networksetup -setsecurewebproxy "Wi-Fi" 127.0.0.1 8118
+networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setwebproxy "Wired" 127.0.0.1 8118 && sudo networksetup -setsecurewebproxy "Wired" 127.0.0.1 8118
+
+if ! grep --quiet "StevenBlack/hosts" /etc/hosts; then
+  info "Adding known bad hosts to /etc/hosts"
+  curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts >/dev/null
+fi
+
+if ! fdesetup status | grep --quiet On; then
+  info "Enable FileVault"
+  if ! diskutil info / | grep 'File System Personality:' | grep -q 'APFS'; then
+    warn "Filesystem is not APFS. Not enabling FDE."
+  else
+    sudo fdesetup enable -user "$USER" | tee "$HOME/FileVault_recovery_key.txt"
+  fi
+fi
+
+if ! sudo firmwarepasswd -check | grep --quiet Yes; then
+  user "Set Firmware Password? [y/N] "
+  read -r permission
+  [[ "${permission}" =~ ^(y|Y)$ ]] && sudo firmwarepasswd -setpasswd
+fi
+
+spctl kext-consent status | grep -q 'ENABLED' || warn "Kernel Extension User Consent not required"
+
+if system_profiler SPiBridgeDataType | grep 'Model Name:' | grep -q 'T2'; then
+  warn "EFI Firmware Integrity Check Not Supported by this Mac"
+else
+  /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
+fi
+
+groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
 success "Success"
 warn "Firefox setup not complete. See ~/.dotfiles/firefox/setup.md"

@@ -143,9 +143,9 @@ sudo pmset -a hibernatemode 0
 # Remove the sleep image file to save disk space
 sudo rm -f /private/var/vm/sleepimage
 # Create a zero-byte file instead…
-sudo touch /private/var/vm/sleepimage
+sudo touch /private/var/vm/sleepimage &>/dev/null
 # …and make sure it can’t be rewritten
-sudo chflags uchg /private/var/vm/sleepimage
+sudo chflags uchg /private/var/vm/sleepimage &>/dev/null
 
 ###############################################################################
 # Trackpad, mouse, keyboard, Bluetooth accessories, and input                 #
@@ -458,6 +458,7 @@ defaults write com.apple.dock wvous-br-modifier -int 0
 # Spotlight                                                                   #
 ###############################################################################
 
+# TODO: Error: 2019-06-09 10:53:40.120 defaults[22530:263320] Could not write domain /.Spotlight-V100/VolumeConfiguration; exiting
 # Hide Spotlight tray-icon (and subsequent helper)
 #sudo chmod 600 /System/Library/CoreServices/Search.bundle/Contents/MacOS/Search
 # Disable Spotlight indexing for any volume that gets mounted and has not yet
@@ -531,6 +532,7 @@ defaults write com.apple.Terminal ShowLineMarks -int 0
 # Prevent Time Machine from prompting to use new hard drives as backup volume
 defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 
+# TODO: ERROR: disablelocal: Unrecognized verb.
 # Disable local Time Machine backups
 hash tmutil &> /dev/null && sudo tmutil disablelocal
 
@@ -584,6 +586,9 @@ defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1
 # Install System data files & security updates
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1
 
+# Automatically install MacOS updates
+defaults write com.apple.SoftwareUpdate AutomaticallyInstallMacOSUpdates -bool true
+
 # Automatically download apps purchased on other Macs
 defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1
 
@@ -616,6 +621,9 @@ defaults write com.google.Chrome DisablePrintPreview -bool true
 # Expand the print dialog by default
 defaults write com.google.Chrome PMPrintingExpandedStateForPrint2 -bool true
 
+# Disable Google's automated updates as they "call home"
+defaults write com.google.Keystone.Agent checkInterval 0
+
 ###############################################################################
 # Touchbar                                                                    #
 ###############################################################################
@@ -629,18 +637,71 @@ defaults write com.apple.controlstrip MiniCustomized -array \
 	"com.apple.system.screen-lock"
 
 ###############################################################################
+# Firewall                                                                    #
+###############################################################################
+
+# Enable the firewall
+sudo launchctl load /System/Library/LaunchDaemons/com.apple.alf.agent.plist >/dev/null 2>&1
+sudo launchctl load /System/Library/LaunchAgents/com.apple.alf.useragent.plist >/dev/null 2>&1
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on >/dev/null
+
+# Enable firewall logging
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on >/dev/null
+
+# Turn on stealth mode
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on >/dev/null
+
+# Disable built-in software from being auto-permitted to listen through firewall
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned off >/dev/null
+
+# Disable downloaded signed software from being auto-permitted to listen through firewall
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp off >/dev/null
+
+# Restart Firewall to finalize changes
+sudo pkill -HUP socketfilterfw
+
+###############################################################################
 # Security                                                                    #
 ###############################################################################
 
 # Disable Bonjour multicast advertisements
 defaults write /Library/Preferences/com.apple.mDNSResponder.plist NoMulticastAdvertisements -bool YES
 
-# Disable Google's automated updates as they "call home"
-defaults write com.google.Keystone.Agent checkInterval 0
+# Enable Gatekeeper
+sudo spctl --master-enable
+sudo spctl --enable --label "Developer ID"
 
-###############################################################################
-# Networking                                                                  #
-###############################################################################
+# Disable Metadata Collection from Downloads
+:>~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2
+sudo chflags schg ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV2
 
-# Use CloudFlare's DNS service
-networksetup -setdnsservers Wi-Fi 1.1.1.1 1.0.0.1 2606:4700:4700::1111 2606:4700:4700::1001
+# Disable Captive Portal Assistant
+sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.captive.control Active -bool false
+
+# Disable printer sharing
+cupsctl --no-share-printers
+
+# Require an administrator password to access system-wide preferences
+security -q authorizationdb read system.preferences > /tmp/system.preferences.plist
+/usr/libexec/PlistBuddy -c 'Set :shared false' /tmp/system.preferences.plist
+sudo cat /tmp/system.preferences.plist | sudo security -q authorizationdb write system.preferences
+rm /tmp/system.preferences.plist
+
+# Enable System Integrity Protection (SIP)
+sudo csrutil clear >/dev/null
+
+# Disable automatic loading of remote content by Mail.app
+defaults write com.apple.mail-shared DisableURLLoading -bool true
+
+# Disable remote Apple events"
+sudo systemsetup -setremoteappleevents off >/dev/null
+
+# Disable remote login"
+sudo systemsetup -f -setremotelogin off >/dev/null
+
+# Disable Safari Auto Open 'safe' Files
+defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+# Disable AirDrop Discoverability
+defaults write com.apple.sharingd DiscoverableMode -string 'Off'
+sudo killall -HUP sharingd
