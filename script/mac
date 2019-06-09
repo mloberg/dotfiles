@@ -49,10 +49,6 @@ tap "thoughtbot/formulae"
 brew "rcm"
 EOF
 
-info "Installing dotfiles"
-[ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
-RCRC="$HOME/.dotfiles/rcrc" rcup
-
 if ! test -d "$HOME/.zsh"; then
   info "Setting up oh-my-zsh"
   git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh "$HOME/.zsh"
@@ -60,8 +56,12 @@ if ! test -d "$HOME/.zsh"; then
   ln -s "$HOME/.zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.zsh/custom/themes/spaceship.zsh-theme"
 fi
 
+info "Installing dotfiles"
+[ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
+RCRC="$HOME/.dotfiles/rcrc" rcup
+
 info "Set default shell to zsh"
-echo "$(command -v zsh)" | sudo tee -a /etc/shells
+grep --quiet "$(command -v zsh)" /etc/shells || (command -v zsh | sudo tee -a /etc/shells)
 chsh -s "$(command -v zsh)"
 
 info "Configuring Vagrant to not require passwords"
@@ -96,5 +96,6 @@ info "Securing Mac"
 ~/.dotfiles/script/lockdown
 
 success "Success"
-warn "Rebooting"
+warn "Rebooting in 5s"
+sleep 5
 m restart
