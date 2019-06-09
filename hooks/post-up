@@ -11,13 +11,16 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 
 reset -Q
 
-# Install Homebrew packages
-[ "$(uname -s)" == "Darwin" ] && brew update && brew bundle --global
-
 # Remove broken symlinks
 find -L ~/.bash.d -type l -ls -delete
 find -L ~/.zsh/custom -type l -ls -delete
 find -L ~ -type l -maxdepth 1 -ls -delete
+
+# MacOS specific items
+[ "$(uname -s)" != "Darwin" ] && exit
+
+# Install Homebrew packages
+brew update && brew bundle --global
 
 # VS Code setup
 settings_file="$HOME/Library/Application Support/Code/User/settings.json"
@@ -27,3 +30,6 @@ installed_exts=$(code --list-extensions)
 while read -r ext; do
   [[ "${installed_exts}" =~ $ext ]] || code --install-extension "$ext"
 done < "$HOME/.dotfiles/vscode/extensions.txt"
+
+# MacOS defaults
+~/.macos
