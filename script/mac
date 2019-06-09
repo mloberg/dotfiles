@@ -61,13 +61,6 @@ tap "thoughtbot/formulae"
 brew "rcm"
 EOF
 
-if ! test -d "$HOME/.zsh"; then
-  info "Setting up oh-my-zsh"
-  git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh "$HOME/.zsh"
-  git clone --depth=1 https://github.com/denysdovhan/spaceship-prompt "$HOME/.zsh/custom/themes/spaceship-prompt"
-  ln -s "$HOME/.zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.zsh/custom/themes/spaceship.zsh-theme"
-fi
-
 info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 RCRC="$HOME/.dotfiles/rcrc" rcup
@@ -87,9 +80,6 @@ Cmnd_Alias VAGRANT_HOSTS_REMOVE = $(command -v sed) -i -e /*/ d /etc/hosts
 %admin ALL=(root) NOPASSWD: VAGRANT_EXPORTS_ADD, VAGRANT_NFSD, VAGRANT_EXPORTS_REMOVE, VAGRANT_HOSTS_ADD, VAGRANT_HOSTS_REMOVE
 EOF
 fi
-
-info "Setting MacOS defaults"
-~/.macos
 
 info "Turning Bluetooth off"
 m bluetooth disable

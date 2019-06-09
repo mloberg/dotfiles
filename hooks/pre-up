@@ -5,3 +5,10 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 if [ ! -f "$DIR/gitconfig.local" ]; then
   printf "⚠️ \033[00;33mMissing ~/.dotfiles/gitconfig.local\033[0m\n"
 fi
+
+# install oh-my-zsh
+if ! test -d "$HOME/.zsh"; then
+  git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh "$HOME/.zsh"
+  git clone --depth=1 https://github.com/denysdovhan/spaceship-prompt "$HOME/.zsh/custom/themes/spaceship-prompt"
+  ln -s "$HOME/.zsh/custom/themes/spaceship-prompt/spaceship.zsh-theme" "$HOME/.zsh/custom/themes/spaceship.zsh-theme"
+fi
