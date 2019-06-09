@@ -1,2 +1,2 @@
-EXCLUDES="README.md LICENSE script bin lib config vscode *.example"
+EXCLUDES="README.md LICENSE bin config firefox script vscode *.example"
 DOTFILES_DIRS="$HOME/.dotfiles"

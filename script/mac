@@ -96,7 +96,7 @@ info "Securing Mac"
 ~/.dotfiles/script/lockdown
 
 success "Success"
-warn "Firefox setup not complete. See ~/.dotfiles/firefox/addons.md"
+warn "Firefox setup not complete. See ~/.dotfiles/firefox/setup.md"
 warn "Rebooting in 5s"
 sleep 5
 m restart
