@@ -19,3 +19,15 @@ octref.vetur
 PeterJausovec.vscode-docker
 phproberto.vscode-php-getters-setters
 whatwedo.twig
+formulahendry.auto-rename-tag
+mrmlnc.vscode-duplicate
+EditorConfig.EditorConfig
+abierbaum.vscode-file-peek
+vincaslt.highlight-matching-tag
+bierner.emojisense
+bierner.markdown-emoji
+christian-kohler.path-intellisense
+pnp.polacode
+mechatroner.rainbow-csv
+cssho.vscode-svgviewer
+vscode-icons-team.vscode-icons
