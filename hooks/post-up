@@ -34,6 +34,3 @@ done < "$HOME/.dotfiles/vscode/extensions.txt"
 # We're assuming the default profile
 ffprofile=$(cd "$HOME/Library/Application Support/Firefox/Profiles" && cd $(ls | grep default) && pwd)
 [ -L "$ffprofile/user.js" ] || ln -s "$HOME/.dotfiles/firefox/user.js" "$ffprofile/user.js"
-
-# MacOS defaults
-~/.macos
