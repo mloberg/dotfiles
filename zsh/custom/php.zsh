@@ -4,6 +4,8 @@ if [ -z "$COMPOSER_HOME" ]; then
     export COMPOSER_HOME="$HOME/.composer"
 fi
 
+export PATH="$COMPOSER_HOME/vendor/bin:$PATH"
+
 function composer() {
     if [ "self-update" == "$1" ]; then
         docker pull composer

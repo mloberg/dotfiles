@@ -4,9 +4,8 @@ DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 eamodio.gitlens
 eriklynd.json-tools
+bmewburn.vscode-intelephense-client
 felixfbecker.php-debug
-felixfbecker.php-intellisense
-felixfbecker.php-pack
 formulahendry.code-runner
 jspolancor.presentationmode
 MehediDracula.php-namespace-resolver
