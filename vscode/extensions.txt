@@ -30,3 +30,5 @@ pnp.polacode
 mechatroner.rainbow-csv
 cssho.vscode-svgviewer
 vscode-icons-team.vscode-icons
+MS-vsliveshare.vsliveshare
+johnpapa.vscode-peacock
