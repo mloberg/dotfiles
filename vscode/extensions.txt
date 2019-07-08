@@ -15,7 +15,7 @@ ms-vscode.Go
 ms-vscode.vscode-typescript-tslint-plugin
 neilbrayfield.php-docblocker
 octref.vetur
-PeterJausovec.vscode-docker
+ms-azuretools.vscode-docker
 phproberto.vscode-php-getters-setters
 whatwedo.twig
 formulahendry.auto-rename-tag
@@ -30,5 +30,5 @@ pnp.polacode
 mechatroner.rainbow-csv
 cssho.vscode-svgviewer
 vscode-icons-team.vscode-icons
-MS-vsliveshare.vsliveshare
+ms-vsliveshare.vsliveshare
 johnpapa.vscode-peacock
