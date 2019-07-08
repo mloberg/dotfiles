@@ -162,6 +162,11 @@ user_pref("browser.fixup.hide_user_pass", true);
 // Send DNS request through SOCKS when SOCKS proxying is in use
 user_pref("network.proxy.socks_remote_dns", true);
 
+// Enable DNS over HTTPS
+user_pref("network.trr.mode", 2);
+user_pref("network.trr.uri", "https://cloudflare-dns.com/dns-query");
+user_pref("network.trr.bootstrapAddress", "1.1.1.1");
+
 // Don't monitor OS online/offline connection state
 user_pref("network.manage-offline-status", false);
 
