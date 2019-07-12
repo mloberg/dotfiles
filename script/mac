@@ -55,6 +55,8 @@ if ! command -v brew >/dev/null; then
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
+brew doctor &>/dev/null || abort "\"brew doctor\" is reporting issues. Please fix then run again."
+
 info "Installing some requirements via Homebrew"
 brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
@@ -82,7 +84,7 @@ EOF
 fi
 
 info "Turning Bluetooth off"
-m bluetooth disable
+m bluetooth disable || true
 
 user "Clear Dock? [y/N] "
 read -r clear

@@ -41,3 +41,7 @@ use in Firefox sorted by category.
 
 * [1Password X](https://addons.mozilla.org/en-US/firefox/addon/1password-x-password-manager/)
 * [Tabliss](https://addons.mozilla.org/en-US/firefox/addon/tabliss/)
+
+### Other
+
+* [Pay by Privacy.com](https://addons.mozilla.org/en-US/firefox/addon/pay-by-privacy-com/)
