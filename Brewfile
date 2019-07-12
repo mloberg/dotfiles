@@ -44,6 +44,7 @@ brew "wget"
 brew "zsh"
 
 cask "1password"
+cask "aerial"
 cask "brave-browser"
 cask "caffeine"
 cask "dash"
