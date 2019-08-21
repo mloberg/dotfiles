@@ -147,6 +147,10 @@ else
   /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
 fi
 
+if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall ]; then
+  ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
+fi
+
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
 success "Success"
