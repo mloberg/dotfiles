@@ -6,6 +6,7 @@ tap "thoughtbot/formulae"
 tap "mloberg/formuoli"
 
 brew "ack"
+brew "antibody"
 brew "awscli"
 brew "bash"
 brew "coreutils"

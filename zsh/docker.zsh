@@ -52,5 +52,5 @@ function service() {
   esac
 }
 
-alias redis-cli="dockter run redis redis-cli"
-alias portainer="(dockter status portainer | grep running >/dev/null || dockter start portainer) && open http://localhost:9000"
+alias redis-cli="service run redis redis-cli"
+alias portainer="(service status portainer | grep running >/dev/null || service start portainer) && open http://localhost:9000"
