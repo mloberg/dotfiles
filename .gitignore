@@ -1,2 +1,3 @@
 *.local
-vim/bundle/
+/vim/bundle/
+/.update
