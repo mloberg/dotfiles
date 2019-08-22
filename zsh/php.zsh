@@ -24,3 +24,7 @@ function composer() {
         --volume "$(pwd):/app" \
         composer "$@"
 }
+
+function php() {
+  run_with_docker "php" "latest" "php" $@
+}

@@ -13,7 +13,7 @@ reset -Q
 
 # Remove broken symlinks
 find -L ~/.bash.d -type l -ls -exec rm {} +
-find -L ~/.zsh/custom -type l -ls -exec rm {} +
+find -L ~/.zsh -type l -ls -exec rm {} +
 find -L ~ -type l -maxdepth 1 -ls -exec rm {} +
 
 # MacOS specific items
@@ -21,6 +21,10 @@ find -L ~ -type l -maxdepth 1 -ls -exec rm {} +
 
 # Install Homebrew packages
 brew update && brew bundle --global
+
+# zsh plugins via antibody (https://getantibody.github.io/)
+antibody update
+antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/plugins.zsh"
 
 # VS Code setup
 settings_file="$HOME/Library/Application Support/Code/User/settings.json"
