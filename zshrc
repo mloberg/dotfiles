@@ -1,5 +1,7 @@
 # zsh config
 
+PATH="$HOME/bin:/usr/local/bin:/usr/local/opt/openssl/bin:/usr/local/sbin:$PATH"
+
 source ~/.rcrc
 DOTFILES="${DOTFILES_DIR:-$HOME/.dotfiles}"
 
@@ -71,21 +73,15 @@ SPACESHIP_PROMPT_ORDER=(
 SPACESHIP_DIR_TRUNC_PREFIX=…/
 
 # autonotify config (https://github.com/MichaelAquilina/zsh-auto-notify)
-AUTO_NOTIFY_EXPIRE_TIME=30
+AUTO_NOTIFY_THRESHOLD=30
 AUTO_NOTIFY_IGNORE+=("docker" "vagrant")
 
-# common places that should be in PATH
-PATH="/usr/local/bin:/usr/local/opt/openssl/bin:/usr/local/sbin:$PATH"
+# remove duplicate entries from path
+declare -U path
 
 # User configuration
 export LANG=en_US.UTF-8
 export EDITOR=vim
-
-# more custom locations for PATH that should take precedence
-export PATH="$HOME/bin:$HOME/.dotfiles/bin:$PATH"
-
-# remove duplicate entries from path
-declare -U path
 
 # Kill all child processes when we exit, don't leave them running
 unsetopt no_hup
