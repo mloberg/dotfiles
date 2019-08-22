@@ -21,14 +21,6 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pa
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-# Bundler
-alias be='bundle exec'
-alias bi='bundle install'
-
-# Language aliases
-alias rb='ruby'
-alias py='python'
-
 alias c='clear'
 alias k='clear'
 alias ..="cd .."
@@ -41,16 +33,16 @@ if [ ! -x "$(command -v tree >/dev/null)" ]; then
   alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 fi
 
-# Homebrew
-alias bin='brew install'
-alias brm='brew uninstall'
+alias grep='grep --color'
+alias help='man'
+
+# request confirmation
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
 
 # Desktop Programs
 alias chrome="open -a google\ chrome"
-
-# Show/hide hidden files
-alias showhidden="defaults write com.apple.finder AppleShowAllFiles TRUE"
-alias hidehidden="defaults write com.apple.finder AppleShowAllFiles FALSE"
 
 # Vagrant
 alias vup="vagrant up"
@@ -59,14 +51,15 @@ alias vdstr="vagrant destroy"
 
 alias serve="/usr/bin/python -m SimpleHTTPServer"
 
+# Mac aliases
 alias bt-off="m bluetooth disable"
 alias bt-on="m bluetooth enable"
-alias dns-flush="m dns flush"
+alias flush="m dns flush"
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
+alias show="defaults write com.apple.finder AppleShowAllFiles TRUE"
+alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE"
 
 alias extract="dtrx"
-
-alias search="web_search duckduckgo"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
