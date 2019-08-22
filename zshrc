@@ -1,5 +1,28 @@
 # zsh config
 
+source ~/.rcrc
+DOTFILES="${DOTFILES_DIR:-$HOME/.dotfiles}"
+
+# auto update dotfiles
+function _current_epoch() {
+  expr $(date +%s) / 60 / 60 / 24
+}
+
+function _update_dotfile_update() {
+  echo "LAST_EPOCH=$(_current_epoch)" >! "$DOTFILES/.update"
+}
+
+function _auto_update() {
+  [ ! -f "$DOTFILES/.update" ] && _update_dotfile_update && return
+  . "$DOTFILES/.update"
+  [ -z "$LAST_EPOCH" ] && _update_dotfile_update && return
+  diff=$(expr $(_current_epoch) - $LAST_EPOCH)
+  [ "$diff" -lt 14 ] && return
+  rcup && _update_dotfile_update
+}
+
+_auto_update
+
 # load completion commands
 autoload -Uz compinit && compinit
 
