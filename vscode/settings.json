@@ -85,5 +85,11 @@
             "name": "Vue Green",
             "value": "#42b883"
         }
-    ]
+    ],
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "intelephense.telemetry.enabled": false,
+    "code-runner.enableAppInsights": false,
+    "gitlens.advanced.telemetry.enabled": false,
+    "partialDiff.enableTelemetry": false
 }
