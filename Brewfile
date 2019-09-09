@@ -28,7 +28,9 @@ brew "m-cli"
 brew "mkcert"
 brew "mycli"
 brew "n"
+brew "nss"
 brew "packer"
+brew "pinentry-mac"
 brew "pipenv"
 brew "privoxy"
 brew "pyenv"
@@ -88,6 +90,6 @@ when 'Apollo' # Personal laptop
   cask "ilok-license-manager"
   cask "guitar-pro"
   # mas "Affinity Photo", id: 824183456
-when 'Artemis' # Work laptop
+when 'Artemis', 'Adrestia' # Work laptop
   cask "slack"
 end

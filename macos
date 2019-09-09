@@ -133,6 +133,9 @@ sudo defaults write /Library/Preferences/com.apple.driver.AppleIRController Devi
 # Disable AirDrop
 defaults write com.apple.NetworkBrowser DisableAirDrop -bool YES
 
+# Disable wake on network
+sudo systemsetup -setwakeonnetworkaccess off
+
 ###############################################################################
 # SSD-specific tweaks                                                         #
 ###############################################################################
@@ -576,6 +579,7 @@ defaults write com.apple.QuickTimePlayerX MGPlayMovieOnOpen -bool true
 
 # Enable the automatic update check
 defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
+sudo softwareupdate --schedule on
 
 # Check for software updates daily, not just once per week
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1

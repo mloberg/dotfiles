@@ -29,6 +29,8 @@ use in Firefox sorted by category.
 
 * [Privacy Badger](https://addons.mozilla.org/en-US/firefox/addon/privacy-badger17/)
 * [uBlock Origin](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/)
+* [Disconnect](https://addons.mozilla.org/en-US/firefox/addon/disconnect/)
+* [Forget Me Not](https://addons.mozilla.org/en-US/firefox/addon/forget_me_not/)
 * [Cookie AutoDelete](https://addons.mozilla.org/en-US/firefox/addon/cookie-autodelete/)
 * [HTTPS Everywhere](https://addons.mozilla.org/en-US/firefox/addon/https-everywhere/)
 * [Decentraleyes](https://addons.mozilla.org/en-US/firefox/addon/decentraleyes/)

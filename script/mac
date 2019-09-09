@@ -26,11 +26,16 @@ abort() {
 
 ensureServiceRunning() {
   local service="$1"
+  local _brew="brew services"
 
-  if brew services list | grep "$service" | grep --quiet started; then
-    brew services restart "${service}"
+  if [[ $* == *--sudo* ]]; then
+    _brew="sudo brew services"
+  fi
+
+  if $_brew list | grep "$service" | grep --quiet started; then
+    $_brew restart "${service}"
   else
-    brew services start "${service}"
+    $_brew start "${service}"
   fi
 }
 
@@ -99,12 +104,14 @@ sudo softwareupdate -i -a
 info "Setting up DNSCrypt"
 rm -f /usr/local/etc/dnscrypt-proxy.toml
 ln -s "$HOME/.dotfiles/config/dnscrypt-proxy.toml" /usr/local/etc/dnscrypt-proxy.toml
-ensureServiceRunning dnscrypt-proxy
+ensureServiceRunning dnscrypt-proxy --sudo
 
 info "Setting up Dnsmasq"
 rm -f /usr/local/etc/dnsmasq.conf
+rm -f /usr/local/etc/resolv.dnsmasq.conf
 ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
-ensureServiceRunning dnsmasq-dnssec
+ln -s "$HOME/.dotfiles/config/resolv.dnsmasq.conf" /usr/local/etc/resolv.dnsmasq.conf
+ensureServiceRunning dnsmasq-dnssec --sudo
 sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
 networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setdnsservers "Wired" 127.0.0.1
 dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
