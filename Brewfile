@@ -44,6 +44,7 @@ brew "spoof-mac"
 brew "thefuck"
 brew "the_silver_searcher"
 brew "tldr"
+brew "vim"
 brew "wget"
 brew "zsh"
 
