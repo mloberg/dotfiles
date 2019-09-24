@@ -1,3 +1,3 @@
 DOTFILES_DIRS="$HOME/.dotfiles"
-EXCLUDES="README.md LICENSE config firefox script vscode *.example"
+EXCLUDES="README.md LICENSE config/* firefox script vscode *.example **/*.example"
 UNDOTTED="bin"
