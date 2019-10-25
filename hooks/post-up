@@ -12,7 +12,6 @@ vim -u ~/.vimrc.bundles +PlugUpdate +PlugClean! +qa
 reset -Q
 
 # Remove broken symlinks
-find -L ~/.bash.d -type l -ls -exec rm {} +
 find -L ~/.zsh -type l -ls -exec rm {} +
 find -L ~ -type l -maxdepth 1 -ls -exec rm {} +
 
