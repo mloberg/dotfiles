@@ -91,5 +91,7 @@
     "intelephense.telemetry.enabled": false,
     "code-runner.enableAppInsights": false,
     "gitlens.advanced.telemetry.enabled": false,
-    "partialDiff.enableTelemetry": false
+    "partialDiff.enableTelemetry": false,
+    "alex.enable": true,
+    "terminal.integrated.rendererType": "dom"
 }
