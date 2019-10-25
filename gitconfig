@@ -34,6 +34,9 @@
   # Rename the current branch
   rename-branch = branch -m
 
+  # Unstage a file
+  unstage = restore --staged
+
   # Publish a branch to the remote
   publish = "!f() { git push --set-upstream ${1:-origin}; }; f"
 
