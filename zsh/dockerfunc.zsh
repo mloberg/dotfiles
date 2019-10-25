@@ -8,7 +8,7 @@ function aws() {
     -w /tmp/data \
     --log-driver none \
     --name aws \
-    jess/awscli "$@"
+    jess/awscli --profile "${AWS_PROFILE:-default}" "$@"
 }
 
 function jekyll() {
