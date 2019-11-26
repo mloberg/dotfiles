@@ -16,7 +16,6 @@
         "suppressResultsExplorerNotice": false,
         "suppressShowKeyBindingsNotice": true
     },
-    "gitlens.historyExplorer.enabled": true,
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
     "workbench.iconTheme": "vscode-icons",
@@ -28,6 +27,7 @@
     },
     "markdownlint.config": {
         "MD013": true,
+        "MD046": false,
         "no-hard-tabs": true
     },
     "php.suggest.basic": false,
@@ -92,6 +92,7 @@
     "code-runner.enableAppInsights": false,
     "gitlens.advanced.telemetry.enabled": false,
     "partialDiff.enableTelemetry": false,
-    "alex.enable": true,
-    "terminal.integrated.rendererType": "dom"
+    "terminal.integrated.rendererType": "dom",
+    "todo-tree.highlights.enabled": true,
+    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml"
 }

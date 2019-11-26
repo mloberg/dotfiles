@@ -32,4 +32,5 @@ cssho.vscode-svgviewer
 vscode-icons-team.vscode-icons
 ms-vsliveshare.vsliveshare
 johnpapa.vscode-peacock
-shinnn.alex
+ecodes.vscode-phpmd
+thenouillet.symfony-vscode

@@ -554,6 +554,9 @@ user_pref("browser.download.folderList", 2);
 // Always ask the user where to download
 user_pref("browser.download.useDownloadDir", false);
 
+// Disable Snippets (https://wiki.mozilla.org/Firefox/Projects/Firefox_Start/Snippet_Service)
+user_pref("browser.newtabpage.activity-stream.feeds.snippets", false);
+
 // Disable Activity Stream
 user_pref("browser.newtabpage.activity-stream.enabled", false);
 
