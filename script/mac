@@ -24,23 +24,7 @@ abort() {
   exit 1
 }
 
-ensureServiceRunning() {
-  local service="$1"
-  local _brew="brew services"
-
-  if [[ $* == *--sudo* ]]; then
-    _brew="sudo brew services"
-  fi
-
-  if $_brew list | grep "$service" | grep --quiet started; then
-    $_brew restart "${service}"
-  else
-    $_brew start "${service}"
-  fi
-}
-
 [ "$(uname -s)" != "Darwin" ] && abort "This only works on MacOS"
-[ "$(sw_vers -productVersion | awk -F '.' '{print $1 "." $2}')" != "10.14" ] && abort "This only works on MacOS 10.14"
 [ ! -r "$HOME/Library/Mail" ] && abort "Need full disk access"
 
 user "Hostname: "
@@ -74,7 +58,7 @@ RCRC="$HOME/.dotfiles/rcrc" rcup
 
 info "Set default shell to zsh"
 grep --quiet "$(command -v zsh)" /etc/shells || (command -v zsh | sudo tee -a /etc/shells)
-chsh -s "$(command -v zsh)"
+[ "$(command -v zsh)" == $SHELL ] || chsh -s "$(command -v zsh)"
 
 info "Configuring Vagrant to not require passwords"
 if [ ! -f /etc/sudoers.d/vagrant ]; then
@@ -88,9 +72,6 @@ Cmnd_Alias VAGRANT_HOSTS_REMOVE = $(command -v sed) -i -e /*/ d /etc/hosts
 EOF
 fi
 
-info "Turning Bluetooth off"
-m bluetooth disable || true
-
 user "Clear Dock? [y/N] "
 read -r clear
 if [[ "${clear}" =~ ^(y|Y)$ ]]; then
@@ -101,34 +82,43 @@ fi
 info "Updating software"
 sudo softwareupdate -i -a
 
-info "Setting up DNSCrypt"
-rm -f /usr/local/etc/dnscrypt-proxy.toml
-ln -s "$HOME/.dotfiles/config/dnscrypt-proxy.toml" /usr/local/etc/dnscrypt-proxy.toml
-ensureServiceRunning dnscrypt-proxy --sudo
+info "Setting MacOS configuration"
+~/.macos
 
-info "Setting up Dnsmasq"
-rm -f /usr/local/etc/dnsmasq.conf
-rm -f /usr/local/etc/resolv.dnsmasq.conf
-ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
-ln -s "$HOME/.dotfiles/config/resolv.dnsmasq.conf" /usr/local/etc/resolv.dnsmasq.conf
-ensureServiceRunning dnsmasq-dnssec --sudo
-sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
-networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setdnsservers "Wired" 127.0.0.1
-dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
+if [ ! -L /usr/local/etc/dnscrypt-proxy.toml ]; then
+  info "Setting up DNSCrypt"
+  rm -f /usr/local/etc/dnscrypt-proxy.toml
+  ln -s "$HOME/.dotfiles/config/dnscrypt-proxy.toml" /usr/local/etc/dnscrypt-proxy.toml
+  sudo brew services restart dnscrypt-proxy
+fi
 
-info "Setup Privoxy"
-rm -f /usr/local/etc/privoxy/config
-rm -f /usr/local/etc/privoxy/user.action
-ln -s "$HOME/.dotfiles/config/privoxy/config" /usr/local/etc/privoxy/config
-ln -s "$HOME/.dotfiles/config/privoxy/user.action" /usr/local/etc/privoxy/user.action
-ensureServiceRunning privoxy
-sudo networksetup -setwebproxy "Wi-Fi" 127.0.0.1 8118
-sudo networksetup -setsecurewebproxy "Wi-Fi" 127.0.0.1 8118
-networksetup -listallnetworkservices | grep Wired >/dev/null && sudo networksetup -setwebproxy "Wired" 127.0.0.1 8118 && sudo networksetup -setsecurewebproxy "Wired" 127.0.0.1 8118
+if [ ! -L /usr/local/etc/dnsmasq.conf ]; then
+  info "Setting up Dnsmasq"
+  rm -f /usr/local/etc/dnsmasq.conf
+  ln -s "$HOME/.dotfiles/config/dnsmasq.conf" /usr/local/etc/dnsmasq.conf
+  sudo brew services restart dnsmasq
+  sudo networksetup -setdnsservers "Wi-Fi" 127.0.0.1
+  warn "Unable to set the DNS servers on non Wi-Fi connections"
+  warn "Please do so manually with 127.0.0.1"
+  dig +dnssec icann.org | grep "status: NOERROR" >/dev/null || warn "Error in Dnsmasq configuration!"
+fi
+
+if [ ! -L /usr/local/etc/privoxy/config ]; then
+  info "Setup Privoxy"
+  rm -f /usr/local/etc/privoxy/config
+  rm -f /usr/local/etc/privoxy/user.action
+  ln -s "$HOME/.dotfiles/config/privoxy/config" /usr/local/etc/privoxy/config
+  ln -s "$HOME/.dotfiles/config/privoxy/user.action" /usr/local/etc/privoxy/user.action
+  brew services restart privoxy
+  sudo networksetup -setwebproxy "Wi-Fi" 127.0.0.1 8118
+  sudo networksetup -setsecurewebproxy "Wi-Fi" 127.0.0.1 8118
+  warn "Unable to set proxy settings on non Wi-Fi connections"
+  warn "Please do so manually with 127.0.0.1:8118"
+fi
 
 if ! grep --quiet "StevenBlack/hosts" /etc/hosts; then
-  info "Adding known bad hosts to /etc/hosts"
-  curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts >/dev/null
+ info "Adding known bad hosts to /etc/hosts"
+ curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sudo tee -a /etc/hosts >/dev/null
 fi
 
 if ! fdesetup status | grep --quiet On; then
@@ -141,21 +131,21 @@ if ! fdesetup status | grep --quiet On; then
 fi
 
 if ! sudo firmwarepasswd -check | grep --quiet Yes; then
-  user "Set Firmware Password? [y/N] "
-  read -r permission
-  [[ "${permission}" =~ ^(y|Y)$ ]] && sudo firmwarepasswd -setpasswd
+ user "Set Firmware Password? [y/N] "
+ read -r permission
+ [[ "${permission}" =~ ^(y|Y)$ ]] && sudo firmwarepasswd -setpasswd
 fi
 
 spctl kext-consent status | grep -q 'ENABLED' || warn "Kernel Extension User Consent not required"
 
 if system_profiler SPiBridgeDataType | grep 'Model Name:' | grep -q 'T2'; then
-  warn "EFI Firmware Integrity Check Not Supported by this Mac"
+ warn "EFI Firmware Integrity Check Not Supported by this Mac"
 else
-  /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
+ /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
 fi
 
 if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall ]; then
-  ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
+ ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
 fi
 
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"

@@ -33,4 +33,4 @@ vscode-icons-team.vscode-icons
 ms-vsliveshare.vsliveshare
 johnpapa.vscode-peacock
 ecodes.vscode-phpmd
-thenouillet.symfony-vscode
+TheNouillet.symfony-vscode
