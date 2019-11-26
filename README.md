@@ -38,6 +38,11 @@ and modify any part of it to fit your needs.
 * `wip` - Interactive rebase of unpushed commits
 * `standup` - [Recall what you did in the last day](https://github.com/kamranahmedse/git-standup)
 
+## other things
+
+* [font](https://dank.sh/)
+* [yubikey](https://github.com/drduh/YubiKey-Guide#using-keys)
+
 ## thanks
 
 inspiration/dotfiles taken from:
