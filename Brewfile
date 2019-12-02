@@ -84,6 +84,7 @@ when 'Apollo' # Personal laptop
   cask "ilok-license-manager"
   cask "guitar-pro"
   cask "protonvpn"
-when 'Artemis', 'Adrestia', 'Adestria' # Work laptop
+when 'Adestria' # Work laptop
   cask "slack"
+  mas "Jira", id: 1475897096
 end
