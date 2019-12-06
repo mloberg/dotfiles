@@ -62,6 +62,7 @@ cask "font-source-sans-pro"
 cask "google-chrome"
 cask "gpg-suite"
 cask "hyper"
+cask "insomnia"
 # cask "lunchy"
 cask "sequel-pro"
 cask "vagrant"
@@ -77,6 +78,7 @@ cask "do-not-disturb"
 cask "little-snitch"
 
 mas "Affinity Photo", id: 824183456
+mas "Irvue", id: 1039633667
 
 case `hostname`.strip
 when 'Apollo' # Personal laptop
