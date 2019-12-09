@@ -1,3 +1,4 @@
 *.local
 /vim/bundle/
 /.update
+/firefox/backup.js

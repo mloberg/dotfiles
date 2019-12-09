@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
+
 # Vim plugins
 if [ -d ~/.vim/autoload/plug.vim ]; then
   vim -E -s +PlugUpgrade +qa
@@ -26,14 +28,13 @@ antibody update
 antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/plugins.zsh"
 
 # VS Code setup
-settings_file="$HOME/Library/Application Support/Code/User/settings.json"
-[ -L "$settings_file" ] || (rm -f "$settings_file" && ln -s "$HOME/.dotfiles/vscode/settings.json" "$settings_file")
+vssettings="$HOME/Library/Application Support/Code/User/settings.json"
+[ -L "$vssettings" ] || (rm -f "$vssettings" && ln -s "$DIR/vscode/settings.json" "$vssettings")
 
 installed_exts=$(code --list-extensions)
 while read -r ext; do
   [[ "${installed_exts}" =~ $ext ]] || code --install-extension "$ext"
-done < "$HOME/.dotfiles/vscode/extensions.txt"
+done < "$DIR/vscode/extensions.txt"
 
-# We're assuming the default profile
-ffprofile=$(cd "$HOME/Library/Application Support/Firefox/Profiles" && cd $(ls | grep default) && pwd)
-[ -L "$ffprofile/user.js" ] || ln -s "$HOME/.dotfiles/firefox/user.js" "$ffprofile/user.js"
+# Firefox settings
+$DIR/firefox/user.js.sh
