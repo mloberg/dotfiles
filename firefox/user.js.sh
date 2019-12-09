@@ -18,6 +18,8 @@ if [ "$LOCAL_VERSION" != "$CURRENT_VERSION" ]; then
   printf "⚠️ \033[00;33mNew ghacks-user.js available (https://github.com/ghacksuserjs/ghacks-user.js/blob/master/user.js)\033[0m\n"
 fi
 
+echo "Firefox Profile: ${PROFILE}"
+
 # Backup existing user.js and install the new one
 [ -L "$PROFILE/user.js" ] && rm "$PROFILE/user.js"
 [ -f "$PROFILE/user.js" ] && cp "$PROFILE/user.js" "$SCRIPT_DIR/backup.js"

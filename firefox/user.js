@@ -13,9 +13,11 @@
 //   * https://ffprofile.com
 //   * https://github.com/drduh/config/blob/master/firefox.user.js
 
-user_pref("_user.js.parrot", "SUCCESS: No no he's not dead, he's, he's restin'!");
-
 /*** ghacks-user.js overrides ***/
+user_pref("_user.js.parrot", "OVERRIDE: All right then, if he's restin', I'll wake him up!");
+
+// 0102: set START to resume previous session
+ user_pref("browser.startup.page", 3);
 // 0105b: Disable downloading homepage snippets/messages from Mozilla
 user_pref("browser.newtabpage.activity-stream.disableSnippets", true);
 user_pref("browser.aboutHomeSnippets.updateUrl", "");
@@ -46,6 +48,8 @@ user_pref("network.allow-experiments", false);
   // user_pref("network.dns.disableIPv6", false);
 // 0708: disable FTP
 user_pref("network.ftp.enabled", false);
+// 0801: enable location bar using search
+user_pref("keyword.enabled", true);
 // 0901: disable password manager
 user_pref("signon.rememberSignons", false);
 
@@ -53,6 +57,8 @@ user_pref("signon.rememberSignons", false);
 user_pref("permissions.memory_only", true);
 // 1020: limit the number of closed tabs Firefox remembers
 user_pref("browser.sessionstore.max_tabs_undo", 5);
+// 1212: set OCSP fetch failures to soft-fail
+user_pref("security.OCSP.require", false);
 // 1602: send only the scheme, host, and port in the Referer header
 user_pref("network.http.referer.trimmingPolicy", 2);
 // 1603: don't send referer headers when following links across different domains
@@ -88,7 +94,11 @@ user_pref("security.dialog_enable_delay", 3000);
 user_pref("network.cookie.lifetimePolicy", 2);
 // 2731: enforce websites to ask to store data for offline use
 user_pref("offline-apps.allow_by_default", false);
+// 2803: don't clear history on close
+user_pref("privacy.clearOnShutdown.history", false);
 
+// 4504: disable RFP letterboxing
+user_pref("privacy.resistFingerprinting.letterboxing", false);
 // 4601: Spoof dual-core CPU
 user_pref("dom.maxHardwareConcurrency", 2);
 // 4602: Disable resource timing API
@@ -106,6 +116,8 @@ user_pref("general.buildID.override", "20100101");
 user_pref("browser.startup.homepage_override.buildID", "20100101");
 
 /*** Other custom settings ***/
+user_pref("_user.js.parrot", "USER: You stunned him, just as he was wakin' up!");
+
 // Disable network API (helps fingerprinting prevention)
 user_pref("dom.network.enabled", false);
 
@@ -247,15 +259,6 @@ user_pref("browser.offline-apps.notify", true);
 // Limit history leaks via enumeration (PER TAB: back/forward)
 user_pref("browser.sessionhistory.max_entries", 10);
 
-// Enable HSTS preload list (pre-set HSTS sites list provided by Mozilla)
-user_pref("network.stricttransportsecurity.preloadlist", true);
-
-// Enable OCSP Must-Staple support
-user_pref("security.ssl.enable_ocsp_must_staple", true);
-
-// Require a valid OCSP response for OCSP enabled certificates
-// user_pref("security.OCSP.require", true);
-
 // set default permissions
 // setting these could lead to fingerprinting via permissions API
 // 0=always ask (default), 1=allow, 2=block)
@@ -270,3 +273,5 @@ user_pref("security.ssl.enable_ocsp_must_staple", true);
 // user_pref("network.trr.mode", 2);
 // user_pref("network.trr.uri", "https://cloudflare-dns.com/dns-query");
 // user_pref("network.trr.bootstrapAddress", "1.1.1.1");
+
+user_pref("_user.js.parrot", "SUCCESS: Remarkable bird, the Norwegian Blue, idn'it? Beautiful plumage!");
