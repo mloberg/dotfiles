@@ -15,6 +15,7 @@ function _update_dotfile_update() {
 }
 
 function _auto_update() {
+  [ "$(ps aux | grep rcup | grep -v grep)" != "" ] && return
   [ ! -f "$DOTFILES/.update" ] && _update_dotfile_update && return
   . "$DOTFILES/.update"
   [ -z "$LAST_EPOCH" ] && _update_dotfile_update && return
@@ -48,7 +49,7 @@ SPACESHIP_PROMPT_ORDER=(
   user          # Username section
   dir           # Current directory section
   host          # Hostname section
-  git_simplified
+  git           # Git section (git_branch + git_status)
   package       # Package version
   node          # Node.js section
   ruby          # Ruby section
@@ -56,7 +57,7 @@ SPACESHIP_PROMPT_ORDER=(
   golang        # Go section
   php           # PHP section
   rust          # Rust section
-  docker        # Docker section
+  # docker        # Docker section
   aws           # Amazon Web Services section
   venv          # virtualenv section
   pyenv         # Pyenv section

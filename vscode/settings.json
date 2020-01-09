@@ -94,5 +94,6 @@
     "partialDiff.enableTelemetry": false,
     "terminal.integrated.rendererType": "dom",
     "todo-tree.highlights.enabled": true,
-    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml"
+    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml",
+    "vsicons.dontShowNewVersionMessage": true
 }
