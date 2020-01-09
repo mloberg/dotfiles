@@ -66,7 +66,7 @@ cask "insomnia"
 # cask "lunchy"
 cask "sequel-pro"
 cask "vagrant"
-cask "virtualbox"
+# cask "virtualbox" # disabled until vagrant supports 6.1
 cask "visual-studio-code"
 
 # Security apps
