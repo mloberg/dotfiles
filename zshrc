@@ -43,36 +43,6 @@ unset config_file
 # reload completions
 autoload -Uz compinit && compinit
 
-# Prompt (https://github.com/denysdovhan/spaceship-prompt)
-SPACESHIP_PROMPT_ORDER=(
-  time          # Time stamps section
-  user          # Username section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  package       # Package version
-  node          # Node.js section
-  ruby          # Ruby section
-  elixir        # Elixir section
-  golang        # Go section
-  php           # PHP section
-  rust          # Rust section
-  # docker        # Docker section
-  aws           # Amazon Web Services section
-  venv          # virtualenv section
-  pyenv         # Pyenv section
-  kubecontext   # Kubectl context section
-  terraform     # Terraform workspace section
-  exec_time     # Execution time
-  line_sep      # Line break
-  osx_battery   # Battery level and status
-  vi_mode       # Vi-mode indicator
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  char          # Prompt character
-)
-SPACESHIP_DIR_TRUNC_PREFIX=…/
-
 # autonotify config (https://github.com/MichaelAquilina/zsh-auto-notify)
 AUTO_NOTIFY_THRESHOLD=30
 AUTO_NOTIFY_IGNORE+=("docker" "vagrant")
@@ -106,6 +76,10 @@ setopt no_clobber
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # Prevent the less hist file from being made
 export LESSHISTFILE="/dev/null"
+
+# Prompt
+export STARSHIP_CONFIG=~/.starship.toml
+eval "$(starship init zsh)"
 
 # Local config
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
