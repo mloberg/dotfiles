@@ -26,7 +26,7 @@
   undo = reset --soft HEAD^
 
   # Make sure current branch is up to date
-  up = pull --rebase --prune
+  up = pull --rebase --prune --autostash
 
   # Create new branch
   new = checkout -b

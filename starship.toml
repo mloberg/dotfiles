@@ -7,3 +7,6 @@ use_symbol_for_status = true
 full_symbol = "🔋"
 charging_symbol = "⚡️"
 discharging_symbol = "💀"
+
+[directory]
+truncate_to_repo = false
