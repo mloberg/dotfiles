@@ -15,7 +15,7 @@ There are a few settings that need to be set manually.
 
 ### Search
 
-* Change Default Search Engine to _DuckDuckGo_.
+* Change Default Search Engine to _DuckDuckGo_ and add a keyword (`s`)
 * Remove all other One-Click Search Engines
 
 ## Extensions

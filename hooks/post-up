@@ -37,4 +37,4 @@ while read -r ext; do
 done < "$DIR/vscode/extensions.txt"
 
 # Firefox settings
-$DIR/firefox/user.js.sh
+$DIR/firefox/updater.sh -lusv -o "$DIR/firefox/user.js"
