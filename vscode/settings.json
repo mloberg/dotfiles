@@ -95,5 +95,19 @@
     "terminal.integrated.rendererType": "dom",
     "todo-tree.highlights.enabled": true,
     "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml",
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "terraform.indexing": {
+        "enabled": false,
+        "liveIndexing": false,
+        "delay": 500,
+        "exclude": [
+            ".terraform/**/*",
+            "**/.terraform/**/*"
+        ]
+    },
+    "terraform.languageServer": {
+        "enabled": true,
+        "args": []
+    }
 }
