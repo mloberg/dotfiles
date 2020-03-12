@@ -83,7 +83,7 @@ info "Updating software"
 sudo softwareupdate -i -a
 
 info "Setting MacOS configuration"
-~/.macos
+~/.dotfiles/bin/macos
 
 if [ ! -L /usr/local/etc/dnscrypt-proxy.toml ]; then
   info "Setting up DNSCrypt"
