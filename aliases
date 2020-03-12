@@ -1,4 +1,3 @@
-alias dotfiles="rcup"
 alias set-defaults="~/.macos"
 
 # PHP debugging

@@ -1,6 +1,6 @@
 alias po="p open"
 
-function p() {
+p() {
     cmd="cd"
     project="$1"
 
