@@ -1,59 +1,69 @@
 # Docker helper functions
 
-function docker-enter() {
+docker-enter() {
   docker exec -it "$@" /bin/bash
 }
 
-function docker-clean() {
-  docker ps --filter status=exited -q | xargs docker rm --volumes
-  docker images --filter dangling=true -q | xargs docker rmi
+docker-clean() {
+  local containers
+  containers=("${(@f)$(docker ps -aq 2>/dev/null)}")
+  docker rm "${containers[@]}" 2>/dev/null
+  local volumes
+  volumes=("${(@f)$(docker ps --filter status=exited -q 2>/dev/null)}")
+	docker rm -v "${volumes[@]}" 2>/dev/null
+  local images
+  images=("${(@f)$(docker images --filter dangling=true -q 2>/dev/null)}")
+  docker rmi "${images[@]}" 2>/dev/null
 }
 
-# dcg ls|list
-# dcg status [service]
-# dcg start [service]
-# dcg stop [service]
-# dcg run [service] [command]
-function dcg() {
-  local ACTION="$1"
-  local SERVICE="$2"
+del_stopped() {
+  local name=$1
+  local state
+  state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
 
-  if [[ "$ACTION" == "ls" || "$ACTION" == "list" ]]; then
-    docker-compose --file ~/.docker-compose.yml ps --services
-    return
-  fi
-
-  if [[ -z "$ACTION" || -z "$SERVICE" ]]; then
-    >&2 echo "Usage: dcg [start|stop|status|run] [service]"
-    return 1
-  fi
-
-  case "$ACTION" in
-    status)
-      if docker-compose --file ~/.docker-compose.yml ps | grep "${SERVICE}" | grep -q Up; then
-        echo "Service ${SERVICE} is running"
-      else
-        echo "Service ${SERVICE} is stopped"
-      fi
-      ;;
-    start)
-      docker-compose --file ~/.docker-compose.yml up -d "${SERVICE}"
-      ;;
-    stop)
-      docker-compose --file ~/.docker-compose.yml rm -sfv "${SERVICE}"
-      ;;
-    run)
-      docker-compose --file ~/.docker-compose.yml exec "${SERVICE}" "${3:-bash}"
-      ;;
-    purge)
-      docker-compose --file ~/.docker-compose.yml down -v
-      ;;
-    *)
-      >&2 echo "Usage: dcg [start|stop|status|run] [service]"
-      return 1
-      ;;
-  esac
+  if [[ "$state" == "false" ]]; then
+		docker rm "$name"
+	fi
 }
 
-alias redis-cli="dcg run redis redis-cli"
-alias portainer="(dcg status portainer | grep -q running || dcg start portainer) && open http://localhost:9000"
+# shell wrappers for docker run commands
+# Inspiration taken from: https://github.com/jessfraz/dotfiles/blob/master/.dockerfunc
+
+redis() {
+  del_stopped redis
+  docker run -d \
+    -p 6379:6379 \
+    --name redis \
+    redis:alpine redis-server --appendonly yes
+}
+alias redis-cli="docker exec -it redis redis-cli"
+
+portainer() {
+  del_stopped portainer
+  docker run -d \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -p 9000:9000 \
+    --name portainer \
+    portainer/portainer -H unix:///var/run/docker.sock
+  echo
+  echo "Portainer started on http://localhost:9000"
+}
+
+jekyll() {
+  cache=
+  test -f Gemfile && cache="-v $(pwd)/vendor/bundle:/usr/local/bundle"
+  docker run --rm -it \
+    -v "$(pwd):/srv/jekyll" "$cache" \
+    -p 4000:4000 \
+    jekyll/jekyll:"${JEKYLL_VERSION:-4.0}" \
+    jekyll "$@"
+}
+
+godev() {
+  [ -z "$GO_VERSION" ] && test -f go.mod && GO_VERSION=$(awk '/^go [0-9\.]/{print $2}' go.mod)
+  docker run --rm -it \
+    -v "${HOME}/.netrc:/root/.netrc" \
+    -v "$(pwd):/app" \
+    -w /app \
+    mlo/golang:"${GO_VERSION:-1.14}" "$@"
+}
