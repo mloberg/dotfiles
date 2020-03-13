@@ -19,11 +19,8 @@ docker-clean() {
 del_stopped() {
   local name=$1
   local state
-  state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
-
-  if [[ "$state" == "false" ]]; then
-		docker rm "$name"
-	fi
+  state=$(docker inspect --format "{{.State.Running}}" "$name" 2>/dev/null || true)
+  [ "$state" == "false" ] && docker rm "$name"
 }
 
 # shell wrappers for docker run commands

@@ -44,10 +44,6 @@ brew "vim"
 brew "wget"
 brew "zsh"
 
-brew "dnsmasq"
-brew "dnscrypt-proxy"
-brew "privoxy"
-
 cask "1password"
 cask "aerial"
 cask "brave-browser"
