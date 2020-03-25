@@ -29,7 +29,9 @@ antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/80-plugins.zsh"
 
 # VS Code setup
 vssettings="$HOME/Library/Application Support/Code/User/settings.json"
+vskeybindings="$HOME/Library/Application Support/Code/User/keybindings.json"
 [ -L "$vssettings" ] || (rm -f "$vssettings" && ln -s "$DIR/vscode/settings.json" "$vssettings")
+[ -L "$vskeybindings" ] || (rm -f "$vskeybindings" && ln -s "$DIR/vscode/keybindings.json" "$vskeybindings")
 
 installed_exts=$(code --list-extensions)
 while read -r ext; do

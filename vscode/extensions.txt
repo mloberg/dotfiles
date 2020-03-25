@@ -34,3 +34,4 @@ ms-vsliveshare.vsliveshare
 johnpapa.vscode-peacock
 ecodes.vscode-phpmd
 TheNouillet.symfony-vscode
+calebporzio.better-phpunit
