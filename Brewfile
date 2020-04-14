@@ -43,6 +43,7 @@ brew "tldr"
 brew "vim"
 brew "wget"
 brew "zsh"
+brew "zsh-completions"
 
 cask "1password"
 cask "aerial"
@@ -71,6 +72,10 @@ cask "tableplus"
 cask "vagrant"
 cask "virtualbox"
 cask "visual-studio-code"
+
+# Quicklook plugins
+cask "qlmarkdown"
+cask "quicklook-json"
 
 # Security apps
 cask "knockknock"
