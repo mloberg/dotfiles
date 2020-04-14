@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
+
+confs=(settings.json keybindings.json)
+for conf in ${confs[*]}; do
+  [ -L "$HOME/Library/Application Support/Code/User/$conf" ] && continue
+  ln -s "$DIR/vscode/$conf" "$HOME/Library/Application Support/Code/User/$conf"
+done
+
+installed=$(code --list-extensions)
+while read -r ext; do
+  [[ "${installed}" =~ $ext ]] || code --install-extension "$ext"
+done < "$DIR/vscode/extensions.txt"

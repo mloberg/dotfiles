@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# https://getantibody.github.io/
+
+antibody update
+antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/80-plugins.zsh"
