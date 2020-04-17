@@ -49,6 +49,9 @@
   # Delete all branches (except develop & master) that have been merged into the current branch
   delete-merged = "!git branch --merged | grep -vE '\\*|master|develop' | xargs -n 1 git branch -d"
 
+  # Delete all branches that no longer have a remote
+  sync = "!git fetch --prune && git branch -vv --no-color | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D"
+
   # Credit the author of the last commit
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
