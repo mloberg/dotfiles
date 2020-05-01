@@ -1,5 +1,4 @@
 robbyrussell/oh-my-zsh path:lib
-robbyrussell/oh-my-zsh path:plugins/git-auto-fetch
 robbyrussell/oh-my-zsh path:plugins/pip
 
 djui/alias-tips
