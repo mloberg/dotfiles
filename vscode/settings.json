@@ -1,11 +1,54 @@
 {
+    // visuals
     "editor.fontFamily": "Dank Mono",
     "editor.fontSize": 14,
     "editor.fontLigatures": true,
+    "workbench.iconTheme": "vscode-icons",
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.colorTheme": "Yoncé",
+    "workbench.colorCustomizations": {
+        "[Yoncé]": {
+            "editorSuggestWidget.selectedBackground": "#FC438430"
+        }
+    },
+    "explorer.openEditors.visible": 0,
+    "workbench.activityBar.visible": false,
+    // "workbench.editor.showTabs": false,
+    // "workbench.sideBar.location": "right",
+    "workbench.statusBar.visible": false,
+    "editor.minimap.enabled": false,
+    "editor.rulers": [80,120],
+
+    // whitespace handling
     "files.insertFinalNewline": true,
     "files.trimFinalNewlines": true,
-    "explorer.openEditors.visible": 0,
-    "window.zoomLevel": 0,
+    "files.trimTrailingWhitespace": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+
+    // language specific settings
+    "go.useLanguageServer": true,
+    "markdownlint.config": {
+        "MD013": true,
+        "MD046": false,
+        "no-hard-tabs": true
+    },
+    "php.suggest.basic": false,
+    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml",
+    "terraform.indexing": {
+        "enabled": false,
+        "liveIndexing": false,
+        "delay": 500,
+        "exclude": [
+            ".terraform/**/*",
+            "**/.terraform/**/*"
+        ]
+    },
+    "terraform.languageServer": {
+        "enabled": true,
+        "args": []
+    },
+
+    // extension config
     "gitlens.advanced.messages": {
         "suppressCommitHasNoPreviousCommitWarning": false,
         "suppressCommitNotFoundWarning": false,
@@ -18,20 +61,6 @@
     },
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
-    "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "Yoncé",
-    "workbench.colorCustomizations": {
-        "[Yoncé]": {
-            "editorSuggestWidget.selectedBackground": "#FC438430"
-        }
-    },
-    "markdownlint.config": {
-        "MD013": true,
-        "MD046": false,
-        "no-hard-tabs": true
-    },
-    "php.suggest.basic": false,
-    "go.useLanguageServer": true,
     "peacock.favoriteColors": [
         {
             "name": "Angular Red",
@@ -86,29 +115,16 @@
             "value": "#42b883"
         }
     ],
+    "todo-tree.highlights.enabled": true,
+    "todo-tree.tree.showScanModeButton": false,
+
+    // disable telemetry
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "intelephense.telemetry.enabled": false,
     "code-runner.enableAppInsights": false,
     "gitlens.advanced.telemetry.enabled": false,
     "partialDiff.enableTelemetry": false,
-    "terminal.integrated.rendererType": "dom",
-    "todo-tree.highlights.enabled": true,
-    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml",
-    "vsicons.dontShowNewVersionMessage": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "terraform.indexing": {
-        "enabled": false,
-        "liveIndexing": false,
-        "delay": 500,
-        "exclude": [
-            ".terraform/**/*",
-            "**/.terraform/**/*"
-        ]
-    },
-    "terraform.languageServer": {
-        "enabled": true,
-        "args": []
-    },
-    "workbench.activityBar.visible": false
+    "terraform.telemetry.enabled": false,
+    "window.zoomLevel": 0,
 }

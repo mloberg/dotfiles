@@ -22,5 +22,14 @@
     {
         "command": "better-phpunit.run-file",
         "key": "cmd+shift+t"
+    },
+    {
+        "command": "git.commit",
+        "when": "activeViewlet == 'workbench.view.scm'",
+        "key": "cmd+enter"
+    },
+    {
+        "command": "workbench.action.terminal.toggleTerminal",
+        "key": "cmd+t"
     }
 ]
