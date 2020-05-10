@@ -1,6 +1,4 @@
-# PHP debugging
-alias xon='export XDEBUG_CONFIG="idekey=PHPSTORM"'
-alias xoff='unset XDEBUG_CONFIG'
+alias dotfiles=rcup
 
 # grc overides for ls
 #   Made possible through contributions from generous benefactors like
@@ -31,7 +29,6 @@ if [ ! -x "$(command -v tree >/dev/null)" ]; then
 fi
 
 alias grep='grep --color'
-alias help='man'
 
 # request confirmation
 alias rm='rm -i'
