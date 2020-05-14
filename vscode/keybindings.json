@@ -1,27 +1,17 @@
 [
+    // workbench navigation
     {
         "command": "workbench.view.explorer",
         "key": "cmd+shift+e"
     },
     {
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "activeViewlet == 'workbench.view.explorer'",
+        "key": "cmd+shift+e"
+    },
+    {
         "command": "workbench.view.scm",
         "key": "cmd+shift+g"
-    },
-    {
-        "command": "workbench.action.toggleZenMode",
-        "key": "cmd+k cmd+z"
-    },
-    {
-        "command": "vscode-commitizen.commit",
-        "key": "cmd+k cmd+g"
-    },
-    {
-        "command": "better-phpunit.run",
-        "key": "cmd+k cmd+t"
-    },
-    {
-        "command": "better-phpunit.run-file",
-        "key": "cmd+shift+t"
     },
     {
         "command": "git.commit",
@@ -31,5 +21,52 @@
     {
         "command": "workbench.action.terminal.toggleTerminal",
         "key": "cmd+t"
+    },
+    {
+        "command": "workbench.action.toggleZenMode",
+        "key": "cmd+k cmd+z"
+    },
+
+    // File Explorer
+    {
+        "key": "cmd+d",
+        "command": "duplicate.execute",
+        "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+    },
+    {
+        "key": "cmd+n",
+        "command": "explorer.newFile",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "shift+cmd+n",
+        "command": "explorer.newFolder",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+    {
+        "key": "cmd+r",
+        "command": "workbench.files.action.refreshFilesExplorer",
+        "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus"
+    },
+
+    // Plugin shortcuts
+    {
+        "command": "vscode-commitizen.commit",
+        "key": "cmd+k cmd+g"
+    },
+    {
+        "command": "better-phpunit.run",
+        "when": "resourceExtname == .php",
+        "key": "cmd+k cmd+t"
+    },
+    {
+        "command": "better-phpunit.run-file",
+        "when": "resourceExtname == .php",
+        "key": "cmd+k cmd+f"
+    },
+    {
+        "command": "go.test.cursor",
+        "when": "resourceExtname == .go",
+        "key": "cmd+k cmd+t"
     }
 ]

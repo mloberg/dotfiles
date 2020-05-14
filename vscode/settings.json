@@ -3,7 +3,7 @@
     "editor.fontFamily": "Dank Mono",
     "editor.fontSize": 14,
     "editor.fontLigatures": true,
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "vscode-icons", // `null` for no icons
     "vsicons.dontShowNewVersionMessage": true,
     "workbench.colorTheme": "Yoncé",
     "workbench.colorCustomizations": {
@@ -14,7 +14,7 @@
     "explorer.openEditors.visible": 0,
     "workbench.activityBar.visible": false,
     // "workbench.editor.showTabs": false,
-    // "workbench.sideBar.location": "right",
+    "workbench.sideBar.location": "right",
     "workbench.statusBar.visible": false,
     "editor.minimap.enabled": false,
     "editor.rulers": [80,120],
