@@ -58,5 +58,7 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE"
 
 alias extract="dtrx"
 
+alias standup="cd ~/src && git standup -m 3"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
