@@ -33,7 +33,7 @@
         "no-hard-tabs": true
     },
     "php.suggest.basic": false,
-    "phpmd.rules": "/Users/mloberg/.dotfiles/config/php/phpmd.xml",
+    "phpmd.rules": "~/.dotfiles/config/php/phpmd.xml",
     "terraform.indexing": {
         "enabled": false,
         "liveIndexing": false,
