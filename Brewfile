@@ -5,6 +5,8 @@ tap "homebrew/cask-versions"
 tap "thoughtbot/formulae"
 tap "getantibody/tap"
 
+tags = (ENV["HOMEBREW_TAGS"] || "").split(" ")
+
 brew "ack"
 brew "antibody"
 brew "aspell"
@@ -17,7 +19,7 @@ brew "git-standup"
 brew "go"
 brew "gron"
 brew "httpie"
-brew "imagemagick"
+brew "imagemagick" if tags.include? "design"
 brew "jq"
 brew "lesspipe"
 brew "m-cli"
@@ -52,7 +54,6 @@ cask "brave-browser"
 cask "caffeine"
 cask "dash"
 cask "docker"
-cask "dropbox"
 cask "firefox"
 cask "font-hack-nerd-font"
 cask "font-fira-code"
@@ -61,17 +62,16 @@ cask "font-lato"
 cask "font-monoid"
 cask "font-source-code-pro"
 cask "font-source-sans-pro"
-cask "google-chrome"
 cask "gpg-suite"
 cask "hyper"
-cask "imagealpha"
-cask "imageoptim"
+cask "imagealpha" if tags.include? "design"
+cask "imageoptim" if tags.include? "design"
 cask "insomnia"
 # cask "lunchy"
 cask "sequel-pro"
 cask "tableplus"
-cask "vagrant"
-cask "virtualbox"
+cask "vagrant" if tags.include? "vagrant"
+cask "virtualbox" if tags.include? "vagrant"
 cask "visual-studio-code"
 
 # Quicklook plugins
@@ -80,22 +80,16 @@ cask "quicklook-json"
 
 # Security apps
 cask "knockknock"
-cask "blockblock"
-cask "dhs"
+cask "blockblock" if tags.include? "harden"
+cask "dhs" if tags.include? "harden"
 cask "oversight"
 cask "do-not-disturb"
-cask "little-snitch"
+cask "little-snitch" if tags.include? "harden"
+cask "protonvpn" if tags.include? "harden"
 
-mas "Affinity Photo", id: 824183456
+mas "Affinity Photo", id: 824183456  if tags.include? "design"
 mas "Irvue", id: 1039633667
+# mas "Jira", id: 1475897096
 
-case `hostname`.strip
-when 'Apollo' # Personal laptop
-  cask "ableton-live-suite9"
-  cask "ilok-license-manager"
-  cask "guitar-pro"
-  cask "protonvpn"
-when 'Adestria' # Work laptop
-  cask "slack"
-  mas "Jira", id: 1475897096
-end
+cask "ilok-license-manager" if tags.include? "music"
+cask "guitar-pro" if tags.include? "music"
