@@ -1,5 +1,7 @@
 alias po="p open"
 
+[ -f "$HOME/.projects" ] || touch "$HOME/.projects"
+
 p() {
     cmd="cd"
     project="$1"
