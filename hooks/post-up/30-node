@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-N_PREFIX="$HOME/.n" PATH="$N_PREFIX/bin:$PATH" n latest
