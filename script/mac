@@ -59,6 +59,7 @@ RCRC="$HOME/.dotfiles/rcrc" rcup
 info "Set default shell to zsh"
 grep --quiet "$(command -v zsh)" /etc/shells || (command -v zsh | sudo tee -a /etc/shells)
 [ "$(command -v zsh)" == "$SHELL" ] || chsh -s "$(command -v zsh)"
+chmod go-w $(brew --prefix)/share/zsh-completions
 
 user "Clear Dock? [y/N] "
 read -r clear
