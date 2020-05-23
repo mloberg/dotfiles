@@ -5,8 +5,6 @@ tap "homebrew/cask-versions"
 tap "thoughtbot/formulae"
 tap "getantibody/tap"
 
-tags = (ENV["HOMEBREW_TAGS"] || "").split(" ")
-
 brew "ack"
 brew "antibody"
 brew "aspell"
@@ -19,7 +17,6 @@ brew "git-standup"
 brew "go"
 brew "gron"
 brew "httpie"
-brew "imagemagick" if tags.include? "design"
 brew "jq"
 brew "lesspipe"
 brew "m-cli"
@@ -55,23 +52,12 @@ cask "caffeine"
 cask "dash"
 cask "docker"
 cask "firefox"
-cask "font-hack-nerd-font"
-cask "font-fira-code"
-cask "font-fira-mono-for-powerline"
-cask "font-lato"
-cask "font-monoid"
-cask "font-source-code-pro"
-cask "font-source-sans-pro"
 cask "gpg-suite"
 cask "hyper"
-cask "imagealpha" if tags.include? "design"
-cask "imageoptim" if tags.include? "design"
 cask "insomnia"
 # cask "lunchy"
-cask "sequel-pro"
+# cask "sequel-pro"
 cask "tableplus"
-cask "vagrant" if tags.include? "vagrant"
-cask "virtualbox" if tags.include? "vagrant"
 cask "visual-studio-code"
 
 # Quicklook plugins
@@ -80,16 +66,11 @@ cask "quicklook-json"
 
 # Security apps
 cask "knockknock"
-cask "blockblock" if tags.include? "harden"
-cask "dhs" if tags.include? "harden"
 cask "oversight"
 cask "do-not-disturb"
-cask "little-snitch" if tags.include? "harden"
-cask "protonvpn" if tags.include? "harden"
 
-mas "Affinity Photo", id: 824183456  if tags.include? "design"
+# Mac Apps
 mas "Irvue", id: 1039633667
-# mas "Jira", id: 1475897096
 
-cask "ilok-license-manager" if tags.include? "music"
-cask "guitar-pro" if tags.include? "music"
+localbrew = "#{Dir.home}/.Brewfile.local"
+instance_eval(File.read(localbrew)) if File.exists?(localbrew)
