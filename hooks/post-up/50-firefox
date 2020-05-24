@@ -2,4 +2,7 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
 
-"$DIR/firefox/updater.sh" -lusv -o "$DIR/firefox/user.js"
+PROFILE="$HOME/.firefox"
+[ -f "$PROFILE/prefs.js" ] || /Applications/Firefox.app/Contents/MacOS/firefox -CreateProfile "mloberg $PROFILE"
+
+"$DIR/firefox/updater.sh" -p "$PROFILE" -usv -o "$DIR/firefox/overrides.js,$DIR/firefox/local.js"
