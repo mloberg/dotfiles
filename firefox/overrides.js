@@ -4,8 +4,6 @@ user_pref("browser.startup.page", 3);
 // 0302a: auto-install Firefox updates
 user_pref("app.update.auto", false);
 
-// 0701: enable IPv6
-user_pref("network.dns.disableIPv6", false);
 // 0708: disable FTP
 user_pref("network.ftp.enabled", false);
 
