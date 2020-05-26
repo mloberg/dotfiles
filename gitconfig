@@ -61,6 +61,9 @@
   # Squash the current branch (for merge request) (git squash master origin)
   squash = "!s() { git fetch; git rebase -i ${2:-origin}/${1:-master}; }; s"
 
+  # Show summary of commits
+  summary = log --name-status
+
 [apply]
   whitespace = nowarn
 
