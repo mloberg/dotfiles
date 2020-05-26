@@ -21,7 +21,7 @@ user_pref("network.http.referer.trimmingPolicy", 2);
 // 1603: always send a referer
 // This breaks things like iCloud and Atlassian
 // Instead, use a plugin to manage this which has an allow list
-user_pref("network.http.referer.XOriginPolicy", 1);
+user_pref("network.http.referer.XOriginPolicy", 0);
 // 1604: limit referer to only send the scheme, host, and port
 user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 
