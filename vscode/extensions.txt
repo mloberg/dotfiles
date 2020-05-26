@@ -37,3 +37,4 @@ TheNouillet.symfony-vscode
 calebporzio.better-phpunit
 gruntfuggly.todo-tree
 knisterpeter.vscode-commitizen
+travisthetechie.write-good-linter
