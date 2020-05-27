@@ -1,4 +1,5 @@
 set encoding=utf-8
+set backspace=2
 set nobackup
 set nowritebackup
 set noswapfile
