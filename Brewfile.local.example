@@ -1,14 +1,14 @@
 # Customize homebrew bundle for personal/work computer
 #
-# uncomment what you need or add additional items
+# uncomment what you need or add more items
 
 # RECOMMENDED, but sometimes doesn't play nice with corporate security tools
-cask "blockblock"
-cask "dhs"
-cask "little-snitch"
-cask "protonvpn"
+# cask "blockblock"
+# cask "dhs"
+# cask "little-snitch"
+# cask "protonvpn"
 
-# "Design" things
+# "Design" programs
 # brew "imagemagick"
 # cask "imagealpha"
 # cask "imageoptim"
