@@ -3,4 +3,5 @@
 # https://getantibody.github.io/
 
 antibody update
-antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/80-plugins.zsh"
+rm -f "$HOME/.zsh/80-plugins.zsh"
+antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/40-plugins.zsh"

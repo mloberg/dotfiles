@@ -1,9 +1,12 @@
 export LANG=en_US.UTF-8
 
-# _ and - will be interchangeable.
-HYPHEN_INSENSITIVE="true"
-# enable command auto-correction.
-ENABLE_CORRECTION="true"
+# autocorrect commands
+alias cp='nocorrect cp'
+alias man='nocorrect man'
+alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
+alias sudo='nocorrect sudo'
+setopt correct_all
 
 # Kill all child processes when we exit, don't leave them running
 unsetopt no_hup
@@ -17,6 +20,9 @@ unsetopt nomatch
 
 # disallow overwriting files with >
 setopt no_clobber
+
+# recognize comments
+setopt interactivecomments
 
 # make less more friendly for non-text input files, see lesspipe(1)
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
