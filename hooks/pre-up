@@ -3,7 +3,16 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )"
 
 if [ ! -f "$DIR/gitconfig.local" ]; then
-  printf "⚠️ \033[00;33mMissing ~/.dotfiles/gitconfig.local\033[0m\n"
+  cp "$DIR/gitconfig.local.example" "$DIR/gitconfig.local"
+  printf "⚠️ \033[00;33mCreated ~/.dotfiles/gitconfig.local\033[0m\n"
 fi
 
-[ -f "$HOME/.zsh/oh-my-zsh.sh" ] && rm -rf ~/.zsh
+if [ ! -f "$DIR/Brewfile.local" ]; then
+  cp "$DIR/Brewfile.local.example" "$DIR/Brewfile.local"
+  printf "⚠️ \033[00;33mCreated ~/.dotfiles/Brewfile.local\033[0m\n"
+fi
+
+if [ ! -f "$DIR/zshrc.local" ]; then
+  cp "$DIR/zshrc.local.example" "$DIR/zshrc.local"
+  printf "⚠️ \033[00;33mCreated ~/.dotfiles/zshrc.local\033[0m\n"
+fi
