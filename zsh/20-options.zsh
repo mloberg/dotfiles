@@ -1,5 +1,7 @@
 export LANG=en_US.UTF-8
 
+setopt extended_glob
+
 # autocorrect commands
 alias cp='nocorrect cp'
 alias man='nocorrect man'
