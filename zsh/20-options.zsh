@@ -26,6 +26,9 @@ setopt no_clobber
 # recognize comments
 setopt interactivecomments
 
+# don't print a warning message if a mail file has been accessed
+unsetopt mail_warning
+
 # make less more friendly for non-text input files, see lesspipe(1)
 export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # Prevent the less hist file from being made
