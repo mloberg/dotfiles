@@ -18,6 +18,11 @@
     "workbench.statusBar.visible": false,
     "editor.minimap.enabled": false,
     "editor.rulers": [80,120],
+    "window.zoomLevel": 0,
+
+    // functionality
+    "files.autoSave": "onWindowChange",
+    "files.hotExit": "onExitAndWindowClose",
 
     // whitespace handling
     "files.insertFinalNewline": true,
@@ -26,6 +31,7 @@
     "diffEditor.ignoreTrimWhitespace": false,
 
     // language specific settings
+    "editor.renameOnType": true,
     "go.useLanguageServer": true,
     "markdownlint.config": {
         "MD013": true,
@@ -117,6 +123,10 @@
     ],
     "todo-tree.highlights.enabled": true,
     "todo-tree.tree.showScanModeButton": false,
+    "typescript.suggest.paths": false,
+    "ecs.executablePath": "~/bin/ecs",
+    "ecs.configPath": "~/.dotfiles/config/php/ecs.yaml",
+    "commitizen.quoteMessageInGitCommit": false,
 
     // disable telemetry
     "telemetry.enableCrashReporter": false,
@@ -126,5 +136,4 @@
     "gitlens.advanced.telemetry.enabled": false,
     "partialDiff.enableTelemetry": false,
     "terraform.telemetry.enabled": false,
-    "window.zoomLevel": 0,
 }

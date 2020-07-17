@@ -8,7 +8,7 @@ for conf in ${confs[*]}; do
   ln -s "$DIR/vscode/$conf" "$HOME/Library/Application Support/Code/User/$conf"
 done
 
-installed=$(code --list-extensions)
-while read -r ext; do
-  [[ "${installed}" =~ $ext ]] || code --install-extension "$ext"
-done < "$DIR/vscode/extensions.txt"
+# install missing plugins
+diff -B <(sort < "$DIR/vscode/extensions.txt") <(code --list-extensions | sort) | \
+  grep '^<' | sed -E 's/<[[:space:]]+(.*)/\1/g' | \
+  xargs -n 1 code --install-extension

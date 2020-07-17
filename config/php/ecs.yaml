@@ -1,0 +1,5 @@
+parameters:
+    sets:
+        - 'clean-code'
+        - 'psr12'
+        - 'symfony'
