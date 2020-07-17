@@ -32,7 +32,7 @@
   new = checkout -b
 
   # Rename the current branch
-  rename-branch = branch -m
+  rename = branch -m
 
   # Unstage a file
   unstage = restore --staged
@@ -45,6 +45,9 @@
 
   # Delete a branch locally and on the origin remote
   nuke = "!f() { git unpublish $1; git branch -D $1; }; f"
+
+  # Show merged branches
+  merged = "!git branch --merged | grep -vE '\\*|master|main|develop'"
 
   # Delete all branches that no longer have a remote
   sync = "!git fetch --prune && git branch -vv --no-color | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D"
