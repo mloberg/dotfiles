@@ -58,6 +58,7 @@ cask "insomnia"
 cask "keybase"
 # cask "lunchy"
 # cask "sequel-pro"
+cask "stoplight-studio"
 cask "tableplus"
 cask "visual-studio-code"
 
