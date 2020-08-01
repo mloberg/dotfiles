@@ -1,6 +1,11 @@
 [user]
   name = {{ name }}
   email = {{ email }}
+  signingkey = {{ gpgkeyid }}
 [credential]
   # Use "cache" if not running macOS
   helper = osxkeychain
+[gpg]
+  program = gpg2
+[commit]
+  gpgsign = true

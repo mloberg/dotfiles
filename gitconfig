@@ -3,126 +3,87 @@
   tags = tag -l
   branches = branch -a
   remotes = remote -v
-
   # List aliases
   aliases = config --get-regexp alias
-
   # List contributors by number of commits
   contributors = shortlog -sn
-
   # See what's staged
   staged = diff --staged
-
   # Show log of commits that haven't been pushed yet
   unpushed = log @{u}..
-
   # Show diff of changes that haven't been pushed yet
   changes = "!git diff origin/$(git rev-parse --abbrev-ref HEAD)..HEAD"
-
   # Amend the last commit
   amend = commit --amend -C HEAD
-
   # Undo the last commit, but keep the changes
   undo = reset --soft HEAD^
-
   # Make sure current branch is up to date
   up = pull --rebase --prune --autostash
-
   # Create new branch
   new = checkout -b
-
   # Rename the current branch
   rename = branch -m
-
   # Unstage a file
   unstage = restore --staged
-
   # Publish the current branch to the remote
   publish = "!f() { git push --set-upstream ${1:-origin}; }; f"
-
   # Delete a branch on the remote
   unpublish = "!f() { git push ${2:-origin} --delete $1; }; f"
-
   # Delete a branch locally and on the origin remote
   nuke = "!f() { git unpublish $1; git branch -D $1; }; f"
-
   # Show merged branches
   merged = "!git branch --merged | grep -vE '\\*|master|main|develop'"
-
   # Delete all branches that no longer have a remote
   sync = "!git fetch --prune && git branch -vv --no-color | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D"
-
   # Credit the author of the last commit
   credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-
   # Interactive rebase of commits that haven't been pushed yet
   wip = rebase -i @{u}
-
   # Interactive rebase with the given number of latest commits
   reb = "!r() { git rebase -i HEAD~$1; }; r"
-
   # Squash the current branch (for merge request) (git squash master origin)
   squash = "!s() { git fetch; git rebase -i ${2:-origin}/${1:-master}; }; s"
-
   # Show summary of commits
   summary = log --name-status
-
 [apply]
   whitespace = nowarn
-
 [color]
   diff = auto
   status = auto
   branch = auto
   ui = true
-
 [core]
   excludesfile = ~/.gitignore
   editor = vim
-
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
   # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
   whitespace = space-before-tab,-indent-with-non-tab,trailing-space
-
   # Make `git rebase` safer on macOS
   # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
   trustctime = false
-
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
   # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
   precomposeunicode = false
-
 [difftool]
   prompt = false
-
 [fetch]
   prune = true
-
 [help]
   autocorrect = 1
-
 [include]
   path = ~/.gitconfig.local
-
 [merge]
   ff = only
-
 [mergetool]
   keepBackup = false
-
 [push]
   default = current
-	followTags = true
-
+  followTags = true
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-
-[gpg]
-	program = gpg2
-
-[commit]
-	gpgsign = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[init]
+  defaultBranch = main
