@@ -2,7 +2,7 @@
 #
 # Notify via MacOS Notification center
 #
-# Usage: $0 [--title Title] [Message to display]
+# Usage: $0 [--title|-t Title] [Message to display]
 set -e
 
 TITLE="Notification"
@@ -10,6 +10,7 @@ MESSAGE=()
 
 while [[ $# -gt 0 ]]; do
   case $1 in
+    -t)
     --title)
       TITLE="$2"
       shift

@@ -19,9 +19,10 @@ alias path='echo $PATH | tr -s ":" "\n"'
 alias c='clear'
 alias k='clear'
 alias ..="cd .."
-alias ...='cd ../..'     # Go up two directories
-alias ....='cd ../../..' # Go up three directories
-alias -- -='cd -'        # Go back
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias -- -="cd -"
 
 # Tree
 if [ ! -x "$(command -v tree >/dev/null)" ]; then
@@ -35,9 +36,6 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# Desktop Programs
-alias chrome="open -a google\ chrome"
-
 # Vagrant
 alias vup="vagrant up"
 alias vssh="vagrant ssh"
@@ -47,6 +45,7 @@ alias vdstr="vagrant destroy"
 alias dc="docker-compose"
 
 alias serve="/usr/bin/python -m SimpleHTTPServer"
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Mac aliases
 alias bt-off="m bluetooth disable"
@@ -56,9 +55,12 @@ alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
 alias show="defaults write com.apple.finder AppleShowAllFiles TRUE"
 alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE"
 
+alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ip="ipconfig getifaddr en0"
+
 alias extract="dtrx"
 
-alias standup="cd ~/src && git standup -m 3"
+alias standup="(cd ~/src && git standup -m 3)"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local

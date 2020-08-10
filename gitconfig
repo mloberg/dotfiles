@@ -45,6 +45,8 @@
   squash = "!s() { git fetch; git rebase -i ${2:-origin}/${1:-master}; }; s"
   # Show summary of commits
   summary = log --name-status
+  # Bisect shortcut. Assumes the bad commit is HEAD
+  bs = "!b() { git bisect start ${2:-HEAD} ${1}; }; b"
 [apply]
   whitespace = nowarn
 [color]
