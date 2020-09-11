@@ -47,6 +47,10 @@
   summary = log --name-status
   # Bisect shortcut. Assumes the bad commit is HEAD
   bs = "!b() { git bisect start ${2:-HEAD} ${1}; }; b"
+  # Lock files (ignore changes)
+  lock = "update-index --skip-worktree"
+  locked = "!l() { git ls-files -v | grep "^S" | sed -e 's|S ||'; }; l"
+  unlock = "update-index --no-skip-worktree"
 [apply]
   whitespace = nowarn
 [color]
