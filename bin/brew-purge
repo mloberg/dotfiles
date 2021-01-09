@@ -8,7 +8,7 @@ if [ -z "$formula" ]; then
     exit 1
 fi
 
-if ! brew list | grep -q "$formula"; then
+if ! brew list --formula | grep -q "$formula"; then
     (>&2 echo "Brew formula \"$formula\" is not installed")
     exit 1
 fi
