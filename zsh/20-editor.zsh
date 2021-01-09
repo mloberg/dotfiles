@@ -1,2 +1,2 @@
-export VISUAL=vim
-export EDITOR=$VISUAL
+export VISUAL=code
+export EDITOR=vim
