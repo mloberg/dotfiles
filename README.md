@@ -40,3 +40,9 @@ inspiration/dotfiles taken from:
 See insecure directories with `compaudit`. Fix them with:
 
     compaudit | xargs chmod g-w
+
+### yubikey stops working
+
+Try restarting the gpg-agent. If that doesn't work, restart.
+
+    gpgconf --kill gpg-agent
