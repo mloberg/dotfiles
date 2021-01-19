@@ -63,9 +63,16 @@ chmod go-w $(brew --prefix)/share/zsh-completions
 
 user "Clear Dock? [y/N] "
 read -r clear
-if [[ "${clear}" =~ ^(y|Y)$ ]]; then
+if [[ "${clear}" =~ ^(y|Y) ]]; then
   info "Clearing the Dock"
   m dock prune
+fi
+
+FFPROFILE="$HOME/.firefox"
+if [ ! -f "$FFPROFILE/prefs.js" ]; then
+  info "Setting up Firefox profile"
+  /Applications/Firefox.app/Contents/MacOS/firefox -CreateProfile "mloberg $FFPROFILE"
+  /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
 fi
 
 info "Updating software"
@@ -86,7 +93,7 @@ fi
 if ! sudo firmwarepasswd -check | grep --quiet Yes; then
  user "Set Firmware Password? [y/N] "
  read -r permission
- [[ "${permission}" =~ ^(y|Y)$ ]] && sudo firmwarepasswd -setpasswd
+ [[ "${permission}" =~ ^(y|Y) ]] && sudo firmwarepasswd -setpasswd
 fi
 
 spctl kext-consent status | grep -q 'ENABLED' || warn "Kernel Extension User Consent not required"
@@ -104,8 +111,12 @@ fi
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
 success "Success"
-warn "Firefox setup not complete. See ~/.dotfiles/firefox/setup.md"
+warn "Start Firefox Profile Manager to load custom profile"
 warn "For better DNS, run ~/.dotfiles/scripts/pihole"
-warn "Rebooting in 5s"
-sleep 5
-m restart
+
+user "Restart now? [Y/n] "
+read -r reboot
+if [[ "${reboot}" =~ ^(y|Y) ]] || [[ "$reboot" == "" ]]; then
+  warn "Restart"
+  m restart
+fi
