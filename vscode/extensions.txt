@@ -22,6 +22,7 @@ felixfbecker.php-debug
 formulahendry.auto-rename-tag
 formulahendry.code-runner
 golang.go
+hashicorp.terraform
 johnpapa.vscode-peacock
 jspolancor.presentationmode
 mechatroner.rainbow-csv
@@ -33,7 +34,6 @@ ms-vscode.vscode-typescript-tslint-plugin
 ms-vsliveshare.vsliveshare
 neilbrayfield.php-docblocker
 octref.vetur
-phproberto.vscode-php-getters-setters
 pnp.polacode
 redhat.vscode-yaml
 travisthetechie.write-good-linter

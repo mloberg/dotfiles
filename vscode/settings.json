@@ -50,8 +50,7 @@
         ]
     },
     "terraform.languageServer": {
-        "enabled": true,
-        "args": []
+        "external": true
     },
 
     // extension config
