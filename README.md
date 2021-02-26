@@ -21,7 +21,6 @@ fit your needs.
 
 ## other things
 
-* [font](https://dank.sh/)
 * [yubikey](https://github.com/drduh/YubiKey-Guide)
 
 ## thanks

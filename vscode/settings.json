@@ -1,6 +1,6 @@
 {
     // visuals
-    "editor.fontFamily": "Dank Mono",
+    "editor.fontFamily": "FiraCode Nerd Font",
     "editor.fontSize": 14,
     "editor.fontLigatures": true,
     "workbench.iconTheme": "vscode-icons", // `null` for no icons
