@@ -31,7 +31,7 @@
     "diffEditor.ignoreTrimWhitespace": false,
 
     // language specific settings
-    "editor.renameOnType": true,
+    "editor.linkedEditing": true,
     "go.useLanguageServer": true,
     "markdownlint.config": {
         "MD013": true,
@@ -40,15 +40,6 @@
     },
     "php.suggest.basic": false,
     "phpmd.rules": "~/.dotfiles/config/php/phpmd.xml",
-    "terraform.indexing": {
-        "enabled": false,
-        "liveIndexing": false,
-        "delay": 500,
-        "exclude": [
-            ".terraform/**/*",
-            "**/.terraform/**/*"
-        ]
-    },
     "terraform.languageServer": {
         "external": true
     },
@@ -61,11 +52,7 @@
         "suppressGitVersionWarning": false,
         "suppressLineUncommittedWarning": false,
         "suppressNoRepositoryWarning": false,
-        "suppressResultsExplorerNotice": false,
-        "suppressShowKeyBindingsNotice": true
     },
-    "gitlens.views.fileHistory.enabled": true,
-    "gitlens.views.lineHistory.enabled": true,
     "peacock.favoriteColors": [
         {
             "name": "Angular Red",
@@ -132,7 +119,4 @@
     "telemetry.enableTelemetry": false,
     "intelephense.telemetry.enabled": false,
     "code-runner.enableAppInsights": false,
-    "gitlens.advanced.telemetry.enabled": false,
-    "partialDiff.enableTelemetry": false,
-    "terraform.telemetry.enabled": false,
 }

@@ -9,6 +9,6 @@ for conf in ${confs[*]}; do
 done
 
 # install missing plugins
-diff -B <(sort < "$DIR/vscode/extensions.txt") <(code --list-extensions | sort) | \
+diff -B <(grep -v '^#' "$DIR/vscode/extensions.txt" | sort) <(code --list-extensions | sort) | \
   grep '^<' | sed -E 's/<[[:space:]]+(.*)/\1/g' | \
   xargs -n 1 code --install-extension
