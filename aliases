@@ -56,8 +56,6 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE"
 alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip="ipconfig getifaddr en0"
 
-alias extract="dtrx"
-
 alias standup="(cd ~/src && git standup -m 3)"
 
 # Include custom aliases
