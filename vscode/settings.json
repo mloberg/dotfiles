@@ -34,9 +34,11 @@
     "editor.linkedEditing": true,
     "go.useLanguageServer": true,
     "markdownlint.config": {
-        "MD013": true,
-        "MD046": false,
-        "no-hard-tabs": true
+        "MD010": true,
+        "MD013": {
+            "code_blocks": false,
+        },
+        "MD046": false
     },
     "php.suggest.basic": false,
     "phpmd.rules": "~/.dotfiles/config/php/phpmd.xml",
