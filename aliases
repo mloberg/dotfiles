@@ -46,17 +46,11 @@ alias serve="/usr/bin/python -m SimpleHTTPServer"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
 # Mac aliases
-alias bt-off="m bluetooth disable"
-alias bt-on="m bluetooth enable"
 alias flush="m dns flush"
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
-alias show="defaults write com.apple.finder AppleShowAllFiles TRUE"
-alias hide="defaults write com.apple.finder AppleShowAllFiles FALSE"
 
 alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip="ipconfig getifaddr en0"
-
-alias standup="(cd ~/src && git standup -m 3)"
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
