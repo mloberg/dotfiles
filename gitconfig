@@ -41,16 +41,20 @@
   wip = rebase -i @{u}
   # Interactive rebase with the given number of latest commits
   reb = "!r() { git rebase -i HEAD~$1; }; r"
-  # Squash the current branch (for merge request) (git squash master origin)
-  squash = "!s() { git fetch; git rebase -i ${2:-origin}/${1:-master}; }; s"
+  # Squash the current branch (for merge request) (git squash main origin)
+  squash = "!s() { git fetch; git rebase -i ${2:-origin}/${1:-main}; }; s"
   # Show summary of commits
   summary = log --name-status
   # Bisect shortcut. Assumes the bad commit is HEAD
   bs = "!b() { git bisect start ${2:-HEAD} ${1}; }; b"
   # Lock files (ignore changes)
-  lock = "update-index --skip-worktree"
+  lock = update-index --skip-worktree
   locked = "!l() { git ls-files -v | grep "^S" | sed -e 's|S ||'; }; l"
-  unlock = "update-index --no-skip-worktree"
+  unlock = update-index --no-skip-worktree
+  # Create pull requests with GitHub's CLI
+  pr = "!gh pr create --fill"
+  # Checkout pull request
+  cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
 [apply]
   whitespace = nowarn
 [color]
