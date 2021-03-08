@@ -22,9 +22,16 @@ _fzf_complete_code() {
     _fzf_complete --multi --reverse -- "$@" < <(fd --type d)
 }
 
-# quickly open projects in vscode
-p() {
-    root="${PROJECTS_HOME:-$HOME/src}"
-    project=$(fd --type d --base-directory "$root" | fzf --select-1 --query "$1")
-    [ -n "$project" ] && code "$root/$project"
+_project() {
+    cmd="${1:-cd}"
+    query="$2"
+    dir="${3:-$HOME/src}"
+
+    res=$(fd --type d --base-directory "$dir" | fzf --select-1 --query "$query")
+    [ -n "$res" ] || return
+    "$cmd" "$dir/$res"
 }
+
+alias p="_project cd"
+alias c="_project code"
+alias o="_project open"

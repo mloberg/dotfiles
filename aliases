@@ -14,7 +14,6 @@ alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pa
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-alias c='clear'
 alias k='clear'
 alias ..="cd .."
 alias ...="cd ../.."
