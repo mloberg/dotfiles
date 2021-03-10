@@ -55,6 +55,8 @@
   pr = "!gh pr create --fill"
   # Checkout pull request
   cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
+  # Show diff of last stash
+  stashed = stash show -p
 [apply]
   whitespace = nowarn
 [color]
