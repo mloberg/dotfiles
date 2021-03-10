@@ -25,3 +25,7 @@ user_pref("network.http.referer.XOriginTrimmingPolicy", 2);
 
 // increase on some confirmation dialogs to 3s
 user_pref("security.dialog_enable_delay", 3000);
+
+// disabled sponsored content
+user_pref("browser.newtabpage.activity-stream.showSponsored", false);
+user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
