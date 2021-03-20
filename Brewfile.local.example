@@ -2,6 +2,8 @@
 #
 # uncomment what you need or add more items
 
+# mas "Irvue", id: 1039633667
+
 # RECOMMENDED, but sometimes doesn't play nice with corporate security tools
 # cask "blockblock"
 # cask "dhs"

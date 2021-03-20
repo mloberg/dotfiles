@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+install_asdf_plugin() {
+    local name="$1"
+    local url="$2"
+
+    if ! asdf plugin-list | grep -Fq "$name"; then
+        asdf plugin add "$name" "$url"
+    else
+        asdf plugin update "$name"
+    fi
+}
+
+install_asdf_language() {
+    local language="$1"
+    local version="$2"
+
+    if [ "$version" == "latest" ]; then
+        install=$(asdf latest "$language")
+    else
+        install=$(asdf list-all "$language" | grep -v "[a-z]" | grep "^$version" | tail -1)
+    fi
+    install="${install:-$version}"
+
+    asdf install "$language" "$install"
+
+    [ "$3" == "--global" ] && asdf global "$language" "$install"
+}
+
+# shellcheck disable=SC1090
+source "$(brew --prefix asdf)/asdf.sh"
+
+install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby"
+install_asdf_language ruby latest --global
+install_asdf_language ruby 2.7
+gem update --system
+number_of_cores=$(sysctl -n hw.ncpu)
+bundle config --global jobs $((number_of_cores - 1))
+
+install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs"
+bash -c "${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-previous-release-team-keyring" &>/dev/null
+install_asdf_language nodejs latest
+install_asdf_language nodejs 14 --global
+install_asdf_language nodejs 12
+
+install_asdf_plugin terraform "https://github.com/Banno/asdf-hashicorp"
+install_asdf_language terraform 0.14
+install_asdf_language terraform 0.13 --global
+
+install_asdf_plugin golang "https://github.com/kennyp/asdf-golang"
+install_asdf_language golang latest --global
+
+install_asdf_plugin python "https://github.com/danhper/asdf-python"
+install_asdf_language python 3 --global
