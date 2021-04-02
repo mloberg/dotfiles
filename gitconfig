@@ -1,5 +1,6 @@
 [alias]
   co = checkout
+  pf = push --force-with-lease
   tags = tag -l
   branches = branch -a
   remotes = remote -v
@@ -57,6 +58,8 @@
   cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
   # Show diff of last stash
   stashed = stash show -p
+  # Clone repo
+  repo = "!gh repo clone"
 [apply]
   whitespace = nowarn
 [color]

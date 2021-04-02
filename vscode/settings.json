@@ -33,6 +33,7 @@
     // language specific settings
     "editor.linkedEditing": true,
     "go.useLanguageServer": true,
+    "go.toolsManagement.autoUpdate": true,
     "markdownlint.config": {
         "MD010": true,
         "MD013": {
@@ -111,6 +112,16 @@
     ],
     "todo-tree.highlights.enabled": true,
     "todo-tree.tree.showScanModeButton": false,
+    "todo-tree.general.tags": [
+        "BUG",
+        "HACK",
+        "FIXME",
+        "TODO",
+        "XXX",
+        "[ ]",
+        "[x]"
+    ],
+    "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
     "typescript.suggest.paths": false,
     "ecs.executablePath": "~/bin/ecs",
     "ecs.configPath": "~/.dotfiles/config/php/ecs.yaml",
