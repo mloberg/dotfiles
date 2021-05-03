@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd "$(dirname $(readlink "$0"))/.."
+cd "$(dirname "$(readlink "$0")")/.." || exit 1
 
 current_branch=$(git symbolic-ref HEAD)
 
