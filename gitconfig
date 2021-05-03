@@ -5,7 +5,8 @@
   branches = branch -a
   remotes = remote -v
   # List aliases
-  aliases = config --get-regexp alias
+  aliases = "!git config --get-regexp 'alias.*' | sed 's/alias\\.//' | sed 's/[ ]/ = /' | sort | ${PAGER:-less}"
+  alias = "!f() { git aliases | grep -e \"$1\" | ${PAGER:-less}; }; f"
   # List contributors by number of commits
   contributors = shortlog -sn
   # See what's staged
@@ -52,14 +53,16 @@
   lock = update-index --skip-worktree
   locked = "!l() { git ls-files -v | grep "^S" | sed -e 's|S ||'; }; l"
   unlock = update-index --no-skip-worktree
-  # Create pull requests with GitHub's CLI
-  pr = "!gh pr create --fill"
-  # Checkout pull request
-  cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
   # Show diff of last stash
   stashed = stash show -p
+  # Create pull requests with GitHub's CLI
+  pr = "!gh pr create"
+  # Checkout pull request
+  cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
   # Clone repo
   repo = "!gh repo clone"
+  # Open repo in web browser
+  view = "!gh repo view --web"
 [apply]
   whitespace = nowarn
 [color]

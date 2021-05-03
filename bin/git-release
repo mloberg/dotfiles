@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# Create and push a git tag
+#
+# If argument starts with a "v" or number, it will use that as the version
+# Otherwise it will generate a semver
+#
+# Usage:
+#       git release 1.0.0 -- -m "foo" -s
+#       git release v1.1.0
+#       git release patch
+#       git release patch --pre beta
+#       git release --pre beta2
+
+while test $# != 0; do
+    case "$1" in
+        --pre|-p) prerelease="$2"; shift ;;
+        --beta) prerelease="beta"; ;;
+        --) shift; args="$*"; break ;;
+        *) test -z "$version" && version=$1 ;;
+    esac
+
+    shift
+done
+
+if [[ ! "$version" =~ ^[v0-9] ]]; then
+    latest=$(git describe --tags "$(git rev-list --tags --max-count=1)")
+
+    if [[ ! "$latest" =~ ^([^0-9]*)([1-9][0-9]+|[0-9])\.([1-9][0-9]+|[0-9])\.([1-9][0-9]+|[0-9])(.*) ]]; then
+      echo "the latest tag doesn't match semver format requirement" 1>&2
+      exit 1
+    fi
+
+    prefix="${BASH_REMATCH[1]}"
+    major="${BASH_REMATCH[2]}"
+    minor="${BASH_REMATCH[3]}"
+    patch="${BASH_REMATCH[4]}"
+    pre="${BASH_REMATCH[5]}"
+
+    case "$version" in
+        major) version="$((major + 1)).0.0" ;;
+        minor) version="${major}.$((minor + 1)).0" ;;
+        patch) version="${major}.${minor}.$((patch + 1))" ;;
+        *) version="${major}.${minor}.${patch}${pre}" ;;
+    esac
+
+    [ -n "$prerelease" ] && version="${major}.${minor}.${patch}-${prerelease}"
+    [ -n "$prefix" ] && version="${prefix}${version}"
+
+    if [ "$latest" == "$version" ]; then
+        echo "usage: $(basename "$0") [version|major|minor|patch] [--pre <release>] [ -- <git tag arguments>]" 1>&2
+        exit 1
+    fi
+fi
+
+# shellcheck disable=SC2086
+git tag "$version" -a -m "$version" $args \
+    && git push --tags
