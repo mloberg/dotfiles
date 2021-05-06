@@ -7,6 +7,7 @@
 # RECOMMENDED, but sometimes doesn't play nice with corporate security tools
 # cask "blockblock"
 # cask "dhs"
+# cask "knockknock"
 # cask "little-snitch"
 # cask "protonvpn"
 
@@ -17,6 +18,7 @@
 # mas "Affinity Photo", id: 824183456
 
 # Work specific tools
+# cask "tableplus"
 # cask "vagrant"
 # cask "virtualbox"
 # mas "Jira", id: 1475897096

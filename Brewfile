@@ -15,7 +15,6 @@ brew "fzf"
 brew "gh"
 brew "git"
 brew "git-lfs"
-brew "gpg"
 brew "gron"
 brew "httpie"
 brew "jq"
@@ -23,8 +22,6 @@ brew "lesspipe"
 brew "m-cli"
 brew "mkcert"
 brew "nss"
-brew "packer"
-brew "pinentry-mac"
 brew "reattach-to-user-namespace"
 brew "readline"
 brew "rcm"
@@ -35,29 +32,16 @@ brew "the_silver_searcher"
 brew "tldr"
 brew "vim"
 brew "wget"
-brew "zsh"
-brew "zsh-completions"
 
 cask "1password"
-cask "brave-browser"
-cask "dash"
 cask "docker"
 cask "firefox"
+cask "gpg-suite-no-mail"
 cask "notion"
-cask "tableplus"
 cask "visual-studio-code"
 
 # Fonts
 cask "font-fira-code-nerd-font"
-
-# Quicklook plugins
-cask "qlmarkdown"
-cask "quicklook-json"
-
-# Security apps
-cask "knockknock"
-cask "oversight"
-cask "do-not-disturb"
 
 localbrew = "#{Dir.home}/.Brewfile.local"
 instance_eval(File.read(localbrew)) if File.exists?(localbrew)
