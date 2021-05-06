@@ -25,7 +25,6 @@ abort() {
 }
 
 [ "$(uname -s)" != "Darwin" ] && abort "This only works on MacOS"
-[ ! -r "$HOME/Library/Mail" ] && abort "Need full disk access"
 
 user "Hostname: "
 read -r hostname
@@ -41,10 +40,19 @@ fi
 
 if ! command -v brew >/dev/null; then
   info "Installing Homebrew"
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 brew doctor &>/dev/null || abort "\"brew doctor\" is reporting issues. Please fix then run again."
+
+if [ "$(uname -m)" == "arm64" ]; then
+  user "Install Rosetta 2? [y/N] "
+  read -r rosetta
+  if [[ "${rosetta}" =~ ^(y|Y) ]]; then
+    softwareupdate --install-rosetta
+  fi
+fi
 
 info "Installing some requirements via Homebrew"
 brew bundle --file=- <<EOF
@@ -56,11 +64,6 @@ info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
 RCRC="$HOME/.dotfiles/rcrc" rcup
 
-info "Set default shell to zsh"
-grep --quiet "$(command -v zsh)" /etc/shells || (command -v zsh | sudo tee -a /etc/shells)
-[ "$(command -v zsh)" == "$SHELL" ] || chsh -s "$(command -v zsh)"
-chmod go-w $(brew --prefix)/share/zsh-completions
-
 user "Clear Dock? [y/N] "
 read -r clear
 if [[ "${clear}" =~ ^(y|Y) ]]; then
@@ -68,10 +71,9 @@ if [[ "${clear}" =~ ^(y|Y) ]]; then
   m dock prune
 fi
 
-FFPROFILE="$HOME/.firefox"
-if [ ! -f "$FFPROFILE/prefs.js" ]; then
+if [ ! -f "$HOME/.firefox/prefs.js" ]; then
   info "Setting up Firefox profile"
-  /Applications/Firefox.app/Contents/MacOS/firefox -CreateProfile "mloberg $FFPROFILE"
+  /Applications/Firefox.app/Contents/MacOS/firefox -CreateProfile "mloberg $HOME/.firefox"
   /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
 fi
 
@@ -90,20 +92,6 @@ if ! fdesetup status | grep --quiet On; then
   fi
 fi
 
-if ! sudo firmwarepasswd -check | grep --quiet Yes; then
- user "Set Firmware Password? [y/N] "
- read -r permission
- [[ "${permission}" =~ ^(y|Y) ]] && sudo firmwarepasswd -setpasswd
-fi
-
-spctl kext-consent status | grep -q 'ENABLED' || warn "Kernel Extension User Consent not required"
-
-if system_profiler SPiBridgeDataType | grep 'Model Name:' | grep -q 'T2'; then
- warn "EFI Firmware Integrity Check Not Supported by this Mac"
-else
- /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check >/dev/null 2>&1 || warn "EFI Firmware Integrity Check Failed"
-fi
-
 if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall ]; then
  ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
 fi
@@ -111,8 +99,6 @@ fi
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
 success "Success"
-warn "Start Firefox Profile Manager to load custom profile"
-warn "For better DNS, run ~/.dotfiles/scripts/pihole"
 
 user "Restart now? [Y/n] "
 read -r reboot
