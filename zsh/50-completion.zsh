@@ -1,3 +1,6 @@
+# Load in Homebrew completions
+FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
 # completion; use cache if updated within 24h
 autoload -Uz compinit
 if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
