@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -e
+
+if ! remote_branch="$(git rev-parse --abbrev-ref --symbolic-full-name "@{u}" 2>/dev/null)"; then
+    echo "No upstream branch found." 1>&2
+    exit 1
+fi
+
+if [[ $* == *--hard* ]]; then
+    git fetch --prune && git reset --hard "${remote_branch}"
+else
+    git pull --rebase --prune --autostash
+fi
+
+git branch -vv --no-color | grep ': gone]' | awk '{print $1}' | xargs -n 1 git branch -D
+
+if [[ $* == *--clean* ]]; then
+    git clean -d -f -x
+fi

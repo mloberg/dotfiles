@@ -1,10 +1,11 @@
 [alias]
+  p = pull --rebase --prune --autostash
   co = checkout
   pf = push --force-with-lease
   tags = tag -l
   branches = branch -a
   remotes = remote -v
-  sync = "!git up && git delete-missing-branches"
+  sync = "up --hard"
   # List aliases
   aliases = "!git config --get-regexp 'alias.*' | sed 's/alias\\.//' | sed 's/[ ]/ = /' | sort | ${PAGER:-less}"
   alias = "!f() { git aliases | grep -e \"$1\" | ${PAGER:-less}; }; f"
@@ -20,8 +21,6 @@
   amend = commit --amend -C HEAD
   # Undo the last commit, but keep the changes
   undo = reset --soft HEAD^
-  # Make sure current branch is up to date
-  up = pull --rebase --prune --autostash
   # Create new branch
   new = checkout -b
   # Rename the current branch
