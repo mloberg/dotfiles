@@ -29,3 +29,6 @@ user_pref("security.dialog_enable_delay", 3000);
 // disabled sponsored content
 user_pref("browser.newtabpage.activity-stream.showSponsored", false);
 user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
+
+// open new tab to the right of the active tab
+user_pref("browser.tabs.insertAfterCurrent", true);
