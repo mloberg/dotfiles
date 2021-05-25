@@ -59,6 +59,8 @@ if [[ ! "$version" =~ ^[v0-9] ]]; then
     fi
 fi
 
+echo "Creating tag ${version}"
+
 # shellcheck disable=SC2086
 git tag "$version" -a -m "$version" $args \
     && git push --tags
