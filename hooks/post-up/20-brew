@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-brew update && brew bundle --global && brew cleanup
+brew update
+brew bundle --global
+brew bundle cleanup --force
