@@ -2,4 +2,4 @@
 
 brew update
 brew bundle --global
-brew bundle cleanup --force
+brew bundle cleanup --global --force
