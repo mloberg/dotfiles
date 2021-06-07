@@ -1,3 +1,2 @@
-DOTFILES_DIRS="$HOME/.dotfiles"
-EXCLUDES="README.md LICENSE config/* script *.example **/*.example"
+EXCLUDES="README.md LICENSE script *.example **/*.example *.terminal"
 UNDOTTED="bin"

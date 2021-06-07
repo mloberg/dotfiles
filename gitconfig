@@ -58,9 +58,9 @@
   # Create pull requests with GitHub's CLI
   pr = "!gh pr create"
   # Checkout pull request
-  cpr = "!gh pr checkout $(gh pr list | fzf | awk '{print $1}')"
+  cpr = "!gh co"
   # Clone repo
-  repo = "!gh repo clone"
+  repo = "!gh clone"
   # Open repo in web browser
   view = "!gh repo view --web"
 [apply]
