@@ -30,7 +30,7 @@ setopt interactivecomments
 unsetopt mail_warning
 
 # make less more friendly for non-text input files, see lesspipe(1)
-export LESSOPEN="|/usr/local/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
+export LESSOPEN="|$(brew --prefix)/bin/lesspipe.sh %s" LESS_ADVANCED_PREPROCESSOR=1
 # Prevent the less hist file from being made
 export LESSHISTFILE="/dev/null"
 
