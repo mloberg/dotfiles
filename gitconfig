@@ -55,6 +55,8 @@
   unlock = update-index --no-skip-worktree
   # Show diff of last stash
   stashed = stash show -p
+  # List authors
+  authors = shortlog --summary --numbered --email
   # Create pull requests with GitHub's CLI
   pr = "!gh pr create"
   # Checkout pull request
