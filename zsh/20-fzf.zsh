@@ -27,7 +27,7 @@ _project() {
     query="$2"
     dir="${3:-$HOME/src}"
 
-    res=$(fd --type d --base-directory "$dir" | fzf --select-1 --query "$query")
+    res=$(fd --type d --base-directory "$dir" --hidden --glob .git -x dirname | fzf --select-1 --query "$query")
     [ -n "$res" ] || return
     "$cmd" "$dir/$res"
 }
