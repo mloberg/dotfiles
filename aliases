@@ -1,19 +1,3 @@
-# grc overides for ls
-#   Made possible through contributions from generous benefactors like
-#   `brew install coreutils`
-if gls &>/dev/null; then
-  alias ls="gls -F --color"
-  alias l="gls -lAh --color"
-  alias ll="gls -l --color"
-  alias la='gls -A --color'
-fi
-
-# Pipe my public key to my clipboard.
-alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
-
-# Pretty print the path
-alias path='echo $PATH | tr -s ":" "\n"'
-
 alias k='clear'
 alias ..="cd .."
 alias ...="cd ../.."
@@ -21,12 +5,23 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
-# Tree
-if [ ! -x "$(command -v tree >/dev/null)" ]; then
-  alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+# Replace ls with exa (https://the.exa.website/)
+if command -v exa &>/dev/null; then
+  alias ls="exa --icons"
+  alias ll="exa --icons --long --header --git"
+  alias la="exa --icons --all"
+  alias l="exa --icons --long --header --git --all"
+  alias tree="exa --icons --tree --git-ignore"
 fi
 
+# Grep
 alias grep='grep --color'
+
+# Pipe my public key to my clipboard.
+alias pubkey="more ~/.ssh/id_rsa.pub | pbcopy | echo '=> Public key copied to pasteboard.'"
+
+# Pretty print the path
+alias path='echo $PATH | tr -s ":" "\n"'
 
 # request confirmation
 alias rm='rm -i'
@@ -38,9 +33,7 @@ alias vup="vagrant up"
 alias vssh="vagrant ssh"
 alias vdstr="vagrant destroy"
 
-# Docker Compose
-alias dc="docker-compose"
-
+# Python backed utils
 alias serve="/usr/bin/python -m SimpleHTTPServer"
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 
@@ -49,9 +42,11 @@ alias flush="m dns flush"
 alias rmds="find . -type f -name '*.DS_Store' -ls -delete"
 alias dnd="killall NotificationCenter"
 
+# Network
 alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip="ipconfig getifaddr en0"
 
+# GPG
 alias gpgkill="gpgconf --kill gpg-agent"
 
 # Include custom aliases
