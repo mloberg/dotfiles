@@ -10,6 +10,8 @@
 #       git release patch
 #       git release patch --pre beta
 #       git release --pre beta2
+#       git release patch --dry-run
+#       git release minor --no-push
 
 fail() {
     echo "$1" 1>&2
@@ -25,6 +27,8 @@ while test $# != 0; do
         --help|-h) _usage ;;
         --pre|-p) prerelease="$2"; shift ;;
         --beta) prerelease="beta"; ;;
+        --no-push) nopush="1"; ;;
+        --dry-run) notag="1"; nopush="1"; ;;
         --) shift; args="$*"; break ;;
         *) test -z "$version" && version=$1 ;;
     esac
@@ -62,5 +66,5 @@ fi
 echo "Creating tag ${version}"
 
 # shellcheck disable=SC2086
-git tag "$version" -a -m "$version" $args \
-    && git push --tags
+[ -n "$notag" ] || git tag "$version" -a -m "$version" $args
+[ -n "$nopush" ] || git push --tags
