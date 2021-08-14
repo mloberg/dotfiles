@@ -25,9 +25,12 @@ del_stopped() {
 
 # Work with local services via Docker Compose. `service help` for help
 service() {
+  # install yaml2json if not already
+  command -v yaml2json &>/dev/null || go get -v github.com/bronze1man/yaml2json
+
   case "$1" in
     ls|list)
-      service ps --services
+      service config | yaml2json | jq -r '.services | keys | join("\n")'
       ;;
     start)
       service up -d "${@:2}"
@@ -51,9 +54,6 @@ service() {
 
       port="$3"
       if [ -z "$port" ]; then
-        # install yaml2json if not already
-        command -v yaml2json &>/dev/null || go get -v github.com/bronze1man/yaml2json
-
         # grab the first listed port
         port=$(service config | yaml2json | jq -r ".services.$2.ports[0].target")
       fi
@@ -73,6 +73,7 @@ Wrapper around Docker Compose to work with local services like Redis, Postgres, 
 EOF
       ;;
     *)
+      [ "$1" == "--" ] && shift
       docker-compose -f "$HOME/.services.yml" "$@"
       ;;
   esac
