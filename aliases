@@ -52,5 +52,7 @@ alias dnd="killall NotificationCenter"
 alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip="ipconfig getifaddr en0"
 
+alias gpgkill="gpgconf --kill gpg-agent"
+
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
