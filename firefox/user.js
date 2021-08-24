@@ -32,3 +32,11 @@ user_pref("browser.newtabpage.activity-stream.showSponsoredTopSites", false);
 
 // open new tab to the right of the active tab
 user_pref("browser.tabs.insertAfterCurrent", true);
+
+// additional privacy settings
+user_pref("privacy.firstparty.isolate", true);
+user_pref("browser.urlbar.speculativeConnect.enabled", false);
+user_pref("webgl.disabled", true);
+user_pref("beacon.enabled", false);
+user_pref("network.IDN_show_punycode", true);
+user_pref("network.http.referer.XOriginPolicy", 1);
