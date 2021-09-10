@@ -17,10 +17,12 @@
   changes = "!git diff origin/$(git rev-parse --abbrev-ref HEAD)..HEAD"
   # Amend the last commit
   amend = commit --amend -C HEAD
+  # Change message of last commit
+  reword = commit --amend
   # Undo the last commit, but keep the changes
   undo = reset --soft HEAD^
   # Create new branch
-  new = checkout -b
+  new = switch -c
   # Rename the current branch
   rename = branch -m
   # Unstage a file

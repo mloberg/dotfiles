@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+install_gh_extension() {
+    local extension="$1"
+
+    if ! gh extension list | grep -Fq "$extension"; then
+        gh extension install "$extension"
+    else
+        gh extension upgrade "$extension"
+    fi
+}
+
+install_gh_extension mloberg/gh-prs
