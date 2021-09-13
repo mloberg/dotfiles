@@ -11,3 +11,4 @@ install_gh_extension() {
 }
 
 install_gh_extension mloberg/gh-prs
+install_gh_extension mloberg/gh-view

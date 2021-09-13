@@ -1,5 +1,5 @@
 [alias]
-  co = checkout
+  co = switch
   pf = push --force-with-lease
   tags = tag -l
   branches = branch -a
