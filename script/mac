@@ -96,6 +96,8 @@ if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Conten
  ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
 fi
 
+grep -q "pam_tid.so" /etc/pam.d/sudo || info 'To enable Touch ID for sudo, add "auth  sufficient  pam_tid.so" to the top of /etc/pam.d/sudo'
+
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
 success "Success"
