@@ -1,3 +1,6 @@
 commitizen
 cz-conventional-changelog
 npm-check-updates
+mklicense
+serve
+add-gitignore

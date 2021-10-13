@@ -34,8 +34,7 @@ alias vssh="vagrant ssh"
 alias vdstr="vagrant destroy"
 
 # Python backed utils
-alias serve="/usr/bin/python -m SimpleHTTPServer"
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias urlencode='python -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]));"'
 
 # Mac aliases
 alias flush="m dns flush"
