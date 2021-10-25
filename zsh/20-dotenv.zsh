@@ -12,7 +12,7 @@ dotenv() {
     elif [ "$action" == "unload" ]; then
         while read -r line; do
             unset $line
-        done < <(grep -Eow "^(export )?([A-Z0-9_]+)" .env | sed 's/export //g')
+        done < <(grep -Eow "^(export )?([A-Za-z0-9_]+)" .env | sed 's/export //g')
     else
         cat <<EOF
 NAME
