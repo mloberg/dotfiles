@@ -6,4 +6,4 @@ ohmyzsh/ohmyzsh path:plugins/extract
 zsh-users/zsh-autosuggestions
 zsh-users/zsh-completions
 zsh-users/zsh-history-substring-search
-zdharma/fast-syntax-highlighting
+zsh-users/zsh-syntax-highlighting

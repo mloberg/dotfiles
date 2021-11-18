@@ -2,6 +2,8 @@
 #
 # https://getantibody.github.io/
 
+antibody purge https://github.com/zdharma/fast-syntax-highlighting 2>/dev/null
+
 antibody update
 rm -f "$HOME/.zsh/80-plugins.zsh"
 antibody bundle < "$HOME/.zsh/plugins.txt" > "$HOME/.zsh/40-plugins.zsh"
