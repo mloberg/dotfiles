@@ -5,10 +5,10 @@ install_gh_extension() {
 
     if ! gh extension list | grep -Fq "$extension"; then
         gh extension install "$extension"
-    else
-        gh extension upgrade "$extension"
     fi
 }
+
+gh extension upgrade --all
 
 install_gh_extension mloberg/gh-prs
 install_gh_extension mloberg/gh-view
