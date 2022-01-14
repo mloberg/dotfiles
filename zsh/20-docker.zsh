@@ -25,12 +25,9 @@ del_stopped() {
 
 # Work with local services via Docker Compose. `service help` for help
 service() {
-  # install yaml2json if not already
-  command -v yaml2json &>/dev/null || go get -v github.com/bronze1man/yaml2json
-
   case "$1" in
     ls|list)
-      service config | yaml2json | jq -r '.services | keys | join("\n")'
+      service config | yq e '.services | keys' -
       ;;
     start)
       service up -d "${@:2}"
@@ -39,7 +36,7 @@ service() {
       service rm -sfv "${@:2}"
       ;;
     status)
-      if [ "$(service ps --filter status=up -q "$2")" == "" ]; then
+      if [ "$(service ps --status running -q "$2" 2>/dev/null)" == "" ]; then
         echo "$2 is stopped"
       else
         echo "$2 is running"
@@ -50,13 +47,11 @@ service() {
       ;;
     port)
       # make sure the service is running
-      [ "$(service ps --filter status=up -q "$2")" == "" ] && echo "$2 is not running" && return 1
+      [ "$(service ps --status running -q "$2" 2>/dev/null)" == "" ] && echo "$2 is not running" && return 1
 
       port="$3"
-      if [ -z "$port" ]; then
-        # grab the first listed port
-        port=$(service config | yaml2json | jq -r ".services.$2.ports[0].target")
-      fi
+      # grab the first listed port if none given
+      [ -z "$port" ] && port=$(service config | yq e ".services.$2.ports[0].target" -)
 
       service -- port "$2" "$port"
       ;;

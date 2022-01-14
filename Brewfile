@@ -39,6 +39,7 @@ brew "the_silver_searcher"
 brew "tldr"
 brew "vim"
 brew "wget"
+brew "yq"
 brew "zsh-completions"
 
 cask "1password"
