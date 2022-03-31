@@ -15,6 +15,9 @@ user_pref("extensions.htmlaboutaddons.recommendations.enabled", false);
 // disable FTP
 user_pref("network.ftp.enabled", false);
 
+// disable pocket
+user_pref('extensions.pocket.enabled', false);
+
 // limit the number of closed tabs Firefox remembers
 user_pref("browser.sessionstore.max_tabs_undo", 5);
 
