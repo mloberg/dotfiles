@@ -47,6 +47,7 @@ alias ip="ipconfig getifaddr en0"
 
 # GPG
 alias gpgkill="gpgconf --kill gpg-agent"
+alias yubi-switch='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
