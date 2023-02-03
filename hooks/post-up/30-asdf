@@ -12,16 +12,13 @@ install_asdf_plugin() {
 }
 
 # shellcheck disable=SC1090
-source "$(brew --prefix asdf)/asdf.sh"
+source $(brew --prefix asdf)/libexec/asdf.sh
 
-install_asdf_plugin ruby "https://github.com/asdf-vm/asdf-ruby"
+install_asdf_plugin nodejs https://github.com/asdf-vm/asdf-nodejs
+install_asdf_plugin terraform https://github.com/asdf-community/asdf-hashicorp
+install_asdf_plugin golang https://github.com/kennyp/asdf-golang
+
+install_asdf_plugin ruby https://github.com/asdf-vm/asdf-ruby
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 bundle config --global path vendor/bundle
-
-install_asdf_plugin nodejs "https://github.com/asdf-vm/asdf-nodejs"
-bash -c "${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-previous-release-team-keyring" &>/dev/null
-
-install_asdf_plugin terraform "https://github.com/Banno/asdf-hashicorp"
-install_asdf_plugin golang "https://github.com/kennyp/asdf-golang"
-install_asdf_plugin python "https://github.com/danhper/asdf-python"
