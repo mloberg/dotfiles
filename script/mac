@@ -81,12 +81,6 @@ if [[ "${clear}" =~ ^(y|Y) ]]; then
   m dock prune
 fi
 
-# if [ ! -f "$HOME/.firefox/prefs.js" ]; then
-#   info "Setting up Firefox profile"
-#   /Applications/Firefox.app/Contents/MacOS/firefox -CreateProfile "mloberg $HOME/.firefox"
-#   /Applications/Firefox.app/Contents/MacOS/firefox -ProfileManager
-# fi
-
 info "Updating software"
 sudo softwareupdate -i -a
 
