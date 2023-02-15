@@ -1,6 +1,7 @@
 cask_args appdir: "/Applications"
 
 tap "1password/tap"
+tap "golangci/tap"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
