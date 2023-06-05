@@ -19,7 +19,31 @@ fail() {
 }
 
 _usage() {
-    fail "usage: git release [version|major|minor|patch] [--pre <release>] [ -- <git tag arguments>]" "${1:-0}"
+    c=$(basename "$0")
+    cat <<EOF >&2
+Publish a new git tag based on the previous tag.
+
+Usage:
+    $c [version|major|minor|patch] [flags] [ -- <git tag arguments>]
+
+Flags:
+    --pre string      Create a prerelease
+    --beta            Same as "--pre beta"
+    --dry-run         Don't create or push tag
+    --no-push         Don't push the created tag
+    --release         Create a release on GitHub with gh cli
+
+Examples:
+    Create a new patch release (x.x.Y):
+        $c patch
+
+    Create a new pre-release (x.x.x-beta2):
+        $c --pre beta2
+
+    Create a specific version (must start with v):
+        $c v1.2.3
+EOF
+    exit "${1:-0}"
 }
 
 while test $# != 0; do
@@ -27,9 +51,9 @@ while test $# != 0; do
         --help|-h) _usage ;;
         --pre|-p) prerelease="$2"; shift ;;
         --beta) prerelease="beta"; ;;
-        --no-release) norelease="1" ;;
+        --release) release="1" ;;
         --no-push) nopush="1"; norelease="1"; ;;
-        --dry-run) notag="1"; nopush="1"; norelease="1" ;;
+        --dry-run) notag="1"; nopush="1"; ;;
         --) shift; args="$*"; break ;;
         *) test -z "$version" && version=$1 ;;
     esac
@@ -69,4 +93,4 @@ echo "Creating tag ${version}"
 # shellcheck disable=SC2086
 [ -n "$notag" ] || git tag "$version" -a -m "$version" $args
 [ -n "$nopush" ] || git push --tags
-[ -n "$norelease" ] || gh release create "$version" --generate-notes
+[ -z "$release" ] || gh release create "$version" --generate-notes
