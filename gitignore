@@ -14,6 +14,7 @@ ehthumbs.db
 .idea
 .vscode
 .env
+.envrc
 db/*.sqlite3
 log/*.log
 rerun.txt
