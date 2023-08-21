@@ -1,5 +1,7 @@
-# Docker helper functions
+# Advance > Docker CLI tools > User
+export PATH="$HOME/.docker/bin:$PATH"
 
+# Docker helper functions
 docker-enter() {
   docker exec -it "$@" /bin/bash
 }
