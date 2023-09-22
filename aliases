@@ -5,13 +5,13 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias -- -="cd -"
 
-# Replace ls with exa (https://the.exa.website/)
-if command -v exa &>/dev/null; then
-  alias ls="exa --icons"
-  alias ll="exa --icons --long --header --git"
-  alias la="exa --icons --all"
-  alias l="exa --icons --long --header --git --all"
-  alias tree="exa --icons --tree --git-ignore"
+# Replace ls with eza (https://github.com/eza-community/eza)
+if command -v eza &>/dev/null; then
+  alias ls="eza --icons"
+  alias ll="eza --icons --long --header --git"
+  alias la="eza --icons --all"
+  alias l="eza --icons --long --header --git --all"
+  alias tree="eza --icons --tree --git-ignore"
 fi
 
 alias cat="bat"
