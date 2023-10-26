@@ -58,13 +58,13 @@
   # List authors
   authors = shortlog --summary --numbered --email
   # Create pull requests with GitHub's CLI
-  pr = "!gh pr create"
+  pr = "!op plugin run -- gh pr create -w"
   # Checkout pull request
-  cpr = "!gh co"
+  cpr = "!op plugin run -- gh co"
   # Clone repo
-  repo = "!gh clone"
+  repo = "!op plugin run -- gh clone"
   # Open repo in web browser
-  web = "!gh repo view --web"
+  web = "!op plugin run -- gh repo view --web"
   # Re-commit using the same commit message
   recommit = commit -c ORIG_HEAD
 [apply]
