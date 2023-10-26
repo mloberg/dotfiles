@@ -65,6 +65,8 @@
   repo = "!gh clone"
   # Open repo in web browser
   web = "!gh repo view --web"
+  # Re-commit using the same commit message
+  recommit = commit -c ORIG_HEAD
 [apply]
   whitespace = nowarn
 [color]
