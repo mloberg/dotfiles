@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # Setup a fresh Mac
-set -ue
+set -eou pipefail
 
 info() {
   printf "🛠 \033[00;36m%s\033[0m\n" "$1"
@@ -31,11 +31,8 @@ read -r hostname
 
 if [ -n "$hostname" ]; then
   info "Setting hostname..."
-  sudo hostname "$hostname"
   sudo scutil --set ComputerName "$hostname"
-  sudo scutil --set HostName "$hostname"
   sudo scutil --set LocalHostName "$hostname"
-  sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "$hostname"
 fi
 
 if [ ! -f /Library/Developer/CommandLineTools/usr/bin/git ]; then
@@ -65,10 +62,7 @@ if [ "$(uname -m)" == "arm64" ]; then
 fi
 
 info "Installing some requirements via Homebrew"
-brew bundle --file=- <<EOF
-tap "thoughtbot/formulae"
-brew "rcm"
-EOF
+brew install rcm
 
 info "Installing dotfiles"
 [ ! -d "$HOME/.dotfiles" ] && git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
@@ -84,9 +78,6 @@ fi
 info "Updating software"
 sudo softwareupdate -i -a
 
-info "Setting MacOS configuration"
-~/.dotfiles/bin/macos
-
 if ! fdesetup status | grep --quiet On; then
   info "Enable FileVault"
   if ! diskutil info / | grep 'File System Personality:' | grep -q 'APFS'; then
@@ -100,6 +91,7 @@ if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Conten
   ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
 fi
 
+# TouchID for sudo
 if ls /usr/lib/pam | grep -q pam_tid.so; then
   PAM_FILE="/etc/pam.d/sudo"
   FIRST_LINE="# sudo: auth account password session"
@@ -112,6 +104,10 @@ if ls /usr/lib/pam | grep -q pam_tid.so; then
     success "Enabled TouchID for sudo"
   fi
 fi
+
+info "Enabling the Firewall"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
 
 groups | grep -qv 'admin' || warn "${USER} should not be an administrator"
 
