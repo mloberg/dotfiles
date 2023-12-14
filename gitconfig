@@ -77,6 +77,7 @@
 [core]
   excludesfile = ~/.gitignore
   editor = vim
+  pager = delta
   # Treat spaces before tabs and all kinds of trailing whitespace as an error
   # [default] trailing-space: looks for spaces at the end of a line
   # [default] space-before-tab: looks for spaces before tabs at the beginning of a line
@@ -87,6 +88,10 @@
   # Prevent showing files whose names contain non-ASCII symbols as unversioned.
   # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
   precomposeunicode = false
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+[diff]
+  colorMoved = default
 [difftool]
   prompt = false
 [fetch]
@@ -104,6 +109,7 @@
   defaultBranch = main
 [merge]
   ff = only
+  conflictstyle = diff3
 [mergetool]
   keepBackup = false
 [pull]
@@ -113,3 +119,18 @@
   followTags = true
 [rebase]
   autoStash = true
+[delta]
+  features = side-by-side line-numbers decorations
+  syntax-theme = Nord
+  plus-style = syntax "#003800"
+  minus-style = syntax "#3f0001"
+[delta "decorations"]
+  commit-decoration-style = bold yellow box ul
+  file-style = bold yellow ul
+  file-decoration-style = none
+  hunk-header-decoration-style = cyan box ul
+[delta "line-numbers"]
+  line-numbers-left-style = cyan
+  line-numbers-right-style = cyan
+  line-numbers-minus-style = 124
+  line-numbers-plus-style = 28
