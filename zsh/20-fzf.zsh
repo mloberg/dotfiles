@@ -9,12 +9,12 @@ source "$(brew --prefix)/opt/fzf/shell/key-bindings.zsh"
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
 _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
+    fd --unrestricted --follow --exclude ".git" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
+    fd --type d --unrestricted --follow --exclude ".git" . "$1"
 }
 
 # Autocomplete code with directories
@@ -27,7 +27,7 @@ _project() {
     query="$2"
     dir="${3:-$HOME/src}"
 
-    res=$(fd --type d --base-directory "$dir" --hidden --glob .git -x dirname | fzf --select-1 --query "$query")
+    res=$(fd --type d --base-directory "$dir" --max-depth 2 --unrestricted --glob .git --strip-cwd-prefix -x dirname | fzf --select-1 --query "$query")
     [ -n "$res" ] || return
     "$cmd" "$dir/$res"
 }
