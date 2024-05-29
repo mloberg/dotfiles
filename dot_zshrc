@@ -9,6 +9,7 @@ hash -d src=$HOME/src
 hash -d dotfiles=$HOME/.local/share/chezmoi
 
 # aliases
+alias dotfile="chezmoi"
 [[ -f ~/.aliases ]] && source ~/.aliases
 
 # Local config

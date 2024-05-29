@@ -1,2 +1,0 @@
-EXCLUDES="README.md LICENSE firefox script *.example **/*.example *.terminal"
-UNDOTTED="bin"
