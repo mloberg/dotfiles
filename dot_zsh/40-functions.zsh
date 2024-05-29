@@ -1,6 +1,19 @@
 # mkdir and cd into it
-function mk {
+mk() {
   mkdir -p "$1" && cd $_
+}
+
+bak() {
+  [ -z "$1" ] && echo "Usage: $0 <file>" && return 1
+
+  # if ends with .bak, remove it
+  if [ "${1: -4}" == ".bak" ]; then
+    mv "$1" "${1:0:-4}"
+  elif [ -f "${1}.bak" ]; then
+    mv "$1.bak" "$1"
+  else
+    mv "$1" "$1.bak"
+  fi
 }
 
 repo() {
