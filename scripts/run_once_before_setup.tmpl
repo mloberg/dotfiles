@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -eou pipefail
+
+{{- if not (lookPath "brew") }}
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+{{- end }}
+
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+if ! brew doctor; then
+  >&2 echo "Please fix the issues with Homebrew and run again."
+  exit 1
+fi
+
+{{- if eq .chezmoi.os "darwin" }}
+if ! fdesetup status | grep --quiet On; then
+  if ! diskutil info / | grep 'File System Personality:' | grep -q 'APFS'; then
+    >&2 echo "WARNING: Filesystem is not APFS. Not enabling FDE."
+  else
+    echo "Enabling FileVault"
+    sudo fdesetup enable -user "$USER" | tee "$HOME/FileVault_recovery_key.txt"
+  fi
+fi
+
+# TouchID for sudo
+if ls /usr/lib/pam | grep -q pam_tid.so; then
+  PAM_FILE="/etc/pam.d/sudo"
+  FIRST_LINE="# sudo: auth account password session"
+  if ! head -n1 "$PAM_FILE" | grep -q "$FIRST_LINE"; then
+    >&2 echo "WARNING: $PAM_FILE is not in the expected format!"
+  elif ! grep -q pam_tid.so "$PAM_FILE"; then
+    echo "Enabling TouchID for sudo"
+    TOUCHID_LINE="auth       sufficient     pam_tid.so"
+    sudo sed -i .bak -e "s/$FIRST_LINE/$FIRST_LINE\n$TOUCHID_LINE/" "$PAM_FILE"
+    sudo rm "$PAM_FILE.bak"
+  fi
+fi
+
+echo "Enabling the Firewall"
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+{{- end }}
+
+groups | grep -qv 'admin' || >&2 echo "WARNING: ${USER} should not be an administrator"

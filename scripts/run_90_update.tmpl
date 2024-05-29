@@ -1,0 +1,21 @@
+#!/usr/bin/env zsh
+set -e
+
+{{- if lookPath "op" }}
+{{- $gh := set . "gh" "op plugin run -- gh" }}
+{{- else }}
+{{- $gh := set . "gh" "gh" }}
+{{- end }}
+
+# asdf
+asdf plugin update --all
+
+# antidote
+source $(brew --prefix antidote)/share/antidote/antidote.zsh
+antidote update --bundles
+
+# gh extensions
+{{ .gh }} extension upgrade --all
+
+# Update timestamp of last update
+touch "${HOME}/.update"

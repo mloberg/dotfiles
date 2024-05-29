@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+{{- if lookPath "op" }}
+{{- $gh := set . "gh" "op plugin run -- gh" }}
+{{- else }}
+{{- $gh := set . "gh" "gh" }}
+{{- end }}
+
+{{ .gh }} extension install mloberg/gh-prs
+{{ .gh }} extension install mloberg/gh-view

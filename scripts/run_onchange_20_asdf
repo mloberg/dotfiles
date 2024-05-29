@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 
 # shellcheck disable=SC1091
 source "$(brew --prefix asdf)/libexec/asdf.sh"
@@ -6,9 +7,3 @@ source "$(brew --prefix asdf)/libexec/asdf.sh"
 asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs
 asdf plugin add terraform https://github.com/asdf-community/asdf-hashicorp
 asdf plugin add ruby https://github.com/asdf-vm/asdf-ruby
-asdf plugin update --all
-
-# Configure Ruby
-number_of_cores=$(sysctl -n hw.ncpu)
-bundle config --global jobs $((number_of_cores - 1))
-bundle config --global path vendor/bundle

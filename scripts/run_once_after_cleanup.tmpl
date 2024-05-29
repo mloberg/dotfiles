@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+set -eou pipefail
+
+{{- if eq .chezmoi.os "darwin" }}
+if [ -f ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall ]; then
+  ~/Library/Google/GoogleSoftwareUpdate/GoogleSoftwareUpdate.bundle/Contents/Resources/ksinstall --nuke
+fi
+
+echo "Clear Dock? [y/N] "
+read -r clear
+if [[ "${clear}" =~ ^(y|Y) ]]; then
+  echo "Clearing the Dock"
+  m dock prune
+fi
+
+echo "Updating software"
+sudo softwareupdate -i -a
+{{- end }}
