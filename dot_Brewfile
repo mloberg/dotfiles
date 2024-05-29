@@ -1,7 +1,6 @@
 cask_args appdir: "/Applications"
 
 tap "homebrew/bundle"
-tap "homebrew/cask-fonts"
 
 brew "ack"
 brew "antidote"
@@ -36,7 +35,6 @@ brew "mas"
 brew "mkcert"
 brew "nss"
 brew "procs"
-brew "rcm"
 brew "reattach-to-user-namespace"
 brew "readline"
 brew "ripgrep"
