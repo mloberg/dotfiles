@@ -1,4 +1,23 @@
+[user]
+  name = Matt Loberg
+  email = {{ .email }}
+  signingkey = {{ .signingKey }}
+[credential]
+  helper = {{ if eq .chezmoi.os "darwin" }}osxkeychain{{ else }}cache{{ end }}
+[gpg]
+  {{- if eq (printf "%.3s" .signingKey) "ssh" }}
+  format = ssh
+  {{- else }}
+  program = gpg
+  {{- end }}
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
+[commit]
+  gpgsign = true
+[tag]
+  gpgsign = true
 [alias]
+  c = !{{ if lookPath "art" }}art commit{{ else }}cz{{ end }}
   co = switch
   pf = push --force-with-lease
   tags = tag -l
@@ -103,8 +122,6 @@
   required = true
 [help]
   autocorrect = 1
-[include]
-  path = ~/.gitconfig.local
 [init]
   defaultBranch = main
 [merge]
@@ -134,3 +151,5 @@
   line-numbers-right-style = cyan
   line-numbers-minus-style = 124
   line-numbers-plus-style = 28
+[include]
+  path = ~/.gitconfig.local

@@ -1,3 +1,0 @@
-# Directory shortcuts. Allows `cd ~src` or `vim ~dotfiles/zshrc.local`
-hash -d src=$HOME/src
-hash -d dotfiles=$HOME/.dotfiles

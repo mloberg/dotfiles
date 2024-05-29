@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# user.js: {{ include "firefox/user.js" | sha256sum }}
+set -e
+
+for profile in ~/Library/Application\ Support/Firefox/Profiles/*; do
+    cp {{ joinPath .chezmoi.sourceDir "firefox" "user.js" | quote }} "$profile/user.js"
+done

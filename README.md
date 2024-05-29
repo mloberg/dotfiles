@@ -1,25 +1,16 @@
-# mloberg dotfiles
+# dotfiles
 
-> These are my dotfiles. There are many like it, but this one is mine.
-
-This is how I like my system. You have different tastes and preferences, so
-cloning this outright probably isn't what you want. Take and tweak from here to
-fit your needs.
+My collection of dotfiles and setup scripts.
 
 ## install
 
-    git clone https://github.com/mloberg/dotfiles.git ~/.dotfiles
-    ~/.dotfiles/script/mac
-
-## one-line install (not recommended)
-
-    bash <(curl -fsS https://raw.githubusercontent.com/mloberg/dotfiles/master/script/mac)
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply mloberg
 
 ## updating
 
-    dotfiles
+    chezmoi update
 
-## other things
+## other setup
 
 * [yubikey](https://github.com/drduh/YubiKey-Guide)
 
@@ -42,6 +33,4 @@ See insecure directories with `compaudit`. Fix them with:
 
 ### yubikey stops working
 
-Try restarting the gpg-agent. If that doesn't work, restart.
-
-    gpgconf --kill gpg-agent
+Try restarting the gpg-agent (`gpgkill`). If that doesn't work, restart.

@@ -1,0 +1,11 @@
+{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $signingKey := promptStringOnce . "signingKey" "Git signing key" -}}
+
+[data]
+  email = {{ $email | quote }}
+  signingKey = {{ $signingKey | quote }}
+[diff]
+  exclude = ["scripts"]
+[edit]
+  command = "code"
+  args = ["--wait"]
