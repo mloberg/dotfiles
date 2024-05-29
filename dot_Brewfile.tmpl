@@ -34,6 +34,7 @@ brew "m-cli"
 brew "mas"
 brew "mkcert"
 brew "nss"
+brew "pre-commit"
 brew "procs"
 brew "reattach-to-user-namespace"
 brew "readline"
@@ -51,6 +52,7 @@ brew "zsh-completions"
 
 cask "1password"
 cask "1password-cli"
+cask "aldente"
 cask "docker"
 cask "elgato-camera-hub"
 cask "elgato-control-center"
@@ -59,11 +61,36 @@ cask "elgato-wave-link"
 cask "firefox"
 cask "gpg-suite-no-mail"
 cask "notion"
+cask "tailscale"
 cask "visual-studio-code"
 cask "yubico-authenticator"
 
 # Fonts
 cask "font-fira-code-nerd-font"
+
+{{ if .isWork -}}
+# Work
+tap "hashicorp/tap"
+
+brew "act"
+brew "actionlint"
+brew "awscli"
+brew "chart-testing"
+brew "dotenv-linter"
+brew "git-cliff"
+brew "goreleaser"
+brew "helm"
+brew "mockery"
+brew "terraform-docs"
+brew "trivy"
+brew "hashicorp/tap/packer"
+
+cask "slack"
+cask "zoom"
+
+cask "tableplus"
+cask "tuple"
+{{- end }}
 
 localbrew = "#{Dir.home}/.Brewfile.local"
 instance_eval(File.read(localbrew)) if File.exist?(localbrew)

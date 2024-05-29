@@ -1,9 +1,11 @@
 {{- $email := promptStringOnce . "email" "Email address" -}}
 {{- $signingKey := promptStringOnce . "signingKey" "Git signing key" -}}
+{{- $isWork := promptBoolOnce . "isWork" "Work machine" -}}
 
 [data]
   email = {{ $email | quote }}
   signingKey = {{ $signingKey | quote }}
+  isWork = {{ $isWork }}
 [diff]
   exclude = ["scripts"]
 [edit]
