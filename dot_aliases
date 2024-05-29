@@ -28,11 +28,6 @@ alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
 
-# Vagrant
-alias vup="vagrant up"
-alias vssh="vagrant ssh"
-alias vdstr="vagrant destroy"
-
 # Python backed utils
 alias urlencode='python -c "import sys, urllib.parse as ul; print(ul.quote_plus(sys.argv[1]));"'
 
@@ -44,10 +39,6 @@ alias dnd="killall NotificationCenter"
 # Network
 alias public-ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias ip="ipconfig getifaddr en0"
-
-# GPG
-alias gpgkill="gpgconf --kill gpg-agent"
-alias yubi-switch='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local

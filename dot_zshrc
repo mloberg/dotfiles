@@ -1,0 +1,15 @@
+# zsh config
+for config ($HOME/.zsh/*.zsh(N)); do
+  source $config
+done
+unset config
+
+# Directory shortcuts (e.g. `cd ~src`)
+hash -d src=$HOME/src
+hash -d dotfiles=$HOME/.local/share/chezmoi
+
+# aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
+
+# Local config
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
