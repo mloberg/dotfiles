@@ -21,17 +21,3 @@ fi
 
 # Source your static plugins file.
 source ${zsh_plugins}.zsh
-
-# ## Plugins via antidote (https://getantidote.github.io/)
-# antidote="$HOME/.antidote"
-# plugins="$HOME/.zsh/plugins.txt"
-# static="$HOME/.zsh/40-plugins.zsh"
-
-# # update plugins
-# antidote update --bundles
-
-# # generate static file for loading
-# antidote bundle < "$plugins" > "$static"
-
-## broot
-# broot --print-shell-function zsh > "$HOME/.zsh/60-br.zsh"
