@@ -68,6 +68,11 @@ cask "yubico-authenticator"
 # Fonts
 cask "font-fira-code-nerd-font"
 
+# App Store
+mas "Pages", id: 409201541
+mas "Keynote", id: 409183694
+mas "Numbers", id: 409203825
+
 {{ if .isWork -}}
 # Work
 tap "hashicorp/tap"
@@ -90,6 +95,11 @@ cask "zoom"
 
 cask "tableplus"
 cask "tuple"
+{{- else -}}
+# Personal
+cask "bambu-studio"
+cask "Discord"
+cask "guitar-pro"
 {{- end }}
 
 localbrew = "#{Dir.home}/.Brewfile.local"
