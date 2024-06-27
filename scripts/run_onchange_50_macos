@@ -40,7 +40,7 @@ defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool "false"
 defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool "false"
 
 # Display battery percentage
-defaults -currentHost com.apple.controlcenter BatteryShowPercentage -bool "true"
+defaults -currentHost write com.apple.controlcenter BatteryShowPercentage -bool "true"
 
 # Don't show day of the week
 defaults write com.apple.menuextra.clock ShowDayOfWeek -bool "false"
