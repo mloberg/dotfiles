@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# Update dotfiles
+set -e
+
+# Parse custom flags and convert them to chezmoi flags
+for arg in "$@"; do
+  [ "$arg" == "--no-scripts" ] && shift && set -- "$@" --exclude scripts
+done
+
+# Pull in remote changes
+if [ "$(chezmoi git -- rev-parse --abbrev-ref HEAD)" == "main" ]; then
+  chezmoi git -- pull --rebase
+else
+  >&2 echo "dotfiles not on main branch. skipping pull..."
+fi
+
+# Apply
+exec chezmoi apply -v "$@"
