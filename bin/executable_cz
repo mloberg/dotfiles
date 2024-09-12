@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-TYPE=$(gum choose --height=12 "feat" "fix" "docs" "style" "refactor" "perf" "test" "build" "ci" "chore" "revert")
+if [ -z "$(git status -s -uno | grep -v '^ ')" ]; then
+    >&2 echo "error: no staged files"
+    exit 1
+fi
+
+TYPE=$(gum choose --height=12 "feat" "fix" "docs" "style" "refactor" "perf" "test" "build" "ci" "chore" "deps" "revert")
 SCOPE=$(gum input --placeholder "scope")
 
 # Since the scope is optional, wrap it in parentheses if it has a value.
@@ -12,7 +17,7 @@ SUMMARY=$(gum input --width=72 --char-limit=100 --value "$TYPE$SCOPE: " --placeh
 echo "$SUMMARY"
 echo
 
-DESCRIPTION=$(gum write --width=72 --placeholder "Details of this change (CTRL+D to finish)" | fold -w 72 -s)
+DESCRIPTION=$(gum write --width=72 --placeholder "Details of this change" | fold -w 72 -s)
 echo "$DESCRIPTION"
 echo
 
