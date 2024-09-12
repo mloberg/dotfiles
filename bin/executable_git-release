@@ -52,7 +52,7 @@ while test $# != 0; do
         --pre|-p) prerelease="$2"; shift ;;
         --beta) prerelease="beta"; ;;
         --release) release="1" ;;
-        --no-push) nopush="1"; norelease="1"; ;;
+        --no-push) nopush="1"; ;;
         --dry-run) notag="1"; nopush="1"; ;;
         --) shift; args="$*"; break ;;
         *) test -z "$version" && version=$1 ;;

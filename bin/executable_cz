@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [ -z "$(git status -s -uno | grep -v '^ ')" ]; then
+if ! git status -s -uno | grep -qv '^ '; then
     >&2 echo "error: no staged files"
     exit 1
 fi
