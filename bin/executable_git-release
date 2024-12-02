@@ -92,5 +92,5 @@ echo "Creating tag ${version}"
 
 # shellcheck disable=SC2086
 [ -n "$notag" ] || git tag "$version" -a -m "$version" $args
-[ -n "$nopush" ] || git push "$version"
+[ -n "$nopush" ] || git push origin "$version"
 [ -z "$release" ] || gh release create "$version" --generate-notes
