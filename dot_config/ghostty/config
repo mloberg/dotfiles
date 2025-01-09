@@ -1,0 +1,4 @@
+theme = yonce
+font-family = FiraCode Nerd Font
+shell-integration-features = no-cursor
+window-save-state = always
