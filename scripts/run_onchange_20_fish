@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+FISH="${HOMEBREW_PREFIX:-/opt/homebrew}/bin/fish"
+echo "Setting fish ($FISH) as default shell"
+
+grep -q "$FISH" /etc/shells || (echo "$FISH" | sudo tee -a /etc/shells)
+chsh -s "$FISH"
