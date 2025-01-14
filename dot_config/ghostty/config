@@ -2,3 +2,6 @@ theme = yonce
 font-family = DankMono Nerd Font
 shell-integration-features = no-cursor
 window-save-state = always
+
+keybind = cmd+shift+left=previous_tab
+keybind = cmd+shift+right=next_tab
