@@ -25,9 +25,18 @@ if type -q bat
     alias cat bat
 end
 
+# request confirmation
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
 alias grep 'grep --color'
 alias c 'project code'
 alias p 'project cd'
 alias o 'project open'
 
 abbr -a dotfile chezmoi
+abbr -a flush 'm dns flush'
+abbr -a rmds 'find . -type f -name "*.DS_Store" -ls -delete'
+abbr -a ip 'ipconfig getifaddr en0'
+abbr -a public-ip 'dig +short myip.opendns.com @resolver1.opendns.com'

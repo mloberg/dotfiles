@@ -25,12 +25,6 @@ inspiration/dotfiles taken from:
 
 ## common problems
 
-### zsh compinit: insecure directories
-
-See insecure directories with `compaudit`. Fix them with:
-
-    compaudit | xargs chmod g-w
-
 ### yubikey stops working
 
 Try restarting the gpg-agent (`gpgkill`). If that doesn't work, restart.
