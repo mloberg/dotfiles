@@ -31,6 +31,6 @@ function service --description "Manage local services via Docker Compose"
     service port <service> [port]       Display the local port binding for the service"
         case '*'
             test $argv[1] = "--" && set -e argv[1]
-            docker compose --file ~/.services.yml $argv
+            docker compose --file ~/.config/services.yml $argv
     end
 end
