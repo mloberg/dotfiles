@@ -1,4 +1,3 @@
-function mk --description "mkdir and cd into it"
-    set -l dir $argv[1]
+function mk --description "mkdir and cd into it" -a dir
     mkdir -p $dir && cd $dir
 end

@@ -9,20 +9,25 @@ function multicd
     echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
 end
 abbr -a dotdot --regex '^\.\.+$' --function multicd
+abbr -a - 'cd -'
 
 # Replace ls with eza
 if type -q eza
-    abbr -a ls 'eza --icons'
-    abbr -a ll 'eza --icons --long --header --git'
-    abbr -a la 'eza --icons --all'
-    abbr -a l 'eza --icons --long --header --git --all'
+    alias ls 'eza --icons'
+    alias ll 'eza --icons --long --header --git'
+    alias la 'eza --icons --all'
+    alias l 'eza --icons --long --header --git --all'
     abbr -a tree 'eza --icons --tree --git-ignore'
 end
 
 # Replace cat with bat
 if type -q bat
-    abbr -a cat bat
+    alias cat bat
 end
 
-abbr -a grep 'grep --color'
+alias grep 'grep --color'
+alias c 'project code'
+alias p 'project cd'
+alias o 'project open'
+
 abbr -a dotfile chezmoi

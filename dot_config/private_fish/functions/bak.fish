@@ -1,5 +1,4 @@
-function bak
-    set -l file $argv[1]
+function bak --description "Create or restore a backup file" -a file
     test -z "$file" && echo "Usage: bak <file>" >&2 && return 1
 
     # if the file already ends with .bak, remove it

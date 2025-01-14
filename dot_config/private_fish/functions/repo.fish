@@ -1,14 +1,9 @@
-function repo
-    set -l repo $argv[1]
+function repo --description "Checkout to a repository, cloning it if it doesn't exist" -a repo
+    test -z "$repo" && echo "usage: repo <repo>" >&2 && return 1
     test -n "$SRC" || set -l SRC ~/src
+    test -n "$GITHUB_ORG" || set -l GITHUB_ORG "mloberg"
 
-    if test -z "$repo"
-        echo "usage: repo <repo>" >&2
-        return 1
-    end
-
-    string match "*/*" $repo || set -l repo "articulate/$repo"
-
+    string match "*/*" $repo || set -l repo "$GITHUB_ORG/$repo"
     set -l dir "$SRC/$(basename $repo)"
 
     test -d $dir || gh repo clone $repo $dir -- $argv[2..]

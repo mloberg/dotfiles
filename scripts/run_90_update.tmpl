@@ -1,5 +1,4 @@
-#!/usr/bin/env zsh
-set -e
+#!/usr/bin/env fish
 
 {{- if lookPath "op" }}
 {{- $gh := set . "gh" "op plugin run -- gh" }}
@@ -10,12 +9,14 @@ set -e
 # asdf
 asdf plugin update --all
 
-# antidote
-source $(brew --prefix antidote)/share/antidote/antidote.zsh
-antidote update --bundles
+# plugins
+fisher update
 
 # gh extensions
 {{ .gh }} extension upgrade --all
 
+# completions
+fish_update_completions
+
 # Update timestamp of last update
-touch "${HOME}/.update"
+touch ~/.update
