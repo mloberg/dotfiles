@@ -1,4 +1,6 @@
-firefox
+firefox/
+scripts/
+
 LICENSE
 README.md
 Yoncé.terminal
