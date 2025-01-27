@@ -1,5 +1,6 @@
 firefox/
 scripts/
+.chezmoiscripts/
 
 LICENSE
 README.md
