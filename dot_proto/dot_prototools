@@ -1,0 +1,11 @@
+node = "22.13.1"
+npm = "bundled"
+
+[tools.node]
+bundled-npm = true
+
+[tools.npm]
+shared-globals-dir = true
+
+[settings]
+auto-install = true

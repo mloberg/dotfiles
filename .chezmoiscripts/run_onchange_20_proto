@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -e
+
+export PROTO_HOME="$HOME/.proto"
+
+proto install node lts
+proto install npm bundled
