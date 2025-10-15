@@ -1,4 +1,4 @@
-{{- $email := promptStringOnce . "email" "Email address" -}}
+{{- $email := promptStringOnce . "email" "Email address" "mloberg@users.noreply.github.com" -}}
 {{- $signingKey := promptStringOnce . "signingKey" "Git signing key" -}}
 {{- $isWork := promptBoolOnce . "isWork" "Work machine" -}}
 
@@ -7,5 +7,4 @@
   signingKey = {{ $signingKey | quote }}
   isWork = {{ $isWork }}
 [edit]
-  command = "code"
-  args = ["--wait"]
+  command = "zed"

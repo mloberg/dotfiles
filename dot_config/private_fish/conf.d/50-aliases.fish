@@ -31,7 +31,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 
 alias grep 'grep --color'
-alias c 'project code'
+alias c 'project zed'
 alias p 'project cd'
 alias o 'project open'
 
