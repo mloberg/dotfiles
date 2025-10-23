@@ -17,9 +17,6 @@
   "wrap_guides": [80, 120],
 
   // Panels
-  "git_panel": {
-    "dock": "right"
-  },
   "project_panel": {
     "dock": "right"
   },

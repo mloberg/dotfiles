@@ -7,15 +7,10 @@
 // from the command palette.
 [
   {
-    "bindings": {
-      "cmd-shift-e": "workspace::ToggleRightDock"
-    }
-  },
-  {
     "context": "Workspace",
     "bindings": {
       "shift shift": "file_finder::Toggle",
-      "alt-cmd-shift-g": "git_panel::ToggleFocus",
+      "cmd-shift-e": "workspace::ToggleRightDock",
       "cmd-shift-t": "terminal_panel::Toggle"
     }
   },
