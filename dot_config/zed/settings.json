@@ -32,7 +32,31 @@
   "auto_install_extensions": {
     "catppuccin": true,
     "catppuccin-icons": true,
+    "dockerfile": true,
+    "golangci-lint": true,
+    "make": true,
     "terraform": true
+  },
+
+  // Languages
+  "lsp": {
+    "golangci-lint": {
+      "initialization_options": {
+        "command": [
+          "golangci-lint",
+          "run",
+          "--output.json.path",
+          "stdout",
+          "--show-stats=false",
+          "--output.text.path="
+        ]
+      }
+    }
+  },
+  "languages": {
+    "Go": {
+      "language_servers": ["gopls", "golangci-lint"]
+    }
   },
 
   // Turn shit off
