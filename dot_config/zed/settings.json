@@ -33,9 +33,11 @@
     "catppuccin": true,
     "catppuccin-icons": true,
     "dockerfile": true,
+    "fish": true,
     "golangci-lint": true,
     "make": true,
-    "terraform": true
+    "terraform": true,
+    "sql": true
   },
 
   // Languages

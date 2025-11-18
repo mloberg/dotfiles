@@ -4,7 +4,7 @@ My collection of dotfiles and setup scripts.
 
 ## install
 
-    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply mloberg
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply ivorisoutdoors
 
 ## updating
 
